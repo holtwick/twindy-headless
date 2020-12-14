@@ -15,12 +15,14 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+    "declaration": true
   },
   "include": [
+  "src",
     "**/*.ts",
     "**/*.js",
     "**/*.vue",
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "build", "dist", "example", "rollup.config.js"]
 }

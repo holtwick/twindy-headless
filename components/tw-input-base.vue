@@ -5,13 +5,10 @@
     v-if="type === 'textarea'"
     class="form-input"
     v-bind="$attrs"
-    v-on="$listeners"
     :id="uid"
     :placeholder="placeholder"
     :value="computedValue"
     @input="onInput"
-    @keydown.enter=""
-    @blur=""
     @change="$emit('action', computedValue)"
     v-text="value"
   />
@@ -20,7 +17,6 @@
     v-else-if="type === 'select'"
     class="form-select"
     v-bind="$attrs"
-    v-on="$listeners"
     :id="uid"
     :value="computedValue"
     @input="onInput"
@@ -37,7 +33,6 @@
     v-else-if="type === 'switch'"
     type="checkbox"
     v-bind="$attrs"
-    v-on="$listeners"
     :id="uid"
     :checked="computedValue"
     role="switch"
@@ -51,7 +46,6 @@
     autocomplete="off"
     class="form-input"
     v-bind="$attrs"
-    v-on="$listeners"
     :id="uid"
     :value="computedValue"
     @input="onInput"
@@ -65,7 +59,6 @@
     ref="$input"
     class="form-input"
     v-bind="$attrs"
-    v-on="$listeners"
     :id="uid"
     :value="computedValue"
     :placeholder="placeholder"
@@ -84,6 +77,7 @@ const log = require("debug")("ui:input-base")
 export default defineComponent({
   name: "tw-input-base",
   inheritAttrs: false,
+  emits: ["update:modelValue"],
   props: {
     label: {
       type: String,
@@ -93,7 +87,7 @@ export default defineComponent({
       type: String,
       default: "Text",
     },
-    value: {
+    modelValue: {
       type: [String, Boolean, Number],
       default: "",
     },
@@ -118,7 +112,7 @@ export default defineComponent({
   },
   data() {
     return {
-      newValue: this.value,
+      newValue: this.modelValue,
     }
   },
   computed: {
@@ -134,7 +128,7 @@ export default defineComponent({
       set(value) {
         // log('set value', value)
         this.newValue = value
-        this.$emit("input", value)
+        this.$emit("update:modelValue", value)
         // !this.isValid && this.checkHtml5Validity()
       },
     },
@@ -163,7 +157,7 @@ export default defineComponent({
       })
     },
     onInputBool(event) {
-      // log('onInputBool', event.target.value)
+      log("onInputBool", event.target.value)
       this.$nextTick(() => {
         if (event.target) {
           this.computedValue = event.target.checked

@@ -5,9 +5,8 @@
     <tw-input-base
       :uid="uid"
       v-bind="$attrs"
-      v-on="$listeners"
       type="select"
-      @input="$emit('input', $event)"
+      @input="$emit('update:modelValue', $event)"
     >
       <slot></slot>
     </tw-input-base>

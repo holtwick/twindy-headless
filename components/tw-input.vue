@@ -8,7 +8,6 @@
       ref="textarea"
       :uid="uid"
       v-bind="$attrs"
-      v-on="$listeners"
       :rows="rows"
       type="textarea"
       @input="onInput"
@@ -20,9 +19,8 @@
       :uid="uid"
       ref="textarea"
       v-bind="$attrs"
-      v-on="$listeners"
       type="input"
-      @input="$emit('input', $event)"
+      @input="$emit('update:modelValue', $event)"
       @keydown.enter="onEnter"
       @focus="onFocus"
     />
@@ -66,7 +64,7 @@ export default {
       resizeObserver: null,
     }
   },
-  mounted(): void {
+  mounted() {
     if (this.resize) {
       let el = this.$refs.textarea.$el
       log("el", el)
@@ -78,7 +76,7 @@ export default {
       this.resizeObserver.observe(el)
     }
   },
-  beforeDestroy(): void {
+  beforeUnmount() {
     if (this.resize) {
       this.resizeObserver.disconnect()
       this.resizeObserver = null
@@ -87,7 +85,7 @@ export default {
   methods: {
     onInput(ev) {
       this.onResizeTextarea()
-      this.$emit("input", ev)
+      this.$emit("update:modelValue", ev)
     },
     onResizeTextarea() {
       log("onres", this.resize)

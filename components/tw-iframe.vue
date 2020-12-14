@@ -101,7 +101,7 @@ export default {
   //     this.doUpdateHTML(this.value)
   //   }
   // },
-  beforeDestroy() {
+  beforeUnmount() {
     this.clearTimer()
   },
 }

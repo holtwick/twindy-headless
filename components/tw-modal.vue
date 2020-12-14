@@ -3,29 +3,41 @@
 <template>
   <div
     class="tw-modal"
-    :class="{ active }"
-    id="modal-id"
+    :class="{ active: modelValue }"
     tabindex="-1"
     v-trap-focus
     aria-modal="true"
     :role="role"
   >
     <a @click="doCancel" class="tw-modal-overlay" aria-label="Close"></a>
-    <div class="tw-modal-container vstack">
-      <header class="tw-modal-header modal-header -fix" v-if="title || close">
-        <div class="hstack">
-          <div class="tw-modal-title -fit">
-            <slot name="title">{{ title }}</slot>
-          </div>
-          <tw-link
-            v-if="close"
-            xtooltip="Close"
-            @click="doCancel"
-            class="-fix"
-            symbol="xmark"
-            >CLOSE</tw-link
-          >
+    <div class="tw-modal-container">
+      <header class="tw-modal-header" v-if="title || close">
+        <div class="tw-modal-title">
+          <slot name="title">{{ title }}</slot>
         </div>
+        <tw-link
+          v-if="close"
+          xtooltip="Close"
+          @click="doCancel"
+          class="tw-modal-close"
+          symbol="xmark"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="feather feather-x"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </tw-link>
       </header>
       <section class="tw-modal-body modal-body -fit -scrollable">
         <slot></slot>
@@ -49,7 +61,7 @@ const log = require("debug")("ui:modal")
 export default defineComponent({
   name: "tw-modal",
   props: {
-    active: {
+    modelValue: {
       type: Boolean,
     },
     title: {
@@ -97,19 +109,19 @@ export default defineComponent({
     },
     doClose() {
       this.$emit("close", false)
-      this.$emit("update:active", false)
+      this.$emit("update:modelValue", false)
 
       if (this.standalone) {
         // Timeout for the animation complete before destroying
         setTimeout(() => {
-          // this.active = false
+          // this.value = false
           this.$destroy()
           removeElement(this.$el)
         }, 150)
       }
     },
     keyPress(event) {
-      if (this.active && event.keyCode === 27) {
+      if (this.modelValue && event.keyCode === 27) {
         // Esc key
         this.doCancel("escape")
       }
@@ -128,7 +140,7 @@ export default defineComponent({
       })
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     if (typeof window !== "undefined") {
       document?.removeEventListener("keyup", this.keyPress)
       // reset scroll

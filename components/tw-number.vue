@@ -5,9 +5,8 @@
     <tw-input-base
       :uid="uid"
       v-bind="$attrs"
-      v-on="$listeners"
       type="number"
-      @input="$emit('input', $event)"
+      @input="$emit('update:modelValue', $event)"
     />
   </tw-form-group>
 </template>

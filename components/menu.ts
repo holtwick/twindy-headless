@@ -4,8 +4,6 @@ import { createPopper } from "@popperjs/core"
 import Vue from "vue"
 import Menu from "./tw-menu.vue"
 
-const log = require("debug")("ui:menu")
-
 let vm = null
 let el = null
 let popper = null
@@ -21,15 +19,12 @@ export function showContextMenu(opt = {}) {
   }
 
   window.addEventListener("mousedown", (evt) => {
-    log("mousedown")
     vm.$props.show = false
     // if (popper) {
     //   popper.destroy()
     //   popper = null
     // }
   })
-
-  log("showNativeMenu", opt)
 
   // vm.$props.top = opt.top
   // vm.$props.left = opt.left
@@ -55,8 +50,6 @@ export function showContextMenu(opt = {}) {
       getBoundingClientRect: generateGetBoundingClientRect(x, y),
     }
   }
-
-  log("target", virtualElement, el, vm)
 
   vm.$nextTick(() => {
     popper = createPopper(

@@ -56,8 +56,6 @@ import { removeElement } from "./lib/helpers"
 import TwLink from "./tw-link.vue"
 import TwSymbol from "./tw-symbol.vue"
 
-const log = require("debug")("ui:modal")
-
 export default defineComponent({
   name: "tw-modal",
   props: {
@@ -86,7 +84,7 @@ export default defineComponent({
     onCancel: {
       type: Function,
       default: () => {
-        log("onCancel not defined")
+        // log("onCancel not defined")
       },
     },
   },
@@ -97,10 +95,9 @@ export default defineComponent({
   directives: {
     trapFocus,
   },
-  emits: ["close"],
+  emits: ["close", "update:modelValue"],
   methods: {
     doCancel() {
-      log("do cancel")
       this.$emit("cancel")
       let onCancel = this?.$parent?.onCancel || this?.onCancel
       if (onCancel) {

@@ -54,8 +54,6 @@
 import TwPopover from "./tw-popover.vue"
 import TwItems from "./tw-items"
 
-const log = require("debug")("ui:completion")
-
 export default {
   name: "tw-completion",
   components: {
@@ -99,7 +97,6 @@ export default {
   },
   methods: {
     resizeInput() {
-      log("resize")
       const input = this.$refs.$input
       let value = input.value.trim()
       input.style.width = "1px"
@@ -120,7 +117,6 @@ export default {
       )
     },
     doAddItem(item) {
-      log("item", item.title)
       this.text = item.title
       this.$emit("add", item)
       this.doClear()

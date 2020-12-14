@@ -72,8 +72,6 @@
 <script lang="ts">
 import { defineComponent } from "vue"
 
-const log = require("debug")("ui:input-base")
-
 export default defineComponent({
   name: "tw-input-base",
   inheritAttrs: false,
@@ -118,7 +116,6 @@ export default defineComponent({
   computed: {
     computedValue: {
       get() {
-        // log('get value', this.newValue, this.type)
         let dflt: string | boolean | number = ""
         if (this.type === "switch") dflt = false
         if (this.type === "select") dflt = 0
@@ -126,7 +123,6 @@ export default defineComponent({
         return this.newValue || dflt
       },
       set(value) {
-        // log('set value', value)
         this.newValue = value
         this.$emit("update:modelValue", value)
         // !this.isValid && this.checkHtml5Validity()
@@ -140,7 +136,6 @@ export default defineComponent({
   },
   methods: {
     resizeInput() {
-      log("resize")
       const minWidth = 32
       const input = this.$refs.$input
       let value = input.value.trim()
@@ -148,7 +143,6 @@ export default defineComponent({
       input.style.width = (value ? input.scrollWidth : minWidth) + "px"
     },
     onInput(event) {
-      log("onInput", event, this.grow)
       if (this.grow) this.resizeInput()
       this.$nextTick(() => {
         if (event.target) {
@@ -157,7 +151,6 @@ export default defineComponent({
       })
     },
     onInputBool(event) {
-      log("onInputBool", event.target.value)
       this.$nextTick(() => {
         if (event.target) {
           this.computedValue = event.target.checked

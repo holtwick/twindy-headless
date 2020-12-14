@@ -4,8 +4,6 @@ import Vue from "vue"
 import { merge } from "./lib/helpers"
 import Dialog from "./tw-dialog.vue"
 
-const log = require("debug")("ui:dialog")
-
 function open({ propsData, template }) {
   const DialogComponent = Vue.extend(Dialog)
   log("comp", DialogComponent)

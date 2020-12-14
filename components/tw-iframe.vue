@@ -16,8 +16,6 @@
 <script>
 import { platform } from "@/lib/utils/platform"
 
-const log = require("debug")("ui:iframe")
-
 export default {
   name: "tw-iframe",
   props: {
@@ -48,7 +46,6 @@ export default {
           iFrame.style.height = "400px"
           const iFrameWindow = iFrame.contentWindow
           const iFrameDocument = iFrameWindow.document
-          log("iframe doc", iFrameDocument)
           if (platform.appleNative) {
             // TODO:2020-05-24 Better check for Safari?
             iFrameDocument.documentElement.innerHTML = value

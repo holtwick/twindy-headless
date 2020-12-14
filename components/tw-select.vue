@@ -24,5 +24,6 @@ export default defineComponent({
     TwFormGroup,
     TwInputBase,
   },
+  emits: ["update:modelValue"],
 })
 </script>

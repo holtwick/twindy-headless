@@ -20,8 +20,6 @@
 </template>
 
 <script>
-const log = require("debug")("ui:items")
-
 export default {
   name: "tw-items",
   props: {
@@ -36,7 +34,6 @@ export default {
   },
   methods: {
     doAction(item) {
-      log("action", item)
       this.$emit("selected", item)
     },
     // watch(() => props.selected, selected => {

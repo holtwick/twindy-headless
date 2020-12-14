@@ -32,8 +32,6 @@ import { createPopper } from "@popperjs/core"
 import { defineComponent } from "vue"
 import { UUID } from "./lib/uuid"
 
-const log = require("debug")("ui:popover")
-
 class RefObj {
   constructor(box) {
     this.box = box
@@ -131,7 +129,6 @@ export default defineComponent({
     },
 
     hide() {
-      log("hide popper")
       if (this.popper) {
         this.popper.destroy()
         this.popper = null
@@ -140,8 +137,6 @@ export default defineComponent({
   },
 
   async mounted() {
-    log("mounted")
-
     await this.$nextTick()
     await this.show()
 
@@ -150,7 +145,6 @@ export default defineComponent({
     // })
 
     // window.addEventListener('mousedown', event => {
-    //   log('catch mousedown')
     //   if (!this.element?.contains(event.target)) {
     //     this.hide()
     //   }
@@ -164,7 +158,6 @@ export default defineComponent({
   },
 
   beforeUnmount() {
-    log("beforeUnmount")
     this.hide()
   },
 })

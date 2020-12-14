@@ -9,7 +9,7 @@
           v-if="item.title"
           @click.prevent.stop="doAction(item)"
           @contextmenu.prevent.stop="doAction(item)"
-        >{{ item.title }}
+          >{{ item.title }}
         </a>
         <hr class="-separator" v-else />
       </template>
@@ -46,4 +46,3 @@ export default {
   },
 }
 </script>
-

@@ -12,8 +12,6 @@
 <script lang="ts">
 import { defineComponent } from "vue"
 
-const log = require("debug")("ui:separator")
-
 // Passive: false to prevent scrolling while touch dragging.
 const mouseOptions = { passive: false }
 

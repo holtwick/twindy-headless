@@ -11,8 +11,6 @@
 </template>
 
 <script>
-const log = require("debug")("ui:list")
-
 export default {
   name: "tw-list",
   props: {
@@ -36,14 +34,12 @@ export default {
   },
   methods: {
     doMore() {
-      log("do more")
       this.$emit("load", {
         start: 0,
         end: this.distance,
       })
     },
     onScroll(ev) {
-      // log('do scroll')
       const scrollY = ev.target.scrollTop
       const visible = ev.target.clientHeight
       const bufferHeight = /* this.getFillHeight */ +visible * 0.75 // px before scroll end
@@ -56,4 +52,3 @@ export default {
   },
 }
 </script>
-

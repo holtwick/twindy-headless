@@ -29,8 +29,6 @@
 import TwSymbol from "./tw-symbol.vue"
 import { defineComponent } from "vue"
 
-const log = require("debug")("ui:button")
-
 // @action, @click
 
 export default defineComponent({
@@ -109,7 +107,6 @@ export default defineComponent({
         // trackException(err)
       }
       this.disabled = false
-      log("click done", ev.waitUntil)
     },
     async doClick(ev) {
       if (!this.passive) {

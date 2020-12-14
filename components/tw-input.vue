@@ -38,8 +38,6 @@ import TwFormGroup from "./tw-form-group"
 import TwInputBase from "./tw-input-base"
 import TwLink from "./tw-link"
 
-const log = require("debug")("ui:input")
-
 export default {
   name: "tw-input",
   components: {
@@ -67,7 +65,6 @@ export default {
   mounted() {
     if (this.resize) {
       let el = this.$refs.textarea.$el
-      log("el", el)
       el.setAttribute(
         "style",
         "height:" + (el.scrollHeight + 2) + "px;overflow-y:hidden;resize:none;"
@@ -82,13 +79,13 @@ export default {
       this.resizeObserver = null
     }
   },
+  emits: ["update:modelValue"],
   methods: {
     onInput(ev) {
       this.onResizeTextarea()
       this.$emit("update:modelValue", ev)
     },
     onResizeTextarea() {
-      log("onres", this.resize)
       if (this.resize) {
         let el = this.$refs.textarea.$el
         el.style.height = "auto"
@@ -109,7 +106,6 @@ export default {
     },
     doCopy() {
       let value = this.$refs?.textarea?.$el?.value
-      log("copy value", value)
       $op.copyToClipboard(value)
     },
   },

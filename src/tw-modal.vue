@@ -39,10 +39,10 @@
           </svg>
         </tw-link>
       </header>
-      <section class="tw-modal-body modal-body -fit -scrollable">
+      <section class="tw-modal-body">
         <slot></slot>
       </section>
-      <footer class="tw-modal-footer modal-footer -fix">
+      <footer class="tw-modal-footer">
         <slot name="footer"></slot>
       </footer>
     </div>

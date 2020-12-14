@@ -9,8 +9,6 @@
     :placeholder="placeholder"
     :value="computedValue"
     @input="onInput"
-    @keydown.enter=""
-    @blur=""
     @change="$emit('action', computedValue)"
     v-text="value"
   />
@@ -130,7 +128,7 @@ export default defineComponent({
       set(value) {
         // log('set value', value)
         this.newValue = value
-        this.$emit("input", value)
+        this.$emit("update:modelValue", value)
         // !this.isValid && this.checkHtml5Validity()
       },
     },
@@ -159,7 +157,7 @@ export default defineComponent({
       })
     },
     onInputBool(event) {
-      // log('onInputBool', event.target.value)
+      log("onInputBool", event.target.value)
       this.$nextTick(() => {
         if (event.target) {
           this.computedValue = event.target.checked

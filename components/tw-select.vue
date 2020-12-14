@@ -6,7 +6,7 @@
       :uid="uid"
       v-bind="$attrs"
       type="select"
-      @input="$emit('input', $event)"
+      @input="$emit('update:modelValue', $event)"
     >
       <slot></slot>
     </tw-input-base>

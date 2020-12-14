@@ -20,7 +20,7 @@
       ref="textarea"
       v-bind="$attrs"
       type="input"
-      @input="$emit('input', $event)"
+      @input="$emit('update:modelValue', $event)"
       @keydown.enter="onEnter"
       @focus="onFocus"
     />
@@ -85,7 +85,7 @@ export default {
   methods: {
     onInput(ev) {
       this.onResizeTextarea()
-      this.$emit("input", ev)
+      this.$emit("update:modelValue", ev)
     },
     onResizeTextarea() {
       log("onres", this.resize)

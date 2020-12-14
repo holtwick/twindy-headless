@@ -17,7 +17,7 @@ tw-app()
 @import "../styles/switch.styl"
 
 @supports (-webkit-appearance none) or (-moz-appearance none)
-    input[type="checkbox"], input[type="radio"]
+    input[type="checkbox"].tw-checkbox, input[type="radio"].tw-readio
         --active #275EFE
         --active-inner #fff
         --focus 2px rgba(39, 94, 254, 0.3)
@@ -91,7 +91,7 @@ tw-app()
             cursor pointer
             margin-left 4px
 
-    input[type="checkbox"]
+    input[type="checkbox"].tw-checkbox
         &:not(.switch)
             border-radius 7px
 
@@ -130,7 +130,7 @@ tw-app()
                     &:after
                         opacity 0.6
 
-    input[type="radio"]
+    input[type="radio"].tw-radio
         border-radius 50%
 
         &:after

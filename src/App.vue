@@ -5,7 +5,7 @@
     </div>
     <div>
       <tw-switch v-model="modal">Switches</tw-switch>
-      <input type="checkbox" v-model="modal" />
+      <input type="checkbox" v-model="modal" class="tw-checkbox" />
     </div>
     <div>
       Test {{ modal }}
@@ -15,19 +15,7 @@
       </tw-select>
     </div>
   </div>
-  <tw-modal v-model="modal" close title="WebDAV Sync">
-    <!-- <tw-input
-      label="WebDAV URL"
-      placeholder="https://example.com/webdav"
-      v-model="url"
-    />
-    <tw-input
-      label="Sync Path"
-      placeholder="/example.onepile"
-      v-model="path"
-    />
-    <tw-input label="Username" placeholder="foo" v-model="username" />
-    <tw-input label="Password" v-model="password" /> -->
+  <tw-modal v-model="modal" title="WebDAV Sync" close>
     <template #footer>
       <tw-button :disabled="!url">Connect</tw-button>
     </template>

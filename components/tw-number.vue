@@ -6,7 +6,7 @@
       :uid="uid"
       v-bind="$attrs"
       type="number"
-      @input="$emit('input', $event)"
+      @input="$emit('update:modelValue', $event)"
     />
   </tw-form-group>
 </template>

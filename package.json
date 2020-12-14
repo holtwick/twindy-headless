@@ -5,14 +5,13 @@
     "format": "prettier --write .",
     "build": "rollup -c --environment BUILD:production"
   },
-  "main": "./dist/twindy-headless.esm.js",
-  "module": "./dist/twindy-headless.esm.js",
-  
-  "files": [
-    "dist"
+  "main": "./src/index.ts", 
+  "files": [ 
+    "src"
   ],
   "peerDependencies": {
-    "vue": "^3"
+    "vue": "^3.0.4",
+    "@vue/compiler-sfc": "^3.0.4"
   },
   "devDependencies": {
     "prettier": "^2.2.1",

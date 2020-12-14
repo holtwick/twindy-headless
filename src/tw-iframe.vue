@@ -14,8 +14,6 @@
 </template>
 
 <script>
-import { platform } from "@/lib/utils/platform"
-
 export default {
   name: "tw-iframe",
   props: {

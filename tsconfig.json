@@ -16,10 +16,11 @@
       "@/*": ["src/*"]
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
-    "declaration": true
+    "declaration": true,
+    "declarationMap": true
   },
   "include": [
-  "src",
+    "src",
     "**/*.ts",
     "**/*.js",
     "**/*.vue",

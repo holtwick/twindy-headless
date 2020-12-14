@@ -64,7 +64,7 @@ export default {
       resizeObserver: null,
     }
   },
-  mounted(): void {
+  mounted() {
     if (this.resize) {
       let el = this.$refs.textarea.$el
       log("el", el)
@@ -76,7 +76,7 @@ export default {
       this.resizeObserver.observe(el)
     }
   },
-  beforeUnmount(): void {
+  beforeUnmount() {
     if (this.resize) {
       this.resizeObserver.disconnect()
       this.resizeObserver = null

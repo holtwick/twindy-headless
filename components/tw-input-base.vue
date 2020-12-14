@@ -79,6 +79,7 @@ const log = require("debug")("ui:input-base")
 export default defineComponent({
   name: "tw-input-base",
   inheritAttrs: false,
+  emits: ["update:modelValue"],
   props: {
     label: {
       type: String,
@@ -88,7 +89,7 @@ export default defineComponent({
       type: String,
       default: "Text",
     },
-    value: {
+    modelValue: {
       type: [String, Boolean, Number],
       default: "",
     },
@@ -113,7 +114,7 @@ export default defineComponent({
   },
   data() {
     return {
-      newValue: this.value,
+      newValue: this.modelValue,
     }
   },
   computed: {

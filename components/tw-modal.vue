@@ -3,7 +3,7 @@
 <template>
   <div
     class="tw-modal"
-    :class="{ active: value }"
+    :class="{ active: modelValue }"
     tabindex="-1"
     v-trap-focus
     aria-modal="true"
@@ -22,7 +22,7 @@
             @click="doCancel"
             class="-fix"
             symbol="xmark"
-            >CLOSE</tw-link
+            >X</tw-link
           >
         </div>
       </header>
@@ -48,7 +48,7 @@ const log = require("debug")("ui:modal")
 export default defineComponent({
   name: "tw-modal",
   props: {
-    value: {
+    modelValue: {
       type: Boolean,
     },
     title: {
@@ -96,7 +96,7 @@ export default defineComponent({
     },
     doClose() {
       this.$emit("close", false)
-      this.$emit("update:value", false)
+      this.$emit("update:modelValue", false)
 
       if (this.standalone) {
         // Timeout for the animation complete before destroying
@@ -108,7 +108,7 @@ export default defineComponent({
       }
     },
     keyPress(event) {
-      if (this.value && event.keyCode === 27) {
+      if (this.modelValue && event.keyCode === 27) {
         // Esc key
         this.doCancel("escape")
       }

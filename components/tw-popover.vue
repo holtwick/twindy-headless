@@ -163,8 +163,8 @@ export default defineComponent({
     },
   },
 
-  beforeDestroy() {
-    log("beforeDestroy")
+  beforeUnmount() {
+    log("beforeUnmount")
     this.hide()
   },
 })

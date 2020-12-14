@@ -1,7 +1,7 @@
 <!-- Copyright (c) 2020 Dirk Holtwick. All rights reserved. https://holtwick.de/copyright -->
 
 <template>
-  <tw-button role="link" v-on="$listeners" v-bind="$attrs">
+  <tw-button role="link" v-bind="$attrs">
     <slot></slot>
   </tw-button>
 </template>

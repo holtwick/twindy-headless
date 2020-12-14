@@ -5,7 +5,6 @@
     <tw-input-base
       :uid="uid"
       v-bind="$attrs"
-      v-on="$listeners"
       type="number"
       @input="$emit('input', $event)"
     />

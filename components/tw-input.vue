@@ -8,7 +8,6 @@
       ref="textarea"
       :uid="uid"
       v-bind="$attrs"
-      v-on="$listeners"
       :rows="rows"
       type="textarea"
       @input="onInput"
@@ -20,7 +19,6 @@
       :uid="uid"
       ref="textarea"
       v-bind="$attrs"
-      v-on="$listeners"
       type="input"
       @input="$emit('input', $event)"
       @keydown.enter="onEnter"
@@ -78,7 +76,7 @@ export default {
       this.resizeObserver.observe(el)
     }
   },
-  beforeDestroy(): void {
+  beforeUnmount(): void {
     if (this.resize) {
       this.resizeObserver.disconnect()
       this.resizeObserver = null

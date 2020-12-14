@@ -3,15 +3,14 @@
 <template>
   <div
     class="tw-modal"
-    :class="{ active }"
-    id="modal-id"
+    :class="{ active: value }"
     tabindex="-1"
     v-trap-focus
     aria-modal="true"
     :role="role"
   >
     <a @click="doCancel" class="tw-modal-overlay" aria-label="Close"></a>
-    <div class="tw-modal-container vstack">
+    <div class="tw-modal-container">
       <header class="tw-modal-header modal-header -fix" v-if="title || close">
         <div class="hstack">
           <div class="tw-modal-title -fit">
@@ -49,7 +48,7 @@ const log = require("debug")("ui:modal")
 export default defineComponent({
   name: "tw-modal",
   props: {
-    active: {
+    value: {
       type: Boolean,
     },
     title: {
@@ -97,19 +96,19 @@ export default defineComponent({
     },
     doClose() {
       this.$emit("close", false)
-      this.$emit("update:active", false)
+      this.$emit("update:value", false)
 
       if (this.standalone) {
         // Timeout for the animation complete before destroying
         setTimeout(() => {
-          // this.active = false
+          // this.value = false
           this.$destroy()
           removeElement(this.$el)
         }, 150)
       }
     },
     keyPress(event) {
-      if (this.active && event.keyCode === 27) {
+      if (this.value && event.keyCode === 27) {
         // Esc key
         this.doCancel("escape")
       }
@@ -128,7 +127,7 @@ export default defineComponent({
       })
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     if (typeof window !== "undefined") {
       document?.removeEventListener("keyup", this.keyPress)
       // reset scroll

@@ -6,12 +6,7 @@
     :class="{ '-inline': !slotted, 'form-group': slotted }"
   >
     <label :for="uid" class="tw-switch" :class="`-${theme}`" ref="labelSwitch">
-      <tw-input-base
-        :uid="uid"
-        v-bind="$attrs"
-        v-on="$listeners"
-        type="switch"
-      />
+      <tw-input-base :uid="uid" v-bind="$attrs" type="switch" />
       <i></i>
       <span class="tw-switch-label" v-if="slotted">
         {{ label }}
@@ -26,6 +21,7 @@
 // And IBM Carbon: https://www.carbondesignsystem.com/components/toggle/code
 
 import { defineComponent } from "vue"
+import { UUID } from "./lib/uuid"
 import TwFormGroup from "./tw-form-group.vue"
 import TwInputBase from "./tw-input-base.vue"
 
@@ -52,7 +48,7 @@ export default defineComponent({
   },
   data() {
     return {
-      uid: Math.random().toString(),
+      uid: UUID(),
     }
   },
 })

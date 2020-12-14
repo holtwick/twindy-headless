@@ -1,0 +1,85 @@
+// Copyright (c) 2020 Dirk Holtwick. All rights reserved. https://holtwick.de/copyright
+@require "~twindy"
+
+// @import "../css/variables";
+$modalOverlayBackground = var(--overlay-color, rgba(black, 0.75))
+$modalSepColor = var(--separator-color, $gray-color-light)
+
+.tw-modal
+    align-items center
+    bottom 0
+    display none
+    justify-content center
+    left 0
+    opacity 0
+    overflow hidden
+    padding $layout-spacing
+    position fixed
+    right 0
+    top 0
+
+    &:target, &.active
+        display flex
+        opacity 1
+        z-index $z-index-overlay
+
+        .tw-modal-overlay
+            background $modalOverlayBackground
+            bottom 0
+            cursor default
+            display block
+            left 0
+            position absolute
+            right 0
+            top 0
+
+        .tw-modal-container
+            animation slide-down 0.2s ease 1
+            z-index $z-index-modal
+
+.tw-modal-container
+    // @include shadow-variant(.2rem);
+    box-shadow 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)
+    background var(--modal-content-background, #f4f5f7) // $bg-color-light;
+    border 1px solid $modalSepColor
+    border-radius 8 // $border-radius;
+    display flex
+    flex-direction column
+    max-height 75vh
+    max-width 640
+    min-width 400
+    padding 0
+
+    // width: min-content;
+
+    // width: 100%;
+    &.-fullheight
+        max-height 100vh
+
+    .tw-modal-header
+        color $dark-color
+        padding 16
+        use font-medium
+        border-bottom 1 solid $modalSepColor
+
+    .tw-modal-body
+        color $dark-color
+        overflow-y auto
+        padding 16
+        position relative
+
+    .tw-modal-footer
+        color $dark-color
+        border-top 1 solid $modalSepColor
+        padding 16
+        text-align right
+        white-space nowrap
+
+@media -sm
+    .tw-modal-container
+        max-height inherit
+        min-width inherit
+        max-width inherit
+        width 100%
+        height 100%
+        margin 1rem

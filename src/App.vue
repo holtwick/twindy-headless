@@ -6,6 +6,11 @@
     <div>
       <tw-switch v-model="modal">Switches</tw-switch>
       <input type="checkbox" v-model="modal" class="tw-checkbox" />
+      <input type="checkbox" v-model="modal" class="tw-checkbox switch" />
+    </div>
+    <div>
+      <input type="checkbox" v-model="switch" class="tw-checkbox" />
+      <input type="checkbox" v-model="switch" class="tw-checkbox switch" />
     </div>
     <div>
       Test {{ modal }}
@@ -17,7 +22,7 @@
   </div>
   <tw-modal v-model="modal" title="WebDAV Sync" close>
     <template #footer>
-      <tw-button :disabled="!url">Connect</tw-button>
+      <tw-button @action="modal = false">Connect</tw-button>
     </template>
   </tw-modal>
 </template>
@@ -37,6 +42,7 @@ export default defineComponent({
   setup() {
     let state = reactive({
       modal: false,
+      switch: true,
     })
     return {
       ...toRefs(state),

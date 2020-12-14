@@ -10,14 +10,12 @@ These components implement UI view behaviours, but do not provide a specific des
 
 ---
 
-
-
 ### tw-button
 
 Import:
 
 ```js
-import twButton from 'twindy-headless/components/tw-button.vue'
+import twButton from "twindy-headless/components/tw-button.vue"
 ```
 
 Use in template:
@@ -47,4 +45,3 @@ Define styles:
 - Uses Typescript
 - Plans to support ARIA
 - Mobile friendly
-

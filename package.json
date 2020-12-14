@@ -2,7 +2,7 @@
   "name": "twindy-headless",
   "version": "0.1.3",
   "scripts": {
-    "format": "prettier --write '**/*.{ts,tsx,js,jsx,vue}'"
+    "format": "prettier --write ."
   },
   "files": [
     "components",

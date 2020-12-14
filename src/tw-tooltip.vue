@@ -32,8 +32,6 @@ import TwPopover from "./tw-popover.vue"
 import { UUID } from "./lib/uuid"
 import { defineComponent } from "vue"
 
-const log = require("debug")("ui:tooltip")
-
 export default defineComponent({
   name: "tw-tooltip",
   components: {

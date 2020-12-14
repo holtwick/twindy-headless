@@ -97,6 +97,7 @@ export default defineComponent({
   directives: {
     trapFocus,
   },
+  emits: ["close"],
   methods: {
     doCancel() {
       log("do cancel")
@@ -147,5 +148,6 @@ export default defineComponent({
       // document?.documentElement.classList.remove('is-clipped')
     }
   },
+  // setup(props) {},
 })
 </script>

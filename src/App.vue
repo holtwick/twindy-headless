@@ -21,6 +21,8 @@
     </div>
   </div>
   <tw-modal v-model="modal" title="WebDAV Sync" close>
+    Some content Some content Some content Some content Some content Some
+    content Some content
     <template #footer>
       <tw-button @action="modal = false">Connect</tw-button>
     </template>
@@ -41,7 +43,7 @@ export default defineComponent({
   },
   setup() {
     let state = reactive({
-      modal: false,
+      modal: true,
       switch: true,
     })
     return {

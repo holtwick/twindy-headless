@@ -11,20 +11,33 @@
   >
     <a @click="doCancel" class="tw-modal-overlay" aria-label="Close"></a>
     <div class="tw-modal-container">
-      <header class="tw-modal-header modal-header -fix" v-if="title || close">
-        <div class="hstack">
-          <div class="tw-modal-title -fit">
-            <slot name="title">{{ title }}</slot>
-          </div>
-          <tw-link
-            v-if="close"
-            xtooltip="Close"
-            @click="doCancel"
-            class="-fix"
-            symbol="xmark"
-            >X</tw-link
-          >
+      <header class="tw-modal-header" v-if="title || close">
+        <div class="tw-modal-title">
+          <slot name="title">{{ title }}</slot>
         </div>
+        <tw-link
+          v-if="close"
+          xtooltip="Close"
+          @click="doCancel"
+          class="tw-modal-close"
+          symbol="xmark"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="feather feather-x"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </tw-link>
       </header>
       <section class="tw-modal-body modal-body -fit -scrollable">
         <slot></slot>

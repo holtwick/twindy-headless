@@ -1,7 +1,6 @@
 // Copyright (c) 2020 Dirk Holtwick. All rights reserved. https://holtwick.de/copyright
 @require "~twindy"
 
-$modalOverlayBackground = var(--overlay-color, rgba(black, 0.75))
 $modalSepColor = var(--separator-color, -gray-200)
 
 .tw-modal
@@ -22,8 +21,9 @@ $modalSepColor = var(--separator-color, -gray-200)
         opacity 1
         z-index -z-index-overlay
 
+        // Background overlay
         .tw-modal-overlay
-            background $modalOverlayBackground
+            background rgba(black, 0.75)
             bottom 0
             cursor default
             display block
@@ -38,36 +38,37 @@ $modalSepColor = var(--separator-color, -gray-200)
 
 .tw-modal-container
     use stack-y text-primary
-    // @include shadow-variant(.2rem);
-    box-shadow 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)
-    background var(--modal-content-background, #f4f5f7) // $bg-color-light;
+    shadow lg
+    // box-shadow 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)
+    background -gray-50
     border 1px solid $modalSepColor
-    border-radius rex(8)
-    display flex
-    flex-direction column
+    border-radius 8
     max-height 75vh
     max-width 640
     min-width 400
-    padding 0
-
-    // width: min-content;
-
-    // width: 100%;
-    &.-fullheight
-        max-height 100vh
+    padding 16
 
     .tw-modal-header
-        padding 16
-        use font-medium
+        use stack-x
         border-bottom 1 solid $modalSepColor
 
+    .tw-modal-title
+        use grow font-semibold text-lg
+
+    .tw-modal-close
+        // border-radius base
+        cursor pointer
+
+        &:hover
+            color -gray-600
+            // background -gray-200
+
     .tw-modal-body
-        overflow-y auto
-        padding 16
+        use vscroll
+        padding-y 16
         position relative
 
     .tw-modal-footer
         border-top 1 solid $modalSepColor
-        padding 16
         text-align right
         white-space nowrap

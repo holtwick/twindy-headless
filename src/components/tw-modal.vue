@@ -95,7 +95,7 @@ export default defineComponent({
   directives: {
     trapFocus,
   },
-  emits: ["close", "update:modelValue"],
+  emits: ["close", "update:modelValue", "didopen", "willclose"],
   methods: {
     doCancel() {
       this.$emit("cancel")
@@ -127,6 +127,15 @@ export default defineComponent({
   },
   created() {
     document?.addEventListener("keyup", this.keyPress)
+  },
+  watch: {
+    modelValue(value) {
+      if (value === true) {
+        this.$emit("didopen")
+      } else {
+        this.$emit("willclose")
+      }
+    },
   },
   beforeMount() {
     // Insert the Dialog component in the element container

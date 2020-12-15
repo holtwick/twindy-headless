@@ -6,7 +6,8 @@
   "unpkg": "dist/twindy-headless.umd.min.js",
   "scripts": {
     "format": "prettier --write .",
-    "build": "vue-cli-service build --target lib --name twindy-headless ./src/main.ts"
+    "build": "vue-cli-service build --target lib --name twindy-headless ./src/main.ts",
+    "prepublishOnly": "npm run format && npm run build"
   },
   "files": [
     "dist",

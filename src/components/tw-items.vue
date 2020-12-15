@@ -14,6 +14,7 @@
     >
       <slot :item="item" :index="index"> {{ index }}. {{ item }} </slot>
     </div>
+    <slot name="empty" v-if="items.length <= 0">Empty</slot>
   </div>
 </template>
 

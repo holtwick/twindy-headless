@@ -61,6 +61,7 @@ export default defineComponent({
   props: {
     modelValue: {
       type: Boolean,
+      default: false,
     },
     title: {
       type: String,
@@ -124,19 +125,38 @@ export default defineComponent({
         this.doCancel("escape")
       }
     },
+    doFocus() {
+      this.$nextTick(() => {
+        let el = this.$el.querySelector(".focus")
+        console.log("FOCUS", this.$el)
+        if (el) {
+          el.focus()
+        }
+      })
+    },
   },
   created() {
     document?.addEventListener("keyup", this.keyPress)
   },
   watch: {
-    modelValue(value) {
+    async modelValue(value) {
+      console.log("modal", this.modalValue)
       if (value === true) {
         this.$emit("didopen")
+        this.doFocus()
       } else {
         this.$emit("willclose")
       }
     },
   },
+  // mounted() {
+  //   this.$nextTick(() => {
+  //     console.log("mounted", this.modalValue)
+  //     if (this.modalValue) {
+  //       this.doFocus()
+  //     }
+  //   })
+  // },
   beforeMount() {
     // Insert the Dialog component in the element container
     if (this.standalone && typeof window !== "undefined") {

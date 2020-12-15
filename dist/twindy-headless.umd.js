@@ -6758,17 +6758,17 @@ tw_modalvue_type_script_lang_ts.render = tw_modalvue_type_template_id_02892dc9_r
 
 
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-simple.vue?vue&type=template&id=41720adf
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-simple.vue?vue&type=template&id=3901f966
 
 
-var tw_simplevue_type_template_id_41720adf_hoisted_1 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(" Fallback ");
+var tw_simplevue_type_template_id_3901f966_hoisted_1 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(" Fallback ");
 
-function tw_simplevue_type_template_id_41720adf_render(_ctx, _cache, $props, $setup, $data, $options) {
+function tw_simplevue_type_template_id_3901f966_render(_ctx, _cache, $props, $setup, $data, $options) {
   return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.title) + " ", 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderSlot"])(_ctx.$slots, "default", {}, function () {
-    return [tw_simplevue_type_template_id_41720adf_hoisted_1];
+    return [tw_simplevue_type_template_id_3901f966_hoisted_1];
   })]);
 }
-// CONCATENATED MODULE: ./src/components/tw-simple.vue?vue&type=template&id=41720adf
+// CONCATENATED MODULE: ./src/components/tw-simple.vue?vue&type=template&id=3901f966
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/ts-loader??ref--13-3!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-simple.vue?vue&type=script&lang=ts
 
@@ -6787,7 +6787,7 @@ function tw_simplevue_type_template_id_41720adf_render(_ctx, _cache, $props, $se
 
 
 
-tw_simplevue_type_script_lang_ts.render = tw_simplevue_type_template_id_41720adf_render
+tw_simplevue_type_script_lang_ts.render = tw_simplevue_type_template_id_3901f966_render
 
 /* harmony default export */ var tw_simple = (tw_simplevue_type_script_lang_ts);
 // CONCATENATED MODULE: ./src/main.ts
@@ -6796,9 +6796,9 @@ tw_simplevue_type_script_lang_ts.render = tw_simplevue_type_template_id_41720adf
 
 
 var main_install = function install(app) {
-  app.component('tw-button', tw_button);
-  app.component('tw-modal', tw_modal);
-  app.component('tw-simple', tw_simple);
+  app.component("tw-button", tw_button);
+  app.component("tw-modal", tw_modal);
+  app.component("tw-simple", tw_simple);
 };
 
 tw_button.install = main_install;

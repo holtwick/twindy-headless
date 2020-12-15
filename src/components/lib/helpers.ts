@@ -38,16 +38,16 @@ export function indexOf(array, obj, fn) {
 /**
  * Merge function to replace Object.assign with deep merging possibility
  */
-const isObject = item => typeof item === "object" && !Array.isArray(item)
+const isObject = (item) => typeof item === "object" && !Array.isArray(item)
 const mergeFn = (target, source, deep = false) => {
   if (deep || !Object.assign) {
-    const isDeep = prop =>
+    const isDeep = (prop) =>
       isObject(source[prop]) &&
       target !== null &&
       target.hasOwnProperty(prop) &&
       isObject(target[prop])
     const replaced = Object.getOwnPropertyNames(source)
-      .map(prop => ({
+      .map((prop) => ({
         [prop]: isDeep(prop)
           ? mergeFn(target[prop], source[prop], deep)
           : source[prop],
@@ -69,37 +69,37 @@ export const merge = mergeFn
  * https://www.abeautifulsite.net/detecting-mobile-devices-with-javascript
  */
 export const isMobile = {
-  Android: function() {
+  Android: function () {
     return (
       typeof window !== "undefined" &&
       window.navigator.userAgent.match(/Android/i)
     )
   },
-  BlackBerry: function() {
+  BlackBerry: function () {
     return (
       typeof window !== "undefined" &&
       window.navigator.userAgent.match(/BlackBerry/i)
     )
   },
-  iOS: function() {
+  iOS: function () {
     return (
       typeof window !== "undefined" &&
       window.navigator.userAgent.match(/iPhone|iPad|iPod/i)
     )
   },
-  Opera: function() {
+  Opera: function () {
     return (
       typeof window !== "undefined" &&
       window.navigator.userAgent.match(/Opera Mini/i)
     )
   },
-  Windows: function() {
+  Windows: function () {
     return (
       typeof window !== "undefined" &&
       window.navigator.userAgent.match(/IEMobile/i)
     )
   },
-  any: function() {
+  any: function () {
     return (
       isMobile.Android() ||
       isMobile.BlackBerry() ||

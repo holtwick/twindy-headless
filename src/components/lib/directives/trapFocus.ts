@@ -1,6 +1,6 @@
 // Copyright (c) 2020 Dirk Holtwick. All rights reserved. https://holtwick.de/copyright
 
-const findFocusable = element => {
+const findFocusable = (element) => {
   if (!element) {
     return null
   }
@@ -27,7 +27,7 @@ let onKeyDown
 
 const bind = (el, { value = true }) => {
   if (value && el) {
-    onKeyDown = event => {
+    onKeyDown = (event) => {
       const focusable: HTMLElement[] = Array.from(findFocusable(el))
       let currentFocus = document.querySelector(":focus")
       let index = focusable.findIndex((f: Node) => f.isSameNode(currentFocus))
@@ -49,7 +49,7 @@ const bind = (el, { value = true }) => {
   }
 }
 
-const unbind = el => {
+const unbind = (el) => {
   el?.removeEventListener("keydown", onKeyDown)
 }
 

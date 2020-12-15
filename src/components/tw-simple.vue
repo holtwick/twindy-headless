@@ -1,9 +1,7 @@
 <template>
   <div>
     {{ title }}
-    <slot>
-      Fallback
-    </slot>
+    <slot> Fallback </slot>
   </div>
 </template>
 

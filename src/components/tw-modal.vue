@@ -39,10 +39,10 @@
           </svg>
         </tw-link>
       </header>
-      <section class="tw-modal-body modal-body -fit -scrollable">
+      <section class="tw-modal-body">
         <slot></slot>
       </section>
-      <footer class="tw-modal-footer modal-footer -fix">
+      <footer class="tw-modal-footer">
         <slot name="footer"></slot>
       </footer>
     </div>
@@ -55,8 +55,6 @@ import trapFocus from "./lib/directives/trapFocus"
 import { removeElement } from "./lib/helpers"
 import TwLink from "./tw-link.vue"
 import TwSymbol from "./tw-symbol.vue"
-
-const log = require("debug")("ui:modal")
 
 export default defineComponent({
   name: "tw-modal",
@@ -86,7 +84,7 @@ export default defineComponent({
     onCancel: {
       type: Function,
       default: () => {
-        log("onCancel not defined")
+        // log("onCancel not defined")
       },
     },
   },
@@ -97,9 +95,9 @@ export default defineComponent({
   directives: {
     trapFocus,
   },
+  emits: ["close", "update:modelValue"],
   methods: {
     doCancel() {
-      log("do cancel")
       this.$emit("cancel")
       let onCancel = this?.$parent?.onCancel || this?.onCancel
       if (onCancel) {
@@ -147,5 +145,6 @@ export default defineComponent({
       // document?.documentElement.classList.remove('is-clipped')
     }
   },
+  // setup(props) {},
 })
 </script>

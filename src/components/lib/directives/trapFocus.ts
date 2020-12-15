@@ -1,7 +1,5 @@
 // Copyright (c) 2020 Dirk Holtwick. All rights reserved. https://holtwick.de/copyright
 
-const log = require("debug")("ui:trapFocus")
-
 const findFocusable = (element) => {
   if (!element) {
     return null
@@ -30,12 +28,10 @@ let onKeyDown
 const bind = (el, { value = true }) => {
   if (value && el) {
     onKeyDown = (event) => {
-      log("trapped")
       const focusable: HTMLElement[] = Array.from(findFocusable(el))
       let currentFocus = document.querySelector(":focus")
       let index = focusable.findIndex((f: Node) => f.isSameNode(currentFocus))
       let length = focusable.length
-      log("dic", focusable, currentFocus, index)
 
       if (event.key === "Tab") {
         event.preventDefault()
@@ -46,7 +42,6 @@ const bind = (el, { value = true }) => {
           --index
           if (index <= 0) index = length - 1
         }
-        log("index", index, length)
         focusable[index].focus()
       }
     }

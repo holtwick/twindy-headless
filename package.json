@@ -1,7 +1,7 @@
 {
   "name": "twindy-headless",
   "version": "0.2.0",
-  "private": true,
+  "private": false,
   "main": "dist/twindy-headless.common.js",
   "unpkg": "dist/twindy-headless.umd.min.js",
   "scripts": {

@@ -3956,6 +3956,94 @@ module.exports = function (argument) {
 
 /***/ }),
 
+/***/ "a9e3":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var DESCRIPTORS = __webpack_require__("83ab");
+var global = __webpack_require__("da84");
+var isForced = __webpack_require__("94ca");
+var redefine = __webpack_require__("6eeb");
+var has = __webpack_require__("5135");
+var classof = __webpack_require__("c6b6");
+var inheritIfRequired = __webpack_require__("7156");
+var toPrimitive = __webpack_require__("c04e");
+var fails = __webpack_require__("d039");
+var create = __webpack_require__("7c73");
+var getOwnPropertyNames = __webpack_require__("241c").f;
+var getOwnPropertyDescriptor = __webpack_require__("06cf").f;
+var defineProperty = __webpack_require__("9bf2").f;
+var trim = __webpack_require__("58a8").trim;
+
+var NUMBER = 'Number';
+var NativeNumber = global[NUMBER];
+var NumberPrototype = NativeNumber.prototype;
+
+// Opera ~12 has broken Object#toString
+var BROKEN_CLASSOF = classof(create(NumberPrototype)) == NUMBER;
+
+// `ToNumber` abstract operation
+// https://tc39.github.io/ecma262/#sec-tonumber
+var toNumber = function (argument) {
+  var it = toPrimitive(argument, false);
+  var first, third, radix, maxCode, digits, length, index, code;
+  if (typeof it == 'string' && it.length > 2) {
+    it = trim(it);
+    first = it.charCodeAt(0);
+    if (first === 43 || first === 45) {
+      third = it.charCodeAt(2);
+      if (third === 88 || third === 120) return NaN; // Number('+0x1') should be NaN, old V8 fix
+    } else if (first === 48) {
+      switch (it.charCodeAt(1)) {
+        case 66: case 98: radix = 2; maxCode = 49; break; // fast equal of /^0b[01]+$/i
+        case 79: case 111: radix = 8; maxCode = 55; break; // fast equal of /^0o[0-7]+$/i
+        default: return +it;
+      }
+      digits = it.slice(2);
+      length = digits.length;
+      for (index = 0; index < length; index++) {
+        code = digits.charCodeAt(index);
+        // parseInt parses a string to a first unavailable symbol
+        // but ToNumber should return NaN if a string contains unavailable symbols
+        if (code < 48 || code > maxCode) return NaN;
+      } return parseInt(digits, radix);
+    }
+  } return +it;
+};
+
+// `Number` constructor
+// https://tc39.github.io/ecma262/#sec-number-constructor
+if (isForced(NUMBER, !NativeNumber(' 0o1') || !NativeNumber('0b1') || NativeNumber('+0x1'))) {
+  var NumberWrapper = function Number(value) {
+    var it = arguments.length < 1 ? 0 : value;
+    var dummy = this;
+    return dummy instanceof NumberWrapper
+      // check on 1..constructor(foo) case
+      && (BROKEN_CLASSOF ? fails(function () { NumberPrototype.valueOf.call(dummy); }) : classof(dummy) != NUMBER)
+        ? inheritIfRequired(new NativeNumber(toNumber(it)), dummy, NumberWrapper) : toNumber(it);
+  };
+  for (var keys = DESCRIPTORS ? getOwnPropertyNames(NativeNumber) : (
+    // ES3:
+    'MAX_VALUE,MIN_VALUE,NaN,NEGATIVE_INFINITY,POSITIVE_INFINITY,' +
+    // ES2015 (in case, if modules with ES2015 Number statics required before):
+    'EPSILON,isFinite,isInteger,isNaN,isSafeInteger,MAX_SAFE_INTEGER,' +
+    'MIN_SAFE_INTEGER,parseFloat,parseInt,isInteger,' +
+    // ESNext
+    'fromString,range'
+  ).split(','), j = 0, key; keys.length > j; j++) {
+    if (has(NativeNumber, key = keys[j]) && !has(NumberWrapper, key)) {
+      defineProperty(NumberWrapper, key, getOwnPropertyDescriptor(NativeNumber, key));
+    }
+  }
+  NumberWrapper.prototype = NumberPrototype;
+  NumberPrototype.constructor = NumberWrapper;
+  redefine(global, NUMBER, NumberWrapper);
+}
+
+
+/***/ }),
+
 /***/ "ac1f":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5816,6 +5904,8 @@ __webpack_require__.r(__webpack_exports__);
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, "twButton", function() { return /* reexport */ tw_button; });
 __webpack_require__.d(__webpack_exports__, "twModal", function() { return /* reexport */ tw_modal; });
+__webpack_require__.d(__webpack_exports__, "twItems", function() { return /* reexport */ tw_items; });
+__webpack_require__.d(__webpack_exports__, "twList", function() { return /* reexport */ tw_list; });
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
 // This file is imported into lib/wc client bundles.
@@ -6164,7 +6254,7 @@ tw_symbolvue_type_script_lang_ts.render = tw_symbolvue_type_template_id_51336cb2
 tw_buttonvue_type_script_lang_ts.render = render
 
 /* harmony default export */ var tw_button = (tw_buttonvue_type_script_lang_ts);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-modal.vue?vue&type=template&id=02892dc9
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-modal.vue?vue&type=template&id=3738757b
 
 var _hoisted_1 = {
   "class": "tw-modal-container"
@@ -6206,7 +6296,7 @@ var _hoisted_5 = {
 var _hoisted_6 = {
   "class": "tw-modal-footer"
 };
-function tw_modalvue_type_template_id_02892dc9_render(_ctx, _cache, $props, $setup, $data, $options) {
+function tw_modalvue_type_template_id_3738757b_render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_tw_link = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("tw-link");
 
   var _directive_trap_focus = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveDirective"])("trap-focus");
@@ -6239,7 +6329,7 @@ function tw_modalvue_type_template_id_02892dc9_render(_ctx, _cache, $props, $set
     _: 1
   }, 8, ["onClick"])) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true)])) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("section", _hoisted_5, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderSlot"])(_ctx.$slots, "default")]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("footer", _hoisted_6, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderSlot"])(_ctx.$slots, "footer")])])], 10, ["role"])), [[_directive_trap_focus]]);
 }
-// CONCATENATED MODULE: ./src/components/tw-modal.vue?vue&type=template&id=02892dc9
+// CONCATENATED MODULE: ./src/components/tw-modal.vue?vue&type=template&id=3738757b
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.timers.js
 var web_timers = __webpack_require__("4795");
@@ -6634,11 +6724,14 @@ tw_linkvue_type_script_lang_ts.render = tw_linkvue_type_template_id_6c6b6e08_ren
 
 
 
+
+
 /* harmony default export */ var tw_modalvue_type_script_lang_ts = (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["defineComponent"])({
   name: "tw-modal",
   props: {
     modelValue: {
-      type: Boolean
+      type: Boolean,
+      "default": false
     },
     title: {
       type: String,
@@ -6672,7 +6765,7 @@ tw_linkvue_type_script_lang_ts.render = tw_linkvue_type_template_id_6c6b6e08_ren
   directives: {
     trapFocus: trapFocus
   },
-  emits: ["close", "update:modelValue"],
+  emits: ["close", "update:modelValue", "didopen", "willclose"],
   methods: {
     doCancel: function doCancel() {
       var _this$$parent;
@@ -6707,6 +6800,19 @@ tw_linkvue_type_script_lang_ts.render = tw_linkvue_type_template_id_6c6b6e08_ren
         // Esc key
         this.doCancel("escape");
       }
+    },
+    doFocus: function doFocus() {
+      var _this2 = this;
+
+      this.$nextTick(function () {
+        var el = _this2.$el.querySelector(".focus");
+
+        console.log("FOCUS", _this2.$el);
+
+        if (el) {
+          el.focus();
+        }
+      });
     }
   },
   created: function created() {
@@ -6714,8 +6820,44 @@ tw_linkvue_type_script_lang_ts.render = tw_linkvue_type_template_id_6c6b6e08_ren
 
     (_document = document) === null || _document === void 0 ? void 0 : _document.addEventListener("keyup", this.keyPress);
   },
+  watch: {
+    modelValue: function modelValue(value) {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                console.log("modal", _this3.modalValue);
+
+                if (value === true) {
+                  _this3.$emit("didopen");
+
+                  _this3.doFocus();
+                } else {
+                  _this3.$emit("willclose");
+                }
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    }
+  },
+  // mounted() {
+  //   this.$nextTick(() => {
+  //     console.log("mounted", this.modalValue)
+  //     if (this.modalValue) {
+  //       this.doFocus()
+  //     }
+  //   })
+  // },
   beforeMount: function beforeMount() {
-    var _this2 = this;
+    var _this4 = this;
 
     // Insert the Dialog component in the element container
     if (this.standalone && typeof window !== "undefined") {
@@ -6723,7 +6865,7 @@ tw_linkvue_type_script_lang_ts.render = tw_linkvue_type_template_id_6c6b6e08_ren
         var container =
         /* document.querySelector(this.container) || */
         document.body;
-        container.appendChild(_this2.$el);
+        container.appendChild(_this4.$el);
       });
     }
   },
@@ -6742,10 +6884,155 @@ tw_linkvue_type_script_lang_ts.render = tw_linkvue_type_template_id_6c6b6e08_ren
 
 
 
-tw_modalvue_type_script_lang_ts.render = tw_modalvue_type_template_id_02892dc9_render
+tw_modalvue_type_script_lang_ts.render = tw_modalvue_type_template_id_3738757b_render
 
 /* harmony default export */ var tw_modal = (tw_modalvue_type_script_lang_ts);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-items.vue?vue&type=template&id=6dbe06df
+
+var tw_itemsvue_type_template_id_6dbe06df_hoisted_1 = {
+  "class": "tw-items",
+  ref: "$container"
+};
+
+var tw_itemsvue_type_template_id_6dbe06df_hoisted_2 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])("Empty");
+
+function tw_itemsvue_type_template_id_6dbe06df_render(_ctx, _cache, $props, $setup, $data, $options) {
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", tw_itemsvue_type_template_id_6dbe06df_hoisted_1, [(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])(external_commonjs_vue_commonjs2_vue_root_Vue_["Fragment"], null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderList"])(_ctx.items, function (item, index) {
+    return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", {
+      key: item.id,
+      "data-id": item.id,
+      "data-index": index,
+      onMousedown: function onMousedown($event) {
+        return _ctx.doAction(item);
+      },
+      onKeydown: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withKeys"])(function ($event) {
+        return _ctx.doAction(item);
+      }, ["enter"]),
+      "class": ["tw-items-item", {
+        '-selected': _ctx.selected === index || _ctx.selected === item._id
+      }]
+    }, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderSlot"])(_ctx.$slots, "default", {
+      item: item,
+      index: index
+    }, function () {
+      return [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(index) + ". " + Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(item), 1)];
+    })], 42, ["data-id", "data-index", "onMousedown", "onKeydown"]);
+  }), 128)), _ctx.items.length <= 0 ? Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderSlot"])(_ctx.$slots, "empty", {
+    key: 0
+  }, function () {
+    return [tw_itemsvue_type_template_id_6dbe06df_hoisted_2];
+  }) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true)], 512);
+}
+// CONCATENATED MODULE: ./src/components/tw-items.vue?vue&type=template&id=6dbe06df
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.number.constructor.js
+var es_number_constructor = __webpack_require__("a9e3");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/ts-loader??ref--13-3!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-items.vue?vue&type=script&lang=ts
+
+
+/* harmony default export */ var tw_itemsvue_type_script_lang_ts = (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["defineComponent"])({
+  name: "tw-items",
+  props: {
+    items: {
+      type: Array,
+      "default": function _default() {
+        return [];
+      }
+    },
+    selected: {
+      type: [String, Number],
+      "default": 0
+    }
+  },
+  methods: {
+    doAction: function doAction(item) {
+      this.$emit("selected", item);
+    }
+  }
+}));
+// CONCATENATED MODULE: ./src/components/tw-items.vue?vue&type=script&lang=ts
+ 
+// CONCATENATED MODULE: ./src/components/tw-items.vue
+
+
+
+tw_itemsvue_type_script_lang_ts.render = tw_itemsvue_type_template_id_6dbe06df_render
+
+/* harmony default export */ var tw_items = (tw_itemsvue_type_script_lang_ts);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-list.vue?vue&type=template&id=4c8e8496
+
+function tw_listvue_type_template_id_4c8e8496_render(_ctx, _cache, $props, $setup, $data, $options) {
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", {
+    "class": ["tw-list", {
+      '-scrollable': _ctx.scrollable
+    }],
+    onScroll: _cache[1] || (_cache[1] = function () {
+      return _ctx.onScroll && _ctx.onScroll.apply(_ctx, arguments);
+    })
+  }, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderSlot"])(_ctx.$slots, "default")], 34);
+}
+// CONCATENATED MODULE: ./src/components/tw-list.vue?vue&type=template&id=4c8e8496
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/ts-loader??ref--13-3!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-list.vue?vue&type=script&lang=ts
+
+
+/* harmony default export */ var tw_listvue_type_script_lang_ts = (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["defineComponent"])({
+  name: "tw-list",
+  props: {
+    distance: {
+      type: Number,
+      "default": 50
+    },
+    scrollable: {
+      type: Boolean,
+      "default": true
+    }
+  },
+  data: function data() {
+    return {
+      count: 0,
+      loading: false
+    };
+  },
+  mounted: function mounted() {
+    this.doMore();
+  },
+  methods: {
+    doMore: function doMore() {
+      this.$emit("load", {
+        start: 0,
+        end: this.distance
+      });
+    },
+    onScroll: function onScroll(ev) {
+      var scrollY = ev.target.scrollTop;
+      var visible = ev.target.clientHeight;
+      var bufferHeight =
+      /* this.getFillHeight */
+      +visible * 0.75; // px before scroll end
+
+      var pageHeight = ev.target.scrollHeight - bufferHeight;
+      var bottomOfPage = visible + scrollY >= pageHeight;
+
+      if (bottomOfPage) {
+        this.doMore(false);
+      }
+    }
+  }
+}));
+// CONCATENATED MODULE: ./src/components/tw-list.vue?vue&type=script&lang=ts
+ 
+// CONCATENATED MODULE: ./src/components/tw-list.vue
+
+
+
+tw_listvue_type_script_lang_ts.render = tw_listvue_type_template_id_4c8e8496_render
+
+/* harmony default export */ var tw_list = (tw_listvue_type_script_lang_ts);
 // CONCATENATED MODULE: ./src/components/index.ts
+
+
 
 
 

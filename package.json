@@ -1,12 +1,13 @@
 {
   "name": "twindy-headless",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "private": false,
   "main": "dist/twindy-headless.common.js",
   "unpkg": "dist/twindy-headless.umd.min.js",
   "scripts": {
     "format": "prettier --write .",
-    "build": "vue-cli-service build --target lib --name twindy-headless ./src/main.ts"
+    "build": "vue-cli-service build --target lib --name twindy-headless ./src/main.ts",
+    "prepublishOnly": "npm run format && npm run build"
   },
   "files": [
     "dist",

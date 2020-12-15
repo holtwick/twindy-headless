@@ -1,21 +1,21 @@
 <template>
-    <div>
-        {{ title }}         
-        <slot>
-            Fallback
-        </slot>
-    </div>
+  <div>
+    {{ title }}
+    <slot>
+      Fallback
+    </slot>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue"
 export default defineComponent({
-    name: "tw-simple",
-    props: {
-        title: String
-    },
-    setup() {
-        return {}
-    }
+  name: "tw-simple",
+  props: {
+    title: String,
+  },
+  setup() {
+    return {}
+  },
 })
 </script>

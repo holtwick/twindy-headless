@@ -5,8 +5,7 @@
   "main": "dist/twindy-headless.common.js",
   "unpkg": "dist/twindy-headless.umd.min.js",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "_build": "vue-cli-service build",
+    "format": "prettier --write **/*.vue",
     "build": "vue-cli-service build --target lib --name twindy-headless ./src/main.ts"
   },
   "files": [
@@ -22,6 +21,7 @@
     "@vue/cli-plugin-typescript": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0-0",
+    "prettier": "^1.19.1",
     "typescript": "~4.1.3"
   }
 }

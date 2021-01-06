@@ -89,6 +89,7 @@ export default defineComponent({
       }
     },
   },
+  emits: ["click", "action", "update:active"],
   methods: {
     async doAction(ev) {
       // this.hideTooltip()

@@ -49,7 +49,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent } from "vue"
 import trapFocus from "./lib/directives/trapFocus"
 import { removeElement } from "./lib/helpers"
@@ -114,6 +114,7 @@ export default defineComponent({
         // Timeout for the animation complete before destroying
         setTimeout(() => {
           // this.value = false
+          // @ts-ignore
           this.$destroy()
           removeElement(this.$el)
         }, 150)

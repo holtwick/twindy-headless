@@ -1,11 +1,12 @@
 // Copyright (c) 2020 Dirk Holtwick. All rights reserved. https://holtwick.de/copyright
 
-const findFocusable = (element) => {
+const findFocusable = (element: HTMLElement): HTMLElement[] => {
   if (!element) {
-    return null
+    return []
   }
-  return element.querySelectorAll(
-    `
+  return Array.from(
+    element.querySelectorAll(
+      `
     a[href],
     area[href],
     input:not([disabled]),
@@ -18,17 +19,18 @@ const findFocusable = (element) => {
     *[tabindex],
     *[contenteditable]
     `.trim()
+    ) || []
   )
   //     .tw-button,
   //     .tw-link,
 }
 
-let onKeyDown
+let onKeyDown: any
 
-const bind = (el, { value = true }) => {
+const bind = (el: HTMLElement, { value = true }) => {
   if (value && el) {
-    onKeyDown = (event) => {
-      const focusable: HTMLElement[] = Array.from(findFocusable(el))
+    onKeyDown = (event: KeyboardEvent) => {
+      const focusable: HTMLElement[] = findFocusable(el)
       let currentFocus = document.querySelector(":focus")
       let index = focusable.findIndex((f: Node) => f.isSameNode(currentFocus))
       let length = focusable.length
@@ -49,7 +51,7 @@ const bind = (el, { value = true }) => {
   }
 }
 
-const unbind = (el) => {
+const unbind = (el: HTMLElement) => {
   el?.removeEventListener("keydown", onKeyDown)
 }
 

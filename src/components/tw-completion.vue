@@ -3,14 +3,14 @@
 <template>
   <div
     class="form-input completion"
-    ref="$target"
-    @click="$refs.$input.focus()"
+    ref="target"
+    @click="input.focus()"
     :class="{ '-focus': focus }"
   >
     <slot name="before"></slot>
     <input
       type="text"
-      ref="$input"
+      ref="input"
       :id="uid"
       v-model="text"
       autocomplete="off"
@@ -28,9 +28,18 @@
     <div class="completion-after">
       <slot name="after" class="completion-after"></slot>
     </div>
+    <tw-items
+      :items="items"
+      :selected="selected"
+      #default="{ item }"
+      @selected="doAddItem"
+    >
+      <slot name="item" v-bind:item="item">
+        {{ item }}
+      </slot>
+    </tw-items>
     <tw-popover
-      v-if="false"
-      :target="items.length && focus && $refs.$target"
+      :target="items.length && focus && target"
       placement="bottom-start"
       :arrow="false"
       theme="dropdown"
@@ -55,84 +64,99 @@
 import twPopover from "./tw-popover.vue"
 import twItems from "./tw-items.vue"
 import { UUID } from "./lib/uuid.ts"
-import { defineComponent } from "vue"
+import { defineComponent, ref, reactive, computed, watch, mounted } from "vue"
 
 export default defineComponent({
-  // components: {
-  //   twItems,
-  //   twPopover,
-  // },
-  // props: {
-  //   uid: {
-  //     type: String,
-  //     default: UUID(),
-  //   },
-  //   items: {
-  //     type: Array,
-  //     default: [],
-  //   },
-  //   placeholder: {
-  //     type: String,
-  //     default: "",
-  //   },
-  //   minSize: {
-  //     type: Number | String,
-  //     default: 32,
-  //   },
-  // },
-  // data() {
-  //   return {
-  //     selected: 0,
-  //     text: "",
-  //     itemCandidate: null,
-  //     focus: false,
-  //   }
-  // },
-  // // watch: {
-  // //   text(value) {
-  // //     this.$emit("filter", value)
-  // //   },
-  // // },
-  // // mounted() {
-  // //   const input = this.$refs.$input
-  // //   input.style.width = `${+this.minSize}px`
-  // // },
-  // // methods: {
-  // //   resizeInput() {
-  // //     const input = this.$refs.$input
-  // //     let value = input.value.trim()
-  // //     input.style.width = "1px"
-  // //     input.style.width =
-  // //       Math.max(+this.minSize, value ? input.scrollWidth : 0) + "px"
-  // //   },
-  // //   doInput(event) {
-  // //     this.resizeInput()
-  // //   },
-  // //   doClear() {
-  // //     this.text = ""
-  // //     this.$emit("filter", "")
-  // //   },
-  // //   doMove(delta) {
-  // //     this.selected = Math.max(
-  // //       0,
-  // //       Math.min(this.items.length - 1, this.selected + delta)
-  // //     )
-  // //   },
-  // //   doAddItem(item) {
-  // //     this.text = item.title
-  // //     this.$emit("add", item)
-  // //     this.doClear()
-  // //   },
-  // //   doAddSelection() {
-  // //     const item = this.items[this.selected]
-  // //     this.doAddItem(item)
-  // //   },
-  // //   doDeleteLast(ev) {
-  // //     if (this.text === "") {
-  // //       ev.preventDefault()
-  // //       this.$emit("deleteLast")
-  // //     }
-  // //   },
-  // // },
+  components: {
+    twItems,
+    twPopover,
+  },
+  props: {
+    uid: {
+      type: String,
+      default: UUID(),
+    },
+    items: {
+      type: Array,
+      default: [],
+    },
+    placeholder: {
+      type: String,
+      default: "",
+    },
+    minSize: {
+      type: [Number, String],
+      default: 32,
+    },
+  },
+  emits: ["filter"],
+
+  setup(props, { emit }) {
+    let target = ref()
+    let input = ref()
+
+    // mounted(() => {
+    // input?.style?.width = `${props.minSize}px`
+    // })
+
+    let data = reactive({
+      selected: 0,
+      text: "",
+      itemCandidate: null,
+      focus: false,
+    })
+
+    let methods = {
+      resizeInput() {
+        const el = input.value
+        let value = el.value.trim()
+        el.style.width = "1px"
+        el.style.width =
+          Math.max(+props.minSize, value ? el.scrollWidth : 0) + "px"
+      },
+      doInput(event) {
+        methods.resizeInput()
+      },
+      doClear() {
+        data.text = ""
+        emit("filter", "")
+      },
+      doMove(delta) {
+        data.selected = Math.max(
+          0,
+          Math.min(props.items.length - 1, data.selected + delta)
+        )
+      },
+      doAddItem(item) {
+        data.text = item.title
+        emit("add", item)
+        methods.doClear()
+      },
+      doAddSelection() {
+        const item = props.items[this.selected]
+        methods.doAddItem(item)
+      },
+      doDeleteLast(ev) {
+        if (data.text === "") {
+          ev.preventDefault()
+          emit("deleteLast")
+        }
+      },
+    }
+
+    watch(
+      () => data.text,
+      () => {
+        emit("filter", value)
+      }
+    )
+
+    return {
+      ...methods,
+      ...data,
+      target,
+      input,
+    }
+  },
 })
 </script>

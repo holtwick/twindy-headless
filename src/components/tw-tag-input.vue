@@ -1,43 +1,38 @@
 <!-- Copyright (c) 2020 Dirk Holtwick. All rights reserved. https://holtwick.de/copyright -->
 
 <template>
+  {{ candidates }}
   <tw-completion
     :items="candidates"
     @add="handleSelection"
     @filter="handleFilter"
     @deleteLast="handleDeleteLast"
-    class="op-tag-input"
+    class="tw-tag-input"
     placeholder="Add Tag"
     min-size="120"
   >
     <template #before>
-      <span
-        v-for="t in tags"
-        :class="`op-tag-field co-tag co-tag-${t.color || 'default'}`"
-      >
+      <span v-for="t in tags" class="tw-tag-field" :key="t.id">
         {{ t.title }}
-        <i
-          data-f7-icon="xmark"
-          @click.prevent="doRemoveTag(t._id)"
-          class="tag-remove"
-        ></i>
+        <span @click.prevent="doRemoveTag(t.id)" class="tag-remove">x</span>
       </span>
     </template>
     <template #item="{ item }">
       <span v-if="item.action">
         Create new tag <b>{{ item.value }}</b>
       </span>
-      <span v-else :class="`co-tag co-tag-${item.color || 'default'}`"
-        >{{ item.title }}
+      <span v-else>
+        {{ item.title }}
       </span>
     </template>
   </tw-completion>
 </template>
 
-<script>
+<script lang="ts">
 import twCompletion from "./tw-completion.vue"
+import { defineComponent, ref, computed, reactive, PropType } from "vue"
 
-export function arrayRemoveElement(arr, el) {
+export function arrayRemoveElement(arr: any[], el: any) {
   if (arr && Array.isArray(arr)) {
     let index
     while ((index = arr.indexOf(el)) !== -1) {
@@ -48,91 +43,102 @@ export function arrayRemoveElement(arr, el) {
   return []
 }
 
-export default {
-  name: "op-tag-input",
+interface Tag {
+  id: string
+  title: string
+}
+
+export default defineComponent({
   components: {
     twCompletion,
   },
   props: {
-    item: {
-      type: Object,
-      default: null,
+    modelValue: {
+      type: Array as PropType<Tag[]>,
+    },
+    allTags: {
+      type: Object as PropType<{ [key: string]: Tag }>,
     },
   },
-  data() {
-    return {
+  emits: ["update:modelValue"],
+  setup(props: any, { emit }) {
+    let data = reactive({
       candidates: [],
+    })
+
+    let tags = computed(() => {
+      return (props.modelValue || []).map((tagID: string) => {
+        return props.allTags[tagID]
+      })
+    })
+
+    // console.log("alltags", Object.keys(props.allTags))
+
+    let methods = {
+      setTags(tags: string[] = []) {
+        emit("update:modelValue", [...tags])
+      },
+      doRemoveTag(id: string) {
+        methods.setTags(arrayRemoveElement(props.modelValue, id))
+      },
+      async handleSelection(item: any) {
+        //   log("add item", item)
+        //   if (item.action) {
+        //     let title = item.value.toString().trim()
+        //     if (title) {
+        //       let item = $op.createItemObject({
+        //         module: "tag",
+        //         title,
+        //       })
+        //       item = cloneObject(await $op.storeItem(item))
+        //       if (item) {
+        //         this.setTags([...cloneObject(this.item.tags || []), item._id])
+        //       }
+        //     }
+        //   } else if (item._id) {
+        //     this.setTags([...cloneObject(this.item.tags || []), item._id])
+        //   } else {
+        //     log("unknown item", item)
+        //   }
+      },
+      handleFilter(filter: string) {
+        console.log("filter", filter)
+        // let value = filter.trim()
+        // let lvalue = value.toLowerCase()
+        // let exactMatch = false
+        // let currentTags = tags || []
+        // let candidates = Object.values(props.allTags).filter((item) => {
+        //   if (item.module === "tag" && !currentTags.includes(item._id)) {
+        //     if (value) {
+        //       const title = item.title.toString().toLowerCase()
+        //       if (item.title === lvalue) {
+        //         exactMatch = true
+        //       }
+        //       return title.indexOf(lvalue) >= 0
+        //     }
+        //     return true
+        //   }
+        //   return false
+        // })
+        // if (value && !exactMatch) {
+        //   candidates.push({ action: "create", value })
+        // }
+        // data.candidates = candidates
+      },
+      handleDeleteLast() {
+        // TODO:2020-06-16 Mark before deletion
+        let tags = props.modelValue
+        if (tags.pop()) {
+          methods.setTags(tags)
+        }
+      },
+    }
+
+    return {
+      ...methods,
+      ...data,
+      tags,
     }
   },
-  computed: {
-    tags() {
-      return (this.item.tags || []).map((tagID) => {
-        const item = $op.state.items[tagID]
-        log("tags", tagID, item)
-        return item
-      })
-    },
-  },
-  methods: {
-    setTags(tags) {
-      this.$set(this.item, "tags", tags)
-    },
-    doRemoveTag(id) {
-      log("remove tag", id)
-      this.setTags(arrayRemoveElement(cloneObject(this.item.tags), id))
-    },
-    async handleSelection(item) {
-      log("add item", item)
-      if (item.action) {
-        let title = item.value.toString().trim()
-        if (title) {
-          let item = $op.createItemObject({
-            module: "tag",
-            title,
-          })
-          item = cloneObject(await $op.storeItem(item))
-          if (item) {
-            this.setTags([...cloneObject(this.item.tags || []), item._id])
-          }
-        }
-      } else if (item._id) {
-        this.setTags([...cloneObject(this.item.tags || []), item._id])
-      } else {
-        log("unknown item", item)
-      }
-    },
-    handleFilter(filter) {
-      let value = filter.trim()
-      let lvalue = value.toLowerCase()
-      let exactMatch = false
-      log("handle filter", filter)
-      let currentTags = cloneObject(this.item.tags || [])
-      let candidates = Object.values($op.state.items).filter((item) => {
-        if (item.module === "tag" && !currentTags.includes(item._id)) {
-          if (value) {
-            const title = item.title.toString().toLowerCase()
-            if (item.title === lvalue) {
-              exactMatch = true
-            }
-            return title.indexOf(lvalue) >= 0
-          }
-          return true
-        }
-        return false
-      })
-      if (value && !exactMatch) {
-        candidates.push({ action: "create", value })
-      }
-      log("candidates", candidates)
-      this.candidates = candidates
-    },
-    handleDeleteLast() {
-      // TODO:2020-06-16 Mark before deletion
-      let tags = this.item.tags
-      if (tags.pop()) {
-        this.setTags([...tags])
-      }
-    },
-  },
-}
+})
 </script>

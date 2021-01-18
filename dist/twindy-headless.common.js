@@ -253,6 +253,30 @@ module.exports = !DESCRIPTORS && !fails(function () {
 
 /***/ }),
 
+/***/ "0d03":
+/***/ (function(module, exports, __webpack_require__) {
+
+var redefine = __webpack_require__("6eeb");
+
+var DatePrototype = Date.prototype;
+var INVALID_DATE = 'Invalid Date';
+var TO_STRING = 'toString';
+var nativeDateToString = DatePrototype[TO_STRING];
+var getTime = DatePrototype.getTime;
+
+// `Date.prototype.toString` method
+// https://tc39.es/ecma262/#sec-date.prototype.tostring
+if (new Date(NaN) + '' != INVALID_DATE) {
+  redefine(DatePrototype, TO_STRING, function toString() {
+    var value = getTime.call(this);
+    // eslint-disable-next-line no-self-compare
+    return value === value ? nativeDateToString.call(this) : INVALID_DATE;
+  });
+}
+
+
+/***/ }),
+
 /***/ "1276":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6997,6 +7021,7 @@ __webpack_require__.d(__webpack_exports__, "twItems", function() { return /* ree
 __webpack_require__.d(__webpack_exports__, "twList", function() { return /* reexport */ tw_list; });
 __webpack_require__.d(__webpack_exports__, "twPopover", function() { return /* reexport */ tw_popover; });
 __webpack_require__.d(__webpack_exports__, "twTooltip", function() { return /* reexport */ tw_tooltip; });
+__webpack_require__.d(__webpack_exports__, "twTooltipTrigger", function() { return /* reexport */ tw_tooltip_trigger; });
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
 // This file is imported into lib/wc client bundles.
@@ -10377,7 +10402,91 @@ var log = __webpack_require__("34eb")("ui:tooltip");
 tw_tooltipvue_type_script_lang_ts.render = tw_tooltipvue_type_template_id_bc898bc4_render
 
 /* harmony default export */ var tw_tooltip = (tw_tooltipvue_type_script_lang_ts);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-tooltip-trigger.vue?vue&type=template&id=240dfba4
+
+function tw_tooltip_triggervue_type_template_id_240dfba4_render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_tw_popover = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("tw-popover");
+
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])(_component_tw_popover, {
+    target: _ctx.target,
+    arrow: "",
+    theme: "tooltip"
+  }, {
+    "default": Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withCtx"])(function () {
+      return [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.text), 1)];
+    }),
+    _: 1
+  }, 8, ["target"]);
+}
+// CONCATENATED MODULE: ./src/components/tw-tooltip-trigger.vue?vue&type=template&id=240dfba4
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.date.to-string.js
+var es_date_to_string = __webpack_require__("0d03");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/ts-loader??ref--13-3!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-tooltip-trigger.vue?vue&type=script&lang=ts
+
+
+
+
+
+
+/* harmony default export */ var tw_tooltip_triggervue_type_script_lang_ts = (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["defineComponent"])({
+  components: {
+    twPopover: tw_popover
+  },
+  setup: function setup() {
+    console.log("Tooltip Trigger");
+    var target = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])();
+    var text = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])("");
+
+    var onTooltipHover = function onTooltipHover(ev) {
+      console.log("mouse", ev.type, ev.target);
+
+      if (ev.target instanceof HTMLElement) {
+        var el = ev.target;
+        var title = el.title;
+
+        if (title) {
+          el.setAttribute("tooltip", title);
+        }
+
+        var tooltip = el.getAttribute("tooltip");
+
+        if (tooltip) {
+          el.title = "";
+          target.value = el;
+          text.value = tooltip.toString().trim();
+          return;
+        }
+      }
+
+      target.value = null;
+    };
+
+    var useCapture = true;
+    window.addEventListener("mouseover", onTooltipHover, useCapture);
+    window.addEventListener("focus", onTooltipHover, useCapture);
+    Object(external_commonjs_vue_commonjs2_vue_root_Vue_["onBeforeUnmount"])(function () {
+      window.removeEventListener("mouseover", onTooltipHover, useCapture);
+      window.removeEventListener("focus", onTooltipHover, useCapture);
+    });
+    return {
+      target: target,
+      text: text
+    };
+  }
+}));
+// CONCATENATED MODULE: ./src/components/tw-tooltip-trigger.vue?vue&type=script&lang=ts
+ 
+// CONCATENATED MODULE: ./src/components/tw-tooltip-trigger.vue
+
+
+
+tw_tooltip_triggervue_type_script_lang_ts.render = tw_tooltip_triggervue_type_template_id_240dfba4_render
+
+/* harmony default export */ var tw_tooltip_trigger = (tw_tooltip_triggervue_type_script_lang_ts);
 // CONCATENATED MODULE: ./src/components/index.ts
+
 
 
 
@@ -10404,7 +10513,7 @@ tw_tooltipvue_type_script_lang_ts.render = tw_tooltipvue_type_template_id_bc898b
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
 
 
-/* harmony default export */ var entry_lib = __webpack_exports__["default"] = (/* Cannot get final name for export "default" in "./src/main.ts" (known exports: , known reexports: twButton twModal twItems twList twPopover twTooltip) */ undefined);
+/* harmony default export */ var entry_lib = __webpack_exports__["default"] = (/* Cannot get final name for export "default" in "./src/main.ts" (known exports: , known reexports: twButton twModal twItems twList twPopover twTooltip twTooltipTrigger) */ undefined);
 
 
 

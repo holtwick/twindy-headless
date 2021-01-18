@@ -4,5 +4,14 @@ import twItems from "./tw-items.vue"
 import twList from "./tw-list.vue"
 import twPopover from "./tw-popover.vue"
 import twTooltip from "./tw-tooltip.vue"
+import twTooltipTrigger from "./tw-tooltip-trigger.vue"
 
-export { twButton, twModal, twItems, twList, twPopover, twTooltip }
+export {
+  twButton,
+  twModal,
+  twItems,
+  twList,
+  twPopover,
+  twTooltip,
+  twTooltipTrigger,
+}

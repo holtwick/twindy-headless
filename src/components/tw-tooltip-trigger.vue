@@ -20,32 +20,28 @@ export default defineComponent({
     twPopover,
   },
   setup(props: any) {
-    // console.log("Tooltip Trigger")
     let target = ref()
     let text = ref("")
     let debounceTimer: any = 0
     let currentElement: Node | null
 
     let onTooltipHover = (ev: Event) => {
-      // console.log("mouse", props.delay, ev.type, ev.target)
       clearTimeout(debounceTimer)
+      let el: any = ev.target
       debounceTimer = setTimeout(() => {
-        if (ev.target instanceof HTMLElement) {
-          let el: HTMLElement | null = ev.target
-          while (el != null && el.tagName !== "BODY") {
-            let title = el.title
-            if (title) {
-              el.setAttribute("tooltip", title)
-            }
-            let tooltip = el.getAttribute("tooltip")
-            if (tooltip) {
-              el.title = ""
-              target.value = el
-              text.value = tooltip.toString().trim()
-              return
-            }
-            el = el.parentElement
+        while (el != null && el?.tagName !== "BODY") {
+          // let title = el.title
+          // if (title) {
+          //   el.setAttribute("tooltip", title)
+          // }
+          let tooltip = el.getAttribute("tooltip")
+          if (tooltip && tooltip?.length > 0) {
+            // el.title = ""
+            target.value = el
+            text.value = tooltip?.toString()?.trim() || ""
+            return
           }
+          el = el.parentElement
         }
         target.value = null
       }, /*props.delay || */ 50) // debounce

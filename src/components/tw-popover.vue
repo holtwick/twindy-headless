@@ -103,7 +103,6 @@ export default defineComponent({
     const methods = {
       async show() {
         let target = <Node | Box>props.target
-        console.log("show", target)
         if (target) {
           methods.hide()
           await nextTick()
@@ -143,7 +142,6 @@ export default defineComponent({
       },
 
       hide() {
-        console.log("hide popper")
         if (popper) {
           popper.destroy()
           popper = null
@@ -162,7 +160,6 @@ export default defineComponent({
     // window.addEventListener("mousedown", handleClickOutside)
 
     watchEffect(() => {
-      console.log("watchEffect", props.target)
       if (props.target) {
         methods.show()
       }

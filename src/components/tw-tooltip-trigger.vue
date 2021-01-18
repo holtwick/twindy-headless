@@ -1,5 +1,5 @@
 <template>
-  <tw-popover :target="target" arrow theme="tooltip">
+  <tw-popover :target="target" arrow theme="tooltip" :placement="placement">
     {{ text }}
   </tw-popover>
 </template>
@@ -15,11 +15,15 @@ export default defineComponent({
     //   type: Number,
     //   default: 500,
     // },
+    placement: {
+      default: "top",
+    },
   },
   components: {
     twPopover,
   },
   setup(props: any) {
+    let placement = ref(props.placement)
     let target = ref()
     let text = ref("")
     let debounceTimer: any = 0
@@ -39,6 +43,9 @@ export default defineComponent({
             // el.title = ""
             target.value = el
             text.value = tooltip?.toString()?.trim() || ""
+
+            placement.value =
+              el.getAttribute("tooltip-placement") || props.placement
             return
           }
           el = el.parentElement
@@ -57,6 +64,7 @@ export default defineComponent({
     })
 
     return {
+      placement,
       target,
       text,
     }

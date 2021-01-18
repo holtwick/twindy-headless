@@ -1,12 +1,12 @@
 <!-- Copyright (c) 2020 Dirk Holtwick. All rights reserved. https://holtwick.de/copyright -->
 
 <template>
-  {{ candidates }}
+  {{ candidates }} {{ filter }}
   <tw-completion
     :items="candidates"
     @add="handleSelection"
-    @filter="handleFilter"
     @deleteLast="handleDeleteLast"
+    @filter="handleFilter"
     class="tw-tag-input"
     placeholder="Add Tag"
     min-size="120"
@@ -30,7 +30,7 @@
 
 <script lang="ts">
 import twCompletion from "./tw-completion.vue"
-import { defineComponent, ref, computed, reactive, PropType } from "vue"
+import { defineComponent, ref, computed, reactive, watch, PropType } from "vue"
 
 export function arrayRemoveElement(arr: any[], el: any) {
   if (arr && Array.isArray(arr)) {
@@ -62,23 +62,15 @@ export default defineComponent({
   },
   emits: ["update:modelValue"],
   setup(props: any, { emit }) {
-    // let data = reactive({
-    //   candidates: [],
-    // })
+    let filter = ref("")
+    let candidates = ref<Tag[]>([])
 
     let tags = computed(() => {
+      console.log("calc tags")
       return (props.modelValue || []).map((tagID: string) => {
         return props.allTags[tagID]
       })
     })
-
-    let candidates = computed(() => {
-      return Object.values(props.allTags).map((tag) => {
-        return tag
-      })
-    })
-
-    // console.log("alltags", Object.keys(props.allTags))
 
     let methods = {
       setTags(tags: string[] = []) {
@@ -108,28 +100,29 @@ export default defineComponent({
         //   }
       },
       handleFilter(filter: string) {
-        console.log("filter", filter)
-        // let value = filter.trim()
-        // let lvalue = value.toLowerCase()
-        // let exactMatch = false
-        // let currentTags = tags || []
-        // let candidates = Object.values(props.allTags).filter((item) => {
-        //   if (item.module === "tag" && !currentTags.includes(item._id)) {
-        //     if (value) {
-        //       const title = item.title.toString().toLowerCase()
-        //       if (item.title === lvalue) {
-        //         exactMatch = true
-        //       }
-        //       return title.indexOf(lvalue) >= 0
-        //     }
-        //     return true
-        //   }
-        //   return false
-        // })
-        // if (value && !exactMatch) {
-        //   candidates.push({ action: "create", value })
-        // }
-        //data.candidates = tags
+        let value = filter.trim()
+        console.log("calc candidates", value)
+        let lvalue = value.toLowerCase()
+        let exactMatch = false
+        let currentTags = props.modelValue || []
+        // @ts-ignore
+        let items: Tags[] = Object.values(props.allTags).filter((item: Tag) => {
+          if (currentTags.includes(item.id)) {
+            if (value) {
+              const title = item.title.toString().toLowerCase()
+              if (item.title === lvalue) {
+                exactMatch = true
+              }
+              return title.indexOf(lvalue) >= 0
+            }
+            return true
+          }
+          return false
+        })
+        if (value && !exactMatch) {
+          items.push({ action: "create", value })
+        }
+        candidates.value = items
       },
       handleDeleteLast() {
         console.log("delete last")
@@ -145,6 +138,7 @@ export default defineComponent({
       ...methods,
       candidates,
       tags,
+      filter,
     }
   },
 })

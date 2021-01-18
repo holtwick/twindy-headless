@@ -101,11 +101,12 @@ export default defineComponent({
       type: String,
     },
   },
-  emits: ["filter", "deleteLast", "add"],
+  emits: ["filter", "deleteLast", "add", "update:filter"],
   setup(props, { emit }) {
     let target = ref()
     let input = ref()
-    // let  filterText = ref('')
+    let filterText = ref("")
+
     // mounted(() => {
     //   console.log("mounted")
     //   // input?.value?.style?.width = `${props.minSize}px`
@@ -113,7 +114,6 @@ export default defineComponent({
 
     let data = reactive({
       selected: 0,
-      filterText: "",
       itemCandidate: null,
       focus: false,
     })
@@ -130,7 +130,7 @@ export default defineComponent({
         methods.resizeInput()
       },
       doClear() {
-        data.filterText = ""
+        filterText.value = ""
         emit("filter", "")
       },
       doMove(delta) {
@@ -140,8 +140,8 @@ export default defineComponent({
         )
       },
       doAddItem(item) {
-        console.log("add item", item.title, data.filterText)
-        data.filterText = item.title
+        console.log("add item", item.title, filterText.value)
+        filterText.value = item.title
         emit("add", item)
         methods.doClear()
       },
@@ -151,21 +151,24 @@ export default defineComponent({
       },
       doDeleteLast(ev) {
         console.log("del")
-        if (data.filterText === "") {
+        if (filterText.value === "") {
           ev.preventDefault()
           emit("deleteLast")
         }
       },
     }
 
-    watch(data.filterText, () => {
-      console.log("filterText", data.filterText)
-      emit("filter", value)
+    filterText.value = props.filter
+
+    watch(filterText, () => {
+      console.log("filterText", filterText.value)
+      emit("filter", filterText.value)
     })
 
     return {
       ...methods,
       ...toRefs(data),
+      filterText,
       target,
       input,
     }

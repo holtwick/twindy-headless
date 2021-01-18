@@ -62,13 +62,19 @@ export default defineComponent({
   },
   emits: ["update:modelValue"],
   setup(props: any, { emit }) {
-    let data = reactive({
-      candidates: [],
-    })
+    // let data = reactive({
+    //   candidates: [],
+    // })
 
     let tags = computed(() => {
       return (props.modelValue || []).map((tagID: string) => {
         return props.allTags[tagID]
+      })
+    })
+
+    let candidates = computed(() => {
+      return Object.values(props.allTags).map((tag) => {
+        return tag
       })
     })
 
@@ -123,9 +129,10 @@ export default defineComponent({
         // if (value && !exactMatch) {
         //   candidates.push({ action: "create", value })
         // }
-        // data.candidates = candidates
+        //data.candidates = tags
       },
       handleDeleteLast() {
+        console.log("delete last")
         // TODO:2020-06-16 Mark before deletion
         let tags = props.modelValue
         if (tags.pop()) {
@@ -136,7 +143,7 @@ export default defineComponent({
 
     return {
       ...methods,
-      ...data,
+      candidates,
       tags,
     }
   },

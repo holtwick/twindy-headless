@@ -18,7 +18,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue"
 
 export default defineComponent({
@@ -32,20 +32,27 @@ export default defineComponent({
       default: 0,
     },
   },
-  methods: {
-    doAction(item) {
-      this.$emit("selected", item)
-    },
-    // watch(() => props.selected, selected => {
-    //   const divItem = state.$container.querySelector(`[data-id="${state.selected}"],[data-index="${state.selected}"]`)
-    //   if (divItem) {
-    //     divItem.scrollIntoView({
-    //       behavior: 'smooth',
-    //       block: 'nearest',
-    //       inline: 'nearest'
-    //     })
-    //   }
-    // })
+  emits: ["selected"],
+  setup(props, { emit }) {
+    let methods = {
+      doAction(item: any) {
+        console.log("item selected", item)
+        emit("selected", item)
+      },
+    }
+    return {
+      ...methods,
+    }
   },
+  // watch(() => props.selected, selected => {
+  //   const divItem = state.$container.querySelector(`[data-id="${state.selected}"],[data-index="${state.selected}"]`)
+  //   if (divItem) {
+  //     divItem.scrollIntoView({
+  //       behavior: 'smooth',
+  //       block: 'nearest',
+  //       inline: 'nearest'
+  //     })
+  //   }
+  // })
 })
 </script>

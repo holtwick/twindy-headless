@@ -12,7 +12,7 @@
       type="text"
       ref="input"
       :id="uid"
-      v-model="text"
+      v-model="filterText"
       autocomplete="off"
       :placeholder="placeholder"
       @focus="focus = true"
@@ -25,6 +25,7 @@
       @keydown.8="doDeleteLast"
       class="completion-input"
     />
+    {{ filterText }}
     <div class="completion-after">
       <slot name="after" class="completion-after"></slot>
     </div>
@@ -64,7 +65,15 @@
 import twPopover from "./tw-popover.vue"
 import twItems from "./tw-items.vue"
 import { UUID } from "./lib/uuid.ts"
-import { defineComponent, ref, reactive, computed, watch, mounted } from "vue"
+import {
+  defineComponent,
+  ref,
+  reactive,
+  toRefs,
+  computed,
+  watch,
+  mounted,
+} from "vue"
 
 export default defineComponent({
   components: {
@@ -88,20 +97,23 @@ export default defineComponent({
       type: [Number, String],
       default: 32,
     },
+    filter: {
+      type: String,
+    },
   },
-  emits: ["filter"],
-
+  emits: ["filter", "deleteLast", "add"],
   setup(props, { emit }) {
     let target = ref()
     let input = ref()
-
+    // let  filterText = ref('')
     // mounted(() => {
-    // input?.style?.width = `${props.minSize}px`
+    //   console.log("mounted")
+    //   // input?.value?.style?.width = `${props.minSize}px`
     // })
 
     let data = reactive({
       selected: 0,
-      text: "",
+      filterText: "",
       itemCandidate: null,
       focus: false,
     })
@@ -118,7 +130,7 @@ export default defineComponent({
         methods.resizeInput()
       },
       doClear() {
-        data.text = ""
+        data.filterText = ""
         emit("filter", "")
       },
       doMove(delta) {
@@ -128,7 +140,8 @@ export default defineComponent({
         )
       },
       doAddItem(item) {
-        data.text = item.title
+        console.log("add item", item.title, data.filterText)
+        data.filterText = item.title
         emit("add", item)
         methods.doClear()
       },
@@ -137,23 +150,22 @@ export default defineComponent({
         methods.doAddItem(item)
       },
       doDeleteLast(ev) {
-        if (data.text === "") {
+        console.log("del")
+        if (data.filterText === "") {
           ev.preventDefault()
           emit("deleteLast")
         }
       },
     }
 
-    watch(
-      () => data.text,
-      () => {
-        emit("filter", value)
-      }
-    )
+    watch(data.filterText, () => {
+      console.log("filterText", data.filterText)
+      emit("filter", value)
+    })
 
     return {
       ...methods,
-      ...data,
+      ...toRefs(data),
       target,
       input,
     }

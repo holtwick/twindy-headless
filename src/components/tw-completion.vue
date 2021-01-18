@@ -22,23 +22,13 @@
       @keydown.up="doMove(-1)"
       @keydown.enter="doAddSelection"
       @keydown.esc="doClear"
-      @keydown.8="doDeleteLast"
+      @keydown.backspace="doDeleteLast"
       class="completion-input"
     />
     {{ filterText }}
     <div class="completion-after">
       <slot name="after" class="completion-after"></slot>
     </div>
-    <tw-items
-      :items="items"
-      :selected="selected"
-      #default="{ item }"
-      @selected="doAddItem"
-    >
-      <slot name="item" v-bind:item="item">
-        {{ item }}
-      </slot>
-    </tw-items>
     <tw-popover
       :target="items.length && focus && target"
       placement="bottom-start"
@@ -141,7 +131,6 @@ export default defineComponent({
       },
       doAddItem(item) {
         console.log("add item", item.title, filterText.value)
-        filterText.value = item.title
         emit("add", item)
         methods.doClear()
       },
@@ -150,8 +139,7 @@ export default defineComponent({
         methods.doAddItem(item)
       },
       doDeleteLast(ev) {
-        console.log("del")
-        if (filterText.value === "") {
+        if (!filterText.value) {
           ev.preventDefault()
           emit("deleteLast")
         }
@@ -161,7 +149,6 @@ export default defineComponent({
     filterText.value = props.filter
 
     watch(filterText, () => {
-      console.log("filterText", filterText.value)
       emit("filter", filterText.value)
     })
 

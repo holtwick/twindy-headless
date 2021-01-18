@@ -60,10 +60,9 @@ export default defineComponent({
       type: Object as PropType<{ [key: string]: Tag }>,
     },
   },
-  emits: ["update:modelValue"],
+  emits: ["update:modelValue", "create"],
   setup(props: any, { emit }) {
     let filter = ref("")
-    let candidates = ref<Tag[]>([])
 
     let tags = computed(() => {
       console.log("calc tags")
@@ -72,6 +71,7 @@ export default defineComponent({
       })
     })
 
+    let candidates = ref<Tag[]>(Object.values(props.allTags))
     let methods = {
       setTags(tags: string[] = []) {
         emit("update:modelValue", [...tags])
@@ -80,24 +80,18 @@ export default defineComponent({
         methods.setTags(arrayRemoveElement(props.modelValue, id))
       },
       async handleSelection(item: any) {
-        //   log("add item", item)
-        //   if (item.action) {
-        //     let title = item.value.toString().trim()
-        //     if (title) {
-        //       let item = $op.createItemObject({
-        //         module: "tag",
-        //         title,
-        //       })
-        //       item = cloneObject(await $op.storeItem(item))
-        //       if (item) {
-        //         this.setTags([...cloneObject(this.item.tags || []), item._id])
-        //       }
-        //     }
-        //   } else if (item._id) {
-        //     this.setTags([...cloneObject(this.item.tags || []), item._id])
-        //   } else {
-        //     log("unknown item", item)
-        //   }
+        console.log("add item", item)
+        if (item.action) {
+          let title = item.value.toString().trim()
+          if (title) {
+            console.log("add item title", title)
+            emit("create", title)
+          }
+        } else if (item.id) {
+          methods.setTags([...props.modelValue, item.id])
+        } else {
+          console.log("unknown item", item)
+        }
       },
       handleFilter(filter: string) {
         let value = filter.trim()
@@ -107,7 +101,7 @@ export default defineComponent({
         let currentTags = props.modelValue || []
         // @ts-ignore
         let items: Tags[] = Object.values(props.allTags).filter((item: Tag) => {
-          if (currentTags.includes(item.id)) {
+          if (!currentTags.includes(item.id)) {
             if (value) {
               const title = item.title.toString().toLowerCase()
               if (item.title === lvalue) {

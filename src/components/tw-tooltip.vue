@@ -65,7 +65,7 @@ export default {
   //   }
   // },
 
-  setup(props, context) {
+  setup(props: any) {
     let tooltipAnchor = ref()
     let target = ref<Node>()
     let hoverCount = 0

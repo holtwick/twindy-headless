@@ -95,7 +95,7 @@ export default defineComponent({
       default: () => [0, 8],
     },
   },
-  setup(props, context) {
+  setup(props: any) {
     let popper: any, element
     let popover = ref<HTMLElement>()
     let id = ref(UUID())

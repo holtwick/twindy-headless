@@ -2,14 +2,14 @@
 
 <template>
   <div
-    class="form-input completion"
+    class="tw-completion"
     ref="target"
     @click="input.focus()"
     :class="{ '-focus': focus }"
   >
     <slot name="before"></slot>
     <input
-      type="text"
+      xtype="text"
       ref="input"
       :id="uid"
       v-model="filterText"
@@ -23,10 +23,9 @@
       @keydown.enter="doAddSelection"
       @keydown.esc="doClear"
       @keydown.backspace="doDeleteLast"
-      class="completion-input"
+      class="tw-completion-input"
     />
-    {{ filterText }}
-    <div class="completion-after">
+    <div class="tw-completion-after">
       <slot name="after" class="completion-after"></slot>
     </div>
     <tw-popover

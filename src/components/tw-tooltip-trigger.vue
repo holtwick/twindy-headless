@@ -10,31 +10,28 @@ import { defineComponent, onBeforeUnmount, ref } from "vue"
 
 export default defineComponent({
   props: {
-    delay: {
-      // ms
-      type: Number,
-      default: 500,
-    },
+    // delay: {
+    //   // ms
+    //   type: Number,
+    //   default: 500,
+    // },
   },
   components: {
     twPopover,
   },
   setup(props: any) {
-    console.log("Tooltip Trigger")
+    // console.log("Tooltip Trigger")
     let target = ref()
     let text = ref("")
-
-    let timer = 0
+    let debounceTimer: any = 0
+    let currentElement: Node | null
 
     let onTooltipHover = (ev: Event) => {
-      console.log("mouse", props.delay, ev.type, ev.target)
-
-      clearTimeout(timer)
-      timer = 0
-
-      if (ev.target instanceof HTMLElement) {
-        let el: HTMLElement | undefined | null = ev.target
-        setTimeout(() => {
+      // console.log("mouse", props.delay, ev.type, ev.target)
+      clearTimeout(debounceTimer)
+      debounceTimer = setTimeout(() => {
+        if (ev.target instanceof HTMLElement) {
+          let el: HTMLElement | null = ev.target
           while (el != null && el.tagName !== "BODY") {
             let title = el.title
             if (title) {
@@ -49,18 +46,18 @@ export default defineComponent({
             }
             el = el.parentElement
           }
-        }, props.delay || 50)
-      }
-      target.value = null
+        }
+        target.value = null
+      }, /*props.delay || */ 50) // debounce
     }
 
     const useCapture = true
     window.addEventListener("mouseover", onTooltipHover, useCapture)
-    window.addEventListener("focus", onTooltipHover, useCapture)
+    // window.addEventListener("focus", onTooltipHover, useCapture)
 
     onBeforeUnmount(() => {
       window.removeEventListener("mouseover", onTooltipHover, useCapture)
-      window.removeEventListener("focus", onTooltipHover, useCapture)
+      // window.removeEventListener("focus", onTooltipHover, useCapture)
     })
 
     return {

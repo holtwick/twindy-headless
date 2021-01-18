@@ -13,6 +13,9 @@
     "dist",
     "src"
   ],
+  "dependencies": {
+    "@popperjs/core": "^2.6.0"
+  },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.10",
     "@vue/cli-plugin-typescript": "~4.5.10",

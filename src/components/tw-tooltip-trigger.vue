@@ -8,6 +8,8 @@
 import twPopover from "./tw-popover.vue"
 import { defineComponent, onBeforeUnmount, ref } from "vue"
 
+var active = false
+
 export default defineComponent({
   props: {
     // delay: {
@@ -23,6 +25,13 @@ export default defineComponent({
     twPopover,
   },
   setup(props: any) {
+    if (active) {
+      console.error("tw-tooltip-trigger can only be activated once")
+      return
+    }
+
+    active = true
+
     let placement = ref(props.placement)
     let target = ref()
     let text = ref("")

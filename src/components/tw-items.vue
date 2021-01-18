@@ -20,8 +20,8 @@
 
 <script>
 import { defineComponent } from "vue"
+
 export default defineComponent({
-  name: "tw-items",
   props: {
     items: {
       type: Array,

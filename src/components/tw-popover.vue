@@ -103,16 +103,17 @@ export default defineComponent({
     const methods = {
       async show() {
         let target = <Node | Box>props.target
-        if (target) {
+        console.log("target", target)
+        if (target != null) {
           methods.hide()
           await nextTick()
           element = popover.value
           if (element) {
             let popperTarget: Node | RefObj
-            if (!(target instanceof Node)) {
-              popperTarget = new RefObj(target)
-            } else {
+            if (target instanceof Node) {
               popperTarget = target
+            } else {
+              popperTarget = new RefObj(target)
             }
 
             // https://popper.js.org/docs/v2/tutorial/
@@ -142,7 +143,7 @@ export default defineComponent({
       },
 
       hide() {
-        if (popper) {
+        if (popper != null) {
           popper.destroy()
           popper = null
         }
@@ -160,7 +161,7 @@ export default defineComponent({
     // window.addEventListener("mousedown", handleClickOutside)
 
     watchEffect(() => {
-      if (props.target) {
+      if (props.target != null) {
         methods.show()
       }
     })

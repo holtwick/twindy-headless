@@ -17,7 +17,7 @@
         </div>
         <tw-link
           v-if="close"
-          xtooltip="Close"
+          tooltip="Close"
           @click="doCancel"
           class="tw-modal-close"
           symbol="xmark"

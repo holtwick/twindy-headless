@@ -6,6 +6,7 @@
     v-bind="$attrs"
     :disabled="disabled"
     :role="role"
+    :tabindex="disabled ? '0' : undefined"
     @mousedown="doBeforeClick"
     @click="doClick"
     @contextmenu="doClick"

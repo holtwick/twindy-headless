@@ -72,7 +72,6 @@ export default {
 
     const methods = {
       showTooltip() {
-        console.log("Show tooltip", tooltipAnchor)
         target.value = tooltipAnchor.value
       },
       hideTooltip() {

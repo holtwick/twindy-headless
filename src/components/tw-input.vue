@@ -1,13 +1,18 @@
 <template>
-  <input type="text" v-bind="$attrs" :placeholder="placeholder" ref="input"/>
+  <input type="text" v-bind="$attrs" :placeholder="placeholder" ref="input" />
 </template>
 
-<script>
-import {defineComponent, onBeforeUnmount, onMounted, ref} from "vue"
+<script lang="ts">
+import { defineComponent, onBeforeUnmount, onMounted, ref } from "vue"
+import { onStartTyping } from "@vueuse/core"
 
 export default defineComponent({
   props: {
     resize: {
+      type: Boolean,
+      default: false,
+    },
+    typing: {
       type: Boolean,
       default: false,
     },
@@ -22,18 +27,27 @@ export default defineComponent({
   },
   setup(props) {
     let input = ref()
+
     let placeholderWidth = 0
+
+    if (props.typing) {
+      onStartTyping(() => {
+        if (!input?.value?.active) {
+          input.value.focus()
+        }
+      })
+    }
+
     if (props.resize) {
       let resizeInput = () => {
         const el = input.value
         let value = el.value
         el.style.width = "1px"
         if (value === "" && placeholderWidth) {
-          el.style.width =
-              Math.max(+props.minSize, placeholderWidth) + "px"
+          el.style.width = Math.max(+props.minSize, placeholderWidth) + "px"
         } else {
           el.style.width =
-              Math.max(+props.minSize, value ? el.scrollWidth : 0) + "px"
+            Math.max(+props.minSize, value ? el.scrollWidth : 0) + "px"
         }
       }
       onMounted(() => {

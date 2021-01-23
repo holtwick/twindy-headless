@@ -41,7 +41,7 @@
 
 <script lang="ts">
 import twCompletion from "./tw-completion.vue"
-import { defineComponent, ref, computed, reactive, watch, PropType } from "vue"
+import { defineComponent, ref, computed, PropType } from "vue"
 
 export function arrayRemoveElement(arr: any[], el: any) {
   if (arr && Array.isArray(arr)) {

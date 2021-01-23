@@ -2,12 +2,12 @@ import { reactive } from "vue"
 import { UUID } from "./lib/uuid"
 
 export interface TwindyNotification {
-  id: string
+  id?: string
   title: string
-  message: string
-  timeout: number
-  confirm: (id: string) => void
-  cancel: (id: string) => void
+  message?: string
+  timeout?: number
+  confirm?: (id: string) => void
+  cancel?: (id: string) => void
 }
 
 export let notifications: TwindyNotification[] = reactive([])

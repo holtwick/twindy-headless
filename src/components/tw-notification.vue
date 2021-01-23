@@ -1,11 +1,13 @@
 <template>
   <teleport to="body">
-    <template v-for="n in notifications" :key="n.id">
-      <div class="notification">
-        <div class="notification-title">{{ title }}</div>
-        <div class="notification-message">{{ message }}</div>
-      </div>
-    </template>
+    <div class="notification-container">
+      <template v-for="n in notifications" :key="n.id">
+        <div class="notification">
+          <div class="notification-title">{{ n.title }}</div>
+          <div class="notification-message">{{ n.message }}</div>
+        </div>
+      </template>
+    </div>
   </teleport>
 </template>
 

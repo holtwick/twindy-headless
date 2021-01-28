@@ -36,7 +36,6 @@ export default defineComponent({
     let target = ref()
     let text = ref("")
     let debounceTimer: any = 0
-    let currentElement: Node | null
 
     let onTooltipHover = (ev: Event) => {
       clearTimeout(debounceTimer)

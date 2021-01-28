@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue"
-import { notifications } from "./notification"
+import { notifications } from "./state"
 
 export default defineComponent({
   setup(props) {

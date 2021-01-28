@@ -1,17 +1,8 @@
-import { reactive } from "vue"
 import { UUID } from "./lib/uuid"
-
-export interface TwindyNotification {
-  id?: string
-  active?: boolean
-  title: string
-  message?: string
-  timeout?: number
-  confirm?: (id: string) => void
-  cancel?: (id: string) => void
-}
-
-export let notifications: TwindyNotification[] = reactive([])
+import { createApp } from "vue"
+import twNotification from "./tw-notification.vue"
+import { notifications } from "./state"
+import { TwindyNotification } from "./types"
 
 function deleteNotification(id?: string) {
   let index = notifications.findIndex((n) => n.id === id)
@@ -20,6 +11,11 @@ function deleteNotification(id?: string) {
     console.log("remove index", index, id)
   }
 }
+
+let container = document.createElement("div")
+document.body.appendChild(container)
+createApp(twNotification).mount(container)
+console.log("ccc", container)
 
 export function notification(n: TwindyNotification) {
   if (!n.id) n.id = UUID()
@@ -33,6 +29,6 @@ export function notification(n: TwindyNotification) {
     }, n.timeout)
   }
 
-  console.log("add id", n.id)
+  console.log("add id", n.id, container)
   notifications.unshift(n)
 }

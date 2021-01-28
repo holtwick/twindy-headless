@@ -1,10 +1,10 @@
 <template>
   <teleport to="body">
-    <div class="notification-container">
+    <div class="tw-notification-container">
       <transition-group name="notification" tag="div">
-        <div class="notification" v-for="n in notifications" :key="n.id">
-          <div class="notification-title">{{ n.title }}</div>
-          <div class="notification-message">{{ n.message }}</div>
+        <div class="tw-notification" v-for="n in notifications" :key="n.id">
+          <div class="tw-notification-title">{{ n.title }}</div>
+          <div class="tw-notification-message">{{ n.message }}</div>
         </div>
       </transition-group>
     </div>
@@ -12,8 +12,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, PropType } from "vue"
-import { notifications, TwindyNotification } from "./notification"
+import { defineComponent } from "vue"
+import { notifications } from "./notification"
 
 export default defineComponent({
   setup(props) {

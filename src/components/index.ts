@@ -9,6 +9,7 @@ import twCompletion from "./tw-completion.vue"
 import twTagInput from "./tw-tag-input.vue"
 import twInput from "./tw-input.vue"
 import twNotification from "./tw-notification.vue"
+import { notification } from "./notification"
 
 export {
   twButton,
@@ -21,4 +22,6 @@ export {
   twCompletion,
   twTagInput,
   twInput,
+  twNotification,
+  notification,
 }

@@ -7,6 +7,10 @@ import twTooltip from "./tw-tooltip.vue"
 import twTooltipTrigger from "./tw-tooltip-trigger.vue"
 import twCompletion from "./tw-completion.vue"
 import twTagInput from "./tw-tag-input.vue"
+import twInput from "./tw-input.vue"
+
+import { useNotification } from "./notification"
+import { useTooltip } from "./tooltip"
 
 export {
   twButton,
@@ -18,4 +22,7 @@ export {
   twTooltipTrigger,
   twCompletion,
   twTagInput,
+  twInput,
+  useNotification,
+  useTooltip,
 }

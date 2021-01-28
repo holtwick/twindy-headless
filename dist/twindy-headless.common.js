@@ -2305,7 +2305,7 @@ var store = __webpack_require__("c6cd");
 (module.exports = function (key, value) {
   return store[key] || (store[key] = value !== undefined ? value : {});
 })('versions', []).push({
-  version: '3.8.2',
+  version: '3.8.3',
   mode: IS_PURE ? 'pure' : 'global',
   copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
 });
@@ -2732,6 +2732,31 @@ module.exports = function ($this, dummy, Wrapper) {
   ) setPrototypeOf($this, NewTargetPrototype);
   return $this;
 };
+
+
+/***/ }),
+
+/***/ "72dd":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isVue2", function() { return isVue2; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isVue3", function() { return isVue3; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "install", function() { return install; });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("8bbf");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (module object) */ __webpack_require__.d(__webpack_exports__, "Vue", function() { return vue__WEBPACK_IMPORTED_MODULE_0__; });
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in vue__WEBPACK_IMPORTED_MODULE_0__) if(["default","Vue","isVue2","isVue3","install"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return vue__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+var isVue2 = false
+var isVue3 = true
+
+function install() {}
+
+
+
 
 
 /***/ }),
@@ -4915,6 +4940,7 @@ module.exports = function (METHOD_NAME, options) {
 
 "use strict";
 
+var fails = __webpack_require__("d039");
 var getPrototypeOf = __webpack_require__("e163");
 var createNonEnumerableProperty = __webpack_require__("9112");
 var has = __webpack_require__("5135");
@@ -4940,10 +4966,16 @@ if ([].keys) {
   }
 }
 
-if (IteratorPrototype == undefined) IteratorPrototype = {};
+var NEW_ITERATOR_PROTOTYPE = IteratorPrototype == undefined || fails(function () {
+  var test = {};
+  // FF44- legacy iterators case
+  return IteratorPrototype[ITERATOR].call(test) !== test;
+});
+
+if (NEW_ITERATOR_PROTOTYPE) IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-if (!IS_PURE && !has(IteratorPrototype, ITERATOR)) {
+if ((!IS_PURE || NEW_ITERATOR_PROTOTYPE) && !has(IteratorPrototype, ITERATOR)) {
   createNonEnumerableProperty(IteratorPrototype, ITERATOR, returnThis);
 }
 
@@ -7284,6 +7316,9 @@ __webpack_require__.d(__webpack_exports__, "twTooltip", function() { return /* r
 __webpack_require__.d(__webpack_exports__, "twTooltipTrigger", function() { return /* reexport */ tw_tooltip_trigger; });
 __webpack_require__.d(__webpack_exports__, "twCompletion", function() { return /* reexport */ tw_completion; });
 __webpack_require__.d(__webpack_exports__, "twTagInput", function() { return /* reexport */ tw_tag_input; });
+__webpack_require__.d(__webpack_exports__, "twInput", function() { return /* reexport */ tw_input; });
+__webpack_require__.d(__webpack_exports__, "twNotification", function() { return /* reexport */ tw_notification; });
+__webpack_require__.d(__webpack_exports__, "notification", function() { return /* reexport */ notification; });
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
 // This file is imported into lib/wc client bundles.
@@ -7300,9 +7335,9 @@ if (typeof window !== 'undefined') {
     }
   }
 
-  var src = currentScript && currentScript.src.match(/(.+\/)[^/]+\.js(\?.*)?$/)
-  if (src) {
-    __webpack_require__.p = src[1] // eslint-disable-line
+  var setPublicPath_src = currentScript && currentScript.src.match(/(.+\/)[^/]+\.js(\?.*)?$/)
+  if (setPublicPath_src) {
+    __webpack_require__.p = setPublicPath_src[1] // eslint-disable-line
   }
 }
 
@@ -7312,7 +7347,7 @@ if (typeof window !== 'undefined') {
 // EXTERNAL MODULE: external {"commonjs":"vue","commonjs2":"vue","root":"Vue"}
 var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-button.vue?vue&type=template&id=1bce1244
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-button.vue?vue&type=template&id=3b196076
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_tw_symbol = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("tw-symbol");
@@ -7342,7 +7377,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "tw-button-symbol-right"
   }, null, 8, ["name"])) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true)], 16, ["disabled", "role", "tabindex"]);
 }
-// CONCATENATED MODULE: ./src/components/tw-button.vue?vue&type=template&id=1bce1244
+// CONCATENATED MODULE: ./src/components/tw-button.vue?vue&type=template&id=3b196076
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.includes.js
 var es_array_includes = __webpack_require__("caad");
@@ -7459,7 +7494,6 @@ tw_symbolvue_type_script_lang_ts.render = tw_symbolvue_type_template_id_51336cb2
  // @action, @click
 
 /* harmony default export */ var tw_buttonvue_type_script_lang_js = (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["defineComponent"])({
-  name: "tw-button",
   components: {
     TwSymbol: tw_symbol
   },
@@ -8788,26 +8822,26 @@ function getOffsetParent(element) {
 }
 // CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/enums.js
 var enums_top = 'top';
-var bottom = 'bottom';
-var right = 'right';
-var left = 'left';
+var enums_bottom = 'bottom';
+var enums_right = 'right';
+var enums_left = 'left';
 var auto = 'auto';
-var basePlacements = [enums_top, bottom, right, left];
-var start = 'start';
+var basePlacements = [enums_top, enums_bottom, enums_right, enums_left];
+var enums_start = 'start';
 var end = 'end';
 var enums_clippingParents = 'clippingParents';
 var viewport = 'viewport';
 var enums_popper = 'popper';
 var enums_reference = 'reference';
 var variationPlacements = /*#__PURE__*/basePlacements.reduce(function (acc, placement) {
-  return acc.concat([placement + "-" + start, placement + "-" + end]);
+  return acc.concat([placement + "-" + enums_start, placement + "-" + end]);
 }, []);
 var enums_placements = /*#__PURE__*/[].concat(basePlacements, [auto]).reduce(function (acc, placement) {
-  return acc.concat([placement, placement + "-" + start, placement + "-" + end]);
+  return acc.concat([placement, placement + "-" + enums_start, placement + "-" + end]);
 }, []); // modifiers that need to read the DOM
 
 var beforeRead = 'beforeRead';
-var read = 'read';
+var enums_read = 'read';
 var afterRead = 'afterRead'; // pure-logic modifiers
 
 var beforeMain = 'beforeMain';
@@ -8815,9 +8849,9 @@ var main = 'main';
 var afterMain = 'afterMain'; // modifier with the purpose to write to the DOM (or write into a framework state)
 
 var beforeWrite = 'beforeWrite';
-var write = 'write';
+var enums_write = 'write';
 var afterWrite = 'afterWrite';
-var modifierPhases = [beforeRead, read, afterRead, beforeMain, main, afterMain, beforeWrite, write, afterWrite];
+var modifierPhases = [beforeRead, enums_read, afterRead, beforeMain, main, afterMain, beforeWrite, enums_write, afterWrite];
 // CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/orderModifiers.js
  // source: https://stackoverflow.com/questions/49875255
 
@@ -9197,21 +9231,21 @@ function computeOffsets(_ref) {
       };
       break;
 
-    case bottom:
+    case enums_bottom:
       offsets = {
         x: commonX,
         y: reference.y + reference.height
       };
       break;
 
-    case right:
+    case enums_right:
       offsets = {
         x: reference.x + reference.width,
         y: commonY
       };
       break;
 
-    case left:
+    case enums_left:
       offsets = {
         x: reference.x - element.width,
         y: commonY
@@ -9231,7 +9265,7 @@ function computeOffsets(_ref) {
     var len = mainAxis === 'y' ? 'height' : 'width';
 
     switch (variation) {
-      case start:
+      case enums_start:
         offsets[mainAxis] = offsets[mainAxis] - (reference[len] / 2 - element[len] / 2);
         break;
 
@@ -9319,7 +9353,7 @@ function mapToStyles(_ref2) {
 
   var hasX = offsets.hasOwnProperty('x');
   var hasY = offsets.hasOwnProperty('y');
-  var sideX = left;
+  var sideX = enums_left;
   var sideY = enums_top;
   var win = window;
 
@@ -9334,13 +9368,13 @@ function mapToStyles(_ref2) {
 
 
     if (placement === enums_top) {
-      sideY = bottom;
+      sideY = enums_bottom;
       y -= offsetParent.clientHeight - popperRect.height;
       y *= gpuAcceleration ? 1 : -1;
     }
 
-    if (placement === left) {
-      sideX = right;
+    if (placement === enums_left) {
+      sideX = enums_right;
       x -= offsetParent.clientWidth - popperRect.width;
       x *= gpuAcceleration ? 1 : -1;
     }
@@ -9498,7 +9532,7 @@ function applyStyles_effect(_ref2) {
 
 function distanceAndSkiddingToXY(placement, rects, offset) {
   var basePlacement = getBasePlacement(placement);
-  var invertDistance = [left, enums_top].indexOf(basePlacement) >= 0 ? -1 : 1;
+  var invertDistance = [enums_left, enums_top].indexOf(basePlacement) >= 0 ? -1 : 1;
 
   var _ref = typeof offset === 'function' ? offset(Object.assign(Object.assign({}, rects), {}, {
     placement: placement
@@ -9508,7 +9542,7 @@ function distanceAndSkiddingToXY(placement, rects, offset) {
 
   skidding = skidding || 0;
   distance = (distance || 0) * invertDistance;
-  return [left, right].indexOf(basePlacement) >= 0 ? {
+  return [enums_left, enums_right].indexOf(basePlacement) >= 0 ? {
     x: distance,
     y: skidding
   } : {
@@ -9818,8 +9852,8 @@ function detectOverflow(state, options) {
   if (elementContext === enums_popper && offsetData) {
     var offset = offsetData[placement];
     Object.keys(overflowOffsets).forEach(function (key) {
-      var multiply = [right, bottom].indexOf(key) >= 0 ? 1 : -1;
-      var axis = [enums_top, bottom].indexOf(key) >= 0 ? 'y' : 'x';
+      var multiply = [enums_right, enums_bottom].indexOf(key) >= 0 ? 1 : -1;
+      var axis = [enums_top, enums_bottom].indexOf(key) >= 0 ? 'y' : 'x';
       overflowOffsets[key] += offset[axis] * multiply;
     });
   }
@@ -9940,8 +9974,8 @@ function flip(_ref) {
 
     var _basePlacement = getBasePlacement(placement);
 
-    var isStartVariation = getVariation(placement) === start;
-    var isVertical = [enums_top, bottom].indexOf(_basePlacement) >= 0;
+    var isStartVariation = getVariation(placement) === enums_start;
+    var isVertical = [enums_top, enums_bottom].indexOf(_basePlacement) >= 0;
     var len = isVertical ? 'width' : 'height';
     var overflow = detectOverflow(state, {
       placement: placement,
@@ -9950,7 +9984,7 @@ function flip(_ref) {
       altBoundary: altBoundary,
       padding: padding
     });
-    var mainVariationSide = isVertical ? isStartVariation ? right : left : isStartVariation ? bottom : enums_top;
+    var mainVariationSide = isVertical ? isStartVariation ? enums_right : enums_left : isStartVariation ? enums_bottom : enums_top;
 
     if (referenceRect[len] > popperRect[len]) {
       mainVariationSide = getOppositePlacement(mainVariationSide);
@@ -10087,15 +10121,15 @@ function preventOverflow(_ref) {
   }
 
   if (checkMainAxis) {
-    var mainSide = mainAxis === 'y' ? enums_top : left;
-    var altSide = mainAxis === 'y' ? bottom : right;
+    var mainSide = mainAxis === 'y' ? enums_top : enums_left;
+    var altSide = mainAxis === 'y' ? enums_bottom : enums_right;
     var len = mainAxis === 'y' ? 'height' : 'width';
     var offset = popperOffsets[mainAxis];
     var min = popperOffsets[mainAxis] + overflow[mainSide];
     var max = popperOffsets[mainAxis] - overflow[altSide];
     var additive = tether ? -popperRect[len] / 2 : 0;
-    var minLen = variation === start ? referenceRect[len] : popperRect[len];
-    var maxLen = variation === start ? -popperRect[len] : -referenceRect[len]; // We need to include the arrow in the calculation so the arrow doesn't go
+    var minLen = variation === enums_start ? referenceRect[len] : popperRect[len];
+    var maxLen = variation === enums_start ? -popperRect[len] : -referenceRect[len]; // We need to include the arrow in the calculation so the arrow doesn't go
     // outside the reference bounds
 
     var arrowElement = state.elements.arrow;
@@ -10125,9 +10159,9 @@ function preventOverflow(_ref) {
   }
 
   if (checkAltAxis) {
-    var _mainSide = mainAxis === 'x' ? enums_top : left;
+    var _mainSide = mainAxis === 'x' ? enums_top : enums_left;
 
-    var _altSide = mainAxis === 'x' ? bottom : right;
+    var _altSide = mainAxis === 'x' ? enums_bottom : enums_right;
 
     var _offset = popperOffsets[altAxis];
 
@@ -10173,7 +10207,7 @@ function arrow(_ref) {
   var popperOffsets = state.modifiersData.popperOffsets;
   var basePlacement = getBasePlacement(state.placement);
   var axis = getMainAxisFromPlacement(basePlacement);
-  var isVertical = [left, right].indexOf(basePlacement) >= 0;
+  var isVertical = [enums_left, enums_right].indexOf(basePlacement) >= 0;
   var len = isVertical ? 'height' : 'width';
 
   if (!arrowElement || !popperOffsets) {
@@ -10182,8 +10216,8 @@ function arrow(_ref) {
 
   var paddingObject = state.modifiersData[name + "#persistent"].padding;
   var arrowRect = getLayoutRect(arrowElement);
-  var minProp = axis === 'y' ? enums_top : left;
-  var maxProp = axis === 'y' ? bottom : right;
+  var minProp = axis === 'y' ? enums_top : enums_left;
+  var maxProp = axis === 'y' ? enums_bottom : enums_right;
   var endDiff = state.rects.reference[len] + state.rects.reference[axis] - popperOffsets[axis] - state.rects.popper[len];
   var startDiff = popperOffsets[axis] - state.rects.reference[axis];
   var arrowOffsetParent = getOffsetParent(arrowElement);
@@ -10267,7 +10301,7 @@ function getSideOffsets(overflow, rect, preventedOffsets) {
 }
 
 function isAnySideFullyClipped(overflow) {
-  return [enums_top, right, bottom, left].some(function (side) {
+  return [enums_top, enums_right, enums_bottom, enums_left].some(function (side) {
     return overflow[side] >= 0;
   });
 }
@@ -10950,10 +10984,10 @@ function tw_completionvue_type_template_id_36261d8a_render(_ctx, _cache, $props,
 tw_completionvue_type_script_script_ts_lang_js.render = tw_completionvue_type_template_id_36261d8a_render
 
 /* harmony default export */ var tw_completion = (tw_completionvue_type_script_script_ts_lang_js);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-tag-input.vue?vue&type=template&id=f3f74968
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-tag-input.vue?vue&type=template&id=6d25c7b0
 
 
-var tw_tag_inputvue_type_template_id_f3f74968_hoisted_1 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("svg", {
+var tw_tag_inputvue_type_template_id_6d25c7b0_hoisted_1 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("svg", {
   viewBox: "0 0 24 24",
   fill: "none",
   stroke: "currentColor",
@@ -10972,18 +11006,18 @@ var tw_tag_inputvue_type_template_id_f3f74968_hoisted_1 = /*#__PURE__*/Object(ex
   y2: "18"
 })], -1);
 
-var tw_tag_inputvue_type_template_id_f3f74968_hoisted_2 = {
+var tw_tag_inputvue_type_template_id_6d25c7b0_hoisted_2 = {
   key: 0,
   "class": "tw-tag-item-create"
 };
 
-var tw_tag_inputvue_type_template_id_f3f74968_hoisted_3 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(" Create new tag ");
+var tw_tag_inputvue_type_template_id_6d25c7b0_hoisted_3 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(" Create new tag ");
 
-var tw_tag_inputvue_type_template_id_f3f74968_hoisted_4 = {
+var tw_tag_inputvue_type_template_id_6d25c7b0_hoisted_4 = {
   key: 1,
   "class": "tw-tag-item"
 };
-function tw_tag_inputvue_type_template_id_f3f74968_render(_ctx, _cache, $props, $setup, $data, $options) {
+function tw_tag_inputvue_type_template_id_6d25c7b0_render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_tw_completion = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("tw-completion");
 
   return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])(_component_tw_completion, {
@@ -11005,17 +11039,17 @@ function tw_tag_inputvue_type_template_id_f3f74968_render(_ctx, _cache, $props, 
             return _ctx.doRemoveTag(t.id);
           }, ["prevent"]),
           "class": "tw-tag-remove"
-        }, [tw_tag_inputvue_type_template_id_f3f74968_hoisted_1], 8, ["onClick"])]);
+        }, [tw_tag_inputvue_type_template_id_6d25c7b0_hoisted_1], 8, ["onClick"])]);
       }), 128))];
     }),
     item: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withCtx"])(function (_ref) {
       var item = _ref.item;
-      return [item.action ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("span", tw_tag_inputvue_type_template_id_f3f74968_hoisted_2, [tw_tag_inputvue_type_template_id_f3f74968_hoisted_3, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("b", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(item.value), 1)])) : (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("span", tw_tag_inputvue_type_template_id_f3f74968_hoisted_4, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(item.title), 1))];
+      return [item.action ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("span", tw_tag_inputvue_type_template_id_6d25c7b0_hoisted_2, [tw_tag_inputvue_type_template_id_6d25c7b0_hoisted_3, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("b", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(item.value), 1)])) : (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("span", tw_tag_inputvue_type_template_id_6d25c7b0_hoisted_4, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(item.title), 1))];
     }),
     _: 1
   }, 8, ["items", "onAdd", "onDeleteLast", "onFilter"]);
 }
-// CONCATENATED MODULE: ./src/components/tw-tag-input.vue?vue&type=template&id=f3f74968
+// CONCATENATED MODULE: ./src/components/tw-tag-input.vue?vue&type=template&id=6d25c7b0
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
 var es_array_concat = __webpack_require__("99af");
@@ -11240,10 +11274,3311 @@ function arrayRemoveElement(arr, el) {
 
 
 
-tw_tag_inputvue_type_script_lang_ts.render = tw_tag_inputvue_type_template_id_f3f74968_render
+tw_tag_inputvue_type_script_lang_ts.render = tw_tag_inputvue_type_template_id_6d25c7b0_render
 
 /* harmony default export */ var tw_tag_input = (tw_tag_inputvue_type_script_lang_ts);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-input.vue?vue&type=template&id=3f92536e
+
+function tw_inputvue_type_template_id_3f92536e_render(_ctx, _cache, $props, $setup, $data, $options) {
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("input", Object(external_commonjs_vue_commonjs2_vue_root_Vue_["mergeProps"])({
+    type: "text"
+  }, _ctx.$attrs, {
+    placeholder: _ctx.placeholder,
+    ref: "input"
+  }), null, 16, ["placeholder"]);
+}
+// CONCATENATED MODULE: ./src/components/tw-input.vue?vue&type=template&id=3f92536e
+
+// EXTERNAL MODULE: ./node_modules/vue-demi/lib/index.esm.js
+var index_esm = __webpack_require__("72dd");
+
+// CONCATENATED MODULE: ./node_modules/@vueuse/shared/dist/index.esm.js
+
+
+/**
+ * Two-way refs synchronization.
+ *
+ * @param a
+ * @param b
+ */
+function biSyncRef(a, b) {
+    const flush = 'sync';
+    const stop1 = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(a, (newValue) => {
+        b.value = newValue;
+    }, {
+        flush,
+        immediate: true,
+    });
+    const stop2 = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(b, (newValue) => {
+        a.value = newValue;
+    }, {
+        flush,
+        immediate: true,
+    });
+    return () => {
+        stop1();
+        stop2();
+    };
+}
+
+/**
+ * Explicitly define the deps of computed.
+ *
+ * @param source
+ * @param fn
+ */
+function controlledComputed(source, fn) {
+    const v = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(fn());
+    Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(source, () => v.value = fn(), {
+        flush: 'sync',
+    });
+    return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])(() => v.value);
+}
+
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+function __rest(s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+}
+
+const isClient = typeof window !== 'undefined';
+const isDef = (val) => typeof val !== 'undefined';
+const assert = (condition, ...infos) => {
+    if (!condition)
+        console.warn(...infos);
+};
+const index_esm_toString = Object.prototype.toString;
+const isBoolean = (val) => typeof val === 'boolean';
+const isFunction = (val) => typeof val === 'function';
+const isNumber = (val) => typeof val === 'number';
+const isString = (val) => typeof val === 'string';
+const index_esm_isObject = (val) => index_esm_toString.call(val) === '[object Object]';
+const isWindow = (val) => typeof window !== 'undefined' && index_esm_toString.call(val) === '[object Window]';
+const index_esm_now = () => Date.now();
+const timestamp = () => +Date.now();
+const clamp = (n, min, max) => Math.min(max, Math.max(min, n));
+const noop = () => { };
+
+/**
+ * @internal
+ */
+function createFilterWrapper(filter, fn) {
+    function wrapper(...args) {
+        filter(() => fn.apply(this, args), { fn, thisArg: this, args });
+    }
+    return wrapper;
+}
+const bypassFilter = (invoke) => {
+    return invoke();
+};
+/**
+ * Create an EventFilter that debounce the events
+ *
+ * @param ms
+ */
+function debounceFilter(ms) {
+    if (ms <= 0)
+        return bypassFilter;
+    let timer;
+    const filter = (invoke) => {
+        if (timer)
+            clearTimeout(timer);
+        timer = setTimeout(invoke, ms);
+    };
+    return filter;
+}
+/**
+ * Create an EventFilter that throttle the events
+ *
+ * @param ms
+ * @param [trailing=true]
+ */
+function throttleFilter(ms, trailing = true) {
+    if (ms <= 0)
+        return bypassFilter;
+    let lastExec = 0;
+    let timer;
+    const clear = () => {
+        if (timer) {
+            clearTimeout(timer);
+            timer = undefined;
+        }
+    };
+    const filter = (invoke) => {
+        const elapsed = Date.now() - lastExec;
+        clear();
+        if (elapsed > ms) {
+            lastExec = Date.now();
+            invoke();
+        }
+        else if (trailing) {
+            timer = setTimeout(() => {
+                clear();
+                invoke();
+            }, ms);
+        }
+    };
+    return filter;
+}
+/**
+ * EventFilter that gives extra controls to pause and resume the filter
+ *
+ * @param extendFilter  Extra filter to apply when the PauseableFilter is active, default to none
+ *
+ */
+function pausableFilter(extendFilter = bypassFilter) {
+    const isActive = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(true);
+    function pause() {
+        isActive.value = false;
+    }
+    function resume() {
+        isActive.value = true;
+    }
+    const eventFilter = (...args) => {
+        if (isActive.value)
+            extendFilter(...args);
+    };
+    return { isActive, pause, resume, eventFilter };
+}
+
+function promiseTimeout(ms, throwOnTimeout = false, reason = 'Timeout') {
+    return new Promise((resolve, reject) => {
+        if (throwOnTimeout)
+            setTimeout(() => reject(reason), ms);
+        else
+            setTimeout(resolve, ms);
+    });
+}
+function invoke(fn) {
+    return fn();
+}
+
+// implementation
+function watchWithFilter(source, cb, options = {}) {
+    const { eventFilter = bypassFilter } = options, watchOptions = __rest(options, ["eventFilter"]);
+    return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(source, createFilterWrapper(eventFilter, cb), watchOptions);
+}
+
+// implementation
+function debouncedWatch(source, cb, options = {}) {
+    const { debounce = 0 } = options, watchOptions = __rest(options, ["debounce"]);
+    return watchWithFilter(source, cb, Object.assign(Object.assign({}, watchOptions), { eventFilter: debounceFilter(debounce) }));
+}
+
+function __onlyVue3(name = 'this function') {
+    if (index_esm["isVue3"])
+        return;
+    throw new Error(`[VueUse] ${name} is only works on Vue 3.`);
+}
+
+// implementation
+function extendRef(ref, extend, { enumerable = false, unwrap = true } = {}) {
+    __onlyVue3();
+    for (const [key, value] of Object.entries(extend)) {
+        if (key === 'value')
+            continue;
+        if (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["isRef"])(value) && unwrap) {
+            Object.defineProperty(ref, key, {
+                get() {
+                    return value.value;
+                },
+                set(v) {
+                    value.value = v;
+                },
+                enumerable,
+            });
+        }
+        else {
+            Object.defineProperty(ref, key, { value, enumerable });
+        }
+    }
+    return ref;
+}
+
+function index_esm_get(obj, key) {
+    if (key == null)
+        return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["unref"])(obj);
+    return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["unref"])(obj)[key];
+}
+
+function ignorableWatch(source, cb, options = {}) {
+    const { eventFilter = bypassFilter } = options, watchOptions = __rest(options, ["eventFilter"]);
+    const filteredCb = createFilterWrapper(eventFilter, cb);
+    let ignoreUpdates;
+    let ignorePrevAsyncUpdates;
+    let stop;
+    if (watchOptions.flush === 'sync') {
+        const ignore = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(false);
+        // no op for flush: sync
+        ignorePrevAsyncUpdates = () => { };
+        ignoreUpdates = (updater) => {
+            // Call the updater function and count how many sync updates are performed,
+            // then add them to the ignore count
+            ignore.value = true;
+            updater();
+            ignore.value = false;
+        };
+        stop = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(source, (...args) => {
+            if (!ignore.value)
+                filteredCb(...args);
+        }, watchOptions);
+    }
+    else {
+        // flush 'pre' and 'post'
+        const disposables = [];
+        // counters for how many following changes to be ignored
+        // ignoreCounter is incremented before there is a history operation
+        // affecting the source ref value (undo, redo, revert).
+        // syncCounter is incremented in sync with every change to the
+        // source ref value. This let us know how many times the ref
+        // was modified and support chained sync operations. If there
+        // are more sync triggers than the ignore count, the we now
+        // there are modifications in the source ref value that we
+        // need to commit
+        const ignoreCounter = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0);
+        const syncCounter = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0);
+        ignorePrevAsyncUpdates = () => {
+            ignoreCounter.value = syncCounter.value;
+        };
+        // Sync watch to count modifications to the source
+        disposables.push(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(source, () => {
+            syncCounter.value++;
+        }, Object.assign(Object.assign({}, watchOptions), { flush: 'sync' })));
+        ignoreUpdates = (updater) => {
+            // Call the updater function and count how many sync updates are performed,
+            // then add them to the ignore count
+            const syncCounterPrev = syncCounter.value;
+            updater();
+            ignoreCounter.value += syncCounter.value - syncCounterPrev;
+        };
+        disposables.push(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(source, (...args) => {
+            // If a history operation was performed (ignoreCounter > 0) and there are
+            // no other changes to the source ref value afterwards, then ignore this commit
+            const ignore = ignoreCounter.value > 0 && ignoreCounter.value === syncCounter.value;
+            ignoreCounter.value = 0;
+            syncCounter.value = 0;
+            if (ignore)
+                return;
+            filteredCb(...args);
+        }, watchOptions));
+        stop = () => {
+            disposables.forEach(fn => fn());
+        };
+    }
+    return { stop, ignoreUpdates, ignorePrevAsyncUpdates };
+}
+
+function makeDestructurable(obj, arr) {
+    if (typeof Symbol !== 'undefined') {
+        const clone = Object.assign({}, obj);
+        Object.defineProperty(clone, Symbol.iterator, {
+            enumerable: false,
+            value() {
+                let index = 0;
+                return {
+                    next: () => ({
+                        value: arr[index++],
+                        done: index > arr.length,
+                    }),
+                };
+            },
+        });
+        return clone;
+    }
+    else {
+        return Object.assign([...arr], obj);
+    }
+}
+
+// implementation
+function pausableWatch(source, cb, options = {}) {
+    const { eventFilter: filter } = options, watchOptions = __rest(options, ["eventFilter"]);
+    const { eventFilter, pause, resume, isActive } = pausableFilter(filter);
+    const stop = watchWithFilter(source, cb, Object.assign(Object.assign({}, watchOptions), { eventFilter }));
+    return { stop, pause, resume, isActive };
+}
+
+/**
+ * Converts plain function into a reactive function.
+ * The converted function accepts refs as it's arguments
+ * and returns a ComputedRef, with proper typing.
+ *
+ * @param fn - Source function
+ */
+function reactify(fn) {
+    return function (...args) {
+        return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])(() => fn.apply(this, args.map(i => Object(external_commonjs_vue_commonjs2_vue_root_Vue_["unref"])(i))));
+    };
+}
+
+function reactifyObject(obj, optionsOrKeys = {}) {
+    let keys = [];
+    if (Array.isArray(optionsOrKeys)) {
+        keys = optionsOrKeys;
+    }
+    else {
+        const { includeOwnProperties = true } = optionsOrKeys;
+        keys.push(...Object.keys(obj));
+        if (includeOwnProperties)
+            keys.push(...Object.getOwnPropertyNames(obj));
+    }
+    return Object.fromEntries(keys
+        .map((key) => {
+        const value = obj[key];
+        return [
+            key,
+            typeof value === 'function'
+                ? reactify(value.bind(obj))
+                : value,
+        ];
+    }));
+}
+
+/**
+ *  Shorthand for `ref.value = x`
+ */
+function index_esm_set(...args) {
+    if (args.length === 2) {
+        const [ref, value] = args;
+        ref.value = value;
+    }
+    if (args.length === 3) {
+        if (index_esm["isVue2"]) {
+            // use @vue/composition-api's set API
+            __webpack_require__("72dd").set(...args);
+        }
+        else {
+            const [target, key, value] = args;
+            target[key] = value;
+        }
+    }
+}
+
+/**
+ * Keep target ref(s) in sync with the source ref
+ *
+ * @param source source ref
+ * @param targets
+ */
+function syncRef(source, targets, { flush = 'sync', deep = false, immediate = true, } = {}) {
+    if (!Array.isArray(targets))
+        targets = [targets];
+    return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(source, (newValue) => {
+        targets.forEach(target => target.value = newValue);
+    }, {
+        flush,
+        deep,
+        immediate,
+    });
+}
+
+// implementation
+function throttledWatch(source, cb, options = {}) {
+    const { throttle = 0 } = options, watchOptions = __rest(options, ["throttle"]);
+    return watchWithFilter(source, cb, Object.assign(Object.assign({}, watchOptions), { eventFilter: throttleFilter(throttle) }));
+}
+
+/**
+ * Call onMounted() if it's inside a component lifecycle, if not, run just call the function
+ *
+ * @param fn
+ * @param sync if set to false, it will run in the nextTick() of Vue
+ */
+function tryOnMounted(fn, sync = true) {
+    if (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["getCurrentInstance"])())
+        Object(external_commonjs_vue_commonjs2_vue_root_Vue_["onMounted"])(fn);
+    else if (sync)
+        fn();
+    else
+        Object(external_commonjs_vue_commonjs2_vue_root_Vue_["nextTick"])(fn);
+}
+
+/**
+ * Call onUnmounted() if it's inside a component lifecycle, if not, do nothing
+ *
+ * @param fn
+ */
+function tryOnUnmounted(fn) {
+    if (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["getCurrentInstance"])())
+        Object(external_commonjs_vue_commonjs2_vue_root_Vue_["onUnmounted"])(fn);
+}
+
+/**
+ * Basic counter with utility functions.
+ *
+ * @see   {@link https://vueuse.js.org/useCounter}
+ * @param [initialValue=0]
+ */
+function useCounter(initialValue = 0) {
+    const count = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(initialValue);
+    const inc = (delta = 1) => (count.value += delta);
+    const dec = (delta = 1) => (count.value -= delta);
+    const get = () => count.value;
+    const set = (val) => (count.value = val);
+    const reset = (val = initialValue) => {
+        initialValue = val;
+        return set(val);
+    };
+    return { count, inc, dec, get, set, reset };
+}
+
+/**
+ * Debounce execution of a function.
+ *
+ * @param  fn          A function to be executed after delay milliseconds debounced.
+ * @param  ms          A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher) are most useful.
+ *
+ * @return A new, debounce, function.
+ */
+function useDebounceFn(fn, ms = 200) {
+    return createFilterWrapper(debounceFilter(ms), fn);
+}
+
+function useDebounce(value, ms = 200) {
+    if (ms <= 0)
+        return value;
+    const debounced = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(value.value);
+    const updater = useDebounceFn(() => {
+        debounced.value = value.value;
+    }, ms);
+    Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(value, () => updater());
+    return debounced;
+}
+
+/**
+ * Wrapper for `setInterval` with controls
+ *
+ * @param cb
+ * @param interval
+ * @param immediate
+ */
+function useIntervalFn(cb, interval = 1000, immediate = true) {
+    let timer = null;
+    const isActive = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(false);
+    function clean() {
+        if (timer) {
+            clearInterval(timer);
+            timer = null;
+        }
+    }
+    function pause() {
+        isActive.value = false;
+        clean();
+    }
+    function resume() {
+        isActive.value = true;
+        clean();
+        timer = setInterval(cb, interval);
+    }
+    if (immediate && isClient)
+        resume();
+    tryOnUnmounted(pause);
+    return {
+        isActive,
+        pause,
+        resume,
+        start: resume,
+        stop: pause,
+    };
+}
+
+function useInterval(interval = 1000, immediate = true) {
+    const counter = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0);
+    return Object.assign({ counter }, useIntervalFn(() => counter.value += 1, interval, immediate));
+}
+
+/**
+ * Throttle execution of a function. Especially useful for rate limiting
+ * execution of handlers on events like resize and scroll.
+ *
+ * @param   fn             A function to be executed after delay milliseconds. The `this` context and all arguments are passed through, as-is,
+ *                                    to `callback` when the throttled-function is executed.
+ * @param   ms             A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher) are most useful.
+ *
+ * @return  A new, throttled, function.
+ */
+function useThrottleFn(fn, ms = 200, trailing = true) {
+    return createFilterWrapper(throttleFilter(ms, trailing), fn);
+}
+
+/**
+ * Throttle execution of a function. Especially useful for rate limiting
+ * execution of handlers on events like resize and scroll.
+ *
+ * @param  delay  A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher) are most useful.
+ */
+function useThrottle(value, delay = 200) {
+    if (delay <= 0)
+        return value;
+    const throttled = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(value.value);
+    const updater = useThrottleFn(() => {
+        throttled.value = value.value;
+    }, delay);
+    Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(value, () => updater());
+    return throttled;
+}
+
+/**
+ * Wrapper for `setTimeout` with controls.
+ *
+ * @param cb
+ * @param interval
+ * @param immediate
+ */
+function useTimeoutFn(cb, interval, immediate = true) {
+    const isActive = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(false);
+    let timer = null;
+    function clear() {
+        if (timer) {
+            clearTimeout(timer);
+            timer = null;
+        }
+    }
+    function stop() {
+        isActive.value = false;
+        clear();
+    }
+    function start() {
+        clear();
+        isActive.value = true;
+        timer = setTimeout(() => {
+            timer = null;
+            cb();
+        }, interval);
+    }
+    if (immediate && isClient)
+        start();
+    tryOnUnmounted(stop);
+    return {
+        isActive,
+        start,
+        stop,
+    };
+}
+
+/**
+ * Update value after a given time with controls.
+ *
+ * @param interval
+ * @param immediate
+ */
+function useTimeout(interval = 1000, immediate = true) {
+    const ready = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(false);
+    const controls = useTimeoutFn(() => ready.value = true, interval, immediate);
+    function stop() {
+        ready.value = false;
+        controls.stop();
+    }
+    function start() {
+        ready.value = false;
+        controls.start();
+    }
+    return {
+        ready,
+        isActive: controls.isActive,
+        start,
+        stop,
+    };
+}
+
+function useToggle(initialValue = false) {
+    if (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["isRef"])(initialValue)) {
+        return () => (initialValue.value = !initialValue.value);
+    }
+    else {
+        const boolean = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(initialValue);
+        const toggle = () => (boolean.value = !boolean.value);
+        return [boolean, toggle];
+    }
+}
+
+function when(r) {
+    let isNot = false;
+    function toMatch(condition, { flush = 'sync', deep = false, timeout, throwOnTimeout } = {}) {
+        let stop = null;
+        const watcher = new Promise((resolve) => {
+            stop = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(r, (v) => {
+                if (condition(v) === !isNot) {
+                    stop === null || stop === void 0 ? void 0 : stop();
+                    resolve();
+                }
+            }, {
+                flush,
+                deep,
+                immediate: true,
+            });
+        });
+        const promises = [watcher];
+        if (timeout) {
+            promises.push(promiseTimeout(timeout, throwOnTimeout).finally(() => {
+                stop === null || stop === void 0 ? void 0 : stop();
+            }));
+        }
+        return Promise.race(promises);
+    }
+    function toBe(value, options) {
+        return toMatch(v => v === Object(external_commonjs_vue_commonjs2_vue_root_Vue_["unref"])(value), options);
+    }
+    function toBeTruthy(options) {
+        return toMatch(v => Boolean(v), options);
+    }
+    function toBeNull(options) {
+        return toBe(null, options);
+    }
+    function toBeUndefined(options) {
+        return toBe(undefined, options);
+    }
+    function toBeNaN(options) {
+        return toMatch(Number.isNaN, options);
+    }
+    function toContains(value, options) {
+        return toMatch((v) => {
+            const array = Array.from(v);
+            return array.includes(value) || array.includes(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["unref"])(value));
+        }, options);
+    }
+    function changed(options) {
+        return changedTimes(1, options);
+    }
+    function changedTimes(n = 1, options) {
+        let count = -1; // skip the immediate check
+        return toMatch(() => {
+            count += 1;
+            return count >= n;
+        }, options);
+    }
+    if (Array.isArray(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["unref"])(r))) {
+        const instance = {
+            toMatch,
+            toContains,
+            changed,
+            changedTimes,
+            get not() {
+                isNot = !isNot;
+                return this;
+            },
+        };
+        return instance;
+    }
+    else {
+        const instance = {
+            toMatch,
+            toBe,
+            toBeTruthy,
+            toBeNull,
+            toBeNaN,
+            toBeUndefined,
+            changed,
+            changedTimes,
+            get not() {
+                isNot = !isNot;
+                return this;
+            },
+        };
+        return instance;
+    }
+}
+
+
+
+// CONCATENATED MODULE: ./node_modules/@vueuse/core/dist/index.esm.js
+
+
+
+
+/**
+ * Create an asynchronous computed dependency.
+ *
+ * @see   {@link https://vueuse.js.org/asyncComputed}
+ * @param evaluationCallback     The promise-returning callback which generates the computed value
+ * @param initialState           The initial state, used until the first evaluation finishes
+ * @param optionsOrRef           Additional options or a ref passed to receive the updates of the async evaluation
+ */
+function asyncComputed(evaluationCallback, initialState, optionsOrRef) {
+    let options;
+    if (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["isRef"])(optionsOrRef)) {
+        options = {
+            evaluating: optionsOrRef,
+        };
+    }
+    else {
+        options = optionsOrRef || {};
+    }
+    const { lazy = false, evaluating = undefined, } = options;
+    const started = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(!lazy);
+    const current = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(initialState);
+    let counter = 0;
+    Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watchEffect"])(async (onInvalidate) => {
+        if (!started.value)
+            return;
+        counter++;
+        const counterAtBeginning = counter;
+        let hasFinished = false;
+        try {
+            // Defer initial setting of `evaluating` ref
+            // to avoid having it as a dependency
+            if (evaluating) {
+                Promise.resolve().then(() => {
+                    evaluating.value = true;
+                });
+            }
+            const result = await evaluationCallback((cancelCallback) => {
+                onInvalidate(() => {
+                    if (evaluating)
+                        evaluating.value = false;
+                    if (!hasFinished)
+                        cancelCallback();
+                });
+            });
+            if (counterAtBeginning === counter)
+                current.value = result;
+        }
+        finally {
+            if (evaluating)
+                evaluating.value = false;
+            hasFinished = true;
+        }
+    });
+    if (lazy) {
+        return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])(() => {
+            started.value = true;
+            return current.value;
+        });
+    }
+    else {
+        return current;
+    }
+}
+
+const defaultWindow = /* #__PURE__ */ isClient ? window : undefined;
+const defaultDocument = /* #__PURE__ */ isClient ? window.document : undefined;
+const defaultNavigator = /* #__PURE__ */ isClient ? window.navigator : undefined;
+
+function withScope(factory) {
+    let state = null;
+    const document = defaultDocument;
+    if (document) {
+        const container = document.createElement('div');
+        Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createApp"])({
+            setup() {
+                state = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["reactive"])(factory());
+            },
+            render: () => null,
+        }).mount(container);
+    }
+    else {
+        state = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["reactive"])(factory());
+    }
+    return state;
+}
+/**
+ * Keep states in the global scope to be reusable across Vue instances.
+ *
+ * @see   {@link https://vueuse.js.org/createGlobalState}
+ * @param stateFactory A factory function to create the state
+ */
+function createGlobalState(stateFactory) {
+    let state;
+    return () => {
+        if (state == null)
+            state = withScope(stateFactory);
+        return state;
+    };
+}
+
+function useEventListener(...args) {
+    let target;
+    let event;
+    let listener;
+    let options;
+    if (isString(args[0])) {
+        [event, listener, options] = args;
+        target = defaultWindow;
+    }
+    else {
+        [target, event, listener, options] = args;
+    }
+    if (!target)
+        return;
+    let stopped = false;
+    target.addEventListener(event, listener, options);
+    const stop = () => {
+        if (stopped)
+            return;
+        target.removeEventListener(event, listener, options);
+        stopped = true;
+    };
+    tryOnUnmounted(stop);
+    return stop;
+}
+
+const index_esm_events = ['mousedown', 'touchstart'];
+/**
+ * Listen for clicks outside of an element.
+ *
+ * @see   {@link https://vueuse.js.org/onClickOutside}
+ * @param target
+ * @param handler
+ * @param options
+ */
+function onClickOutside(target, handler, options = {}) {
+    const { window = defaultWindow } = options;
+    if (!window)
+        return;
+    const targetRef = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(target);
+    const listener = (event) => {
+        if (!targetRef.value)
+            return;
+        const elements = event.composedPath();
+        if (targetRef.value === event.target || elements.includes(targetRef.value))
+            return;
+        handler(event);
+    };
+    let disposables = index_esm_events
+        .map(event => useEventListener(window, event, listener, { passive: true }));
+    const stop = () => {
+        disposables.forEach(stop => stop());
+        disposables = [];
+    };
+    tryOnUnmounted(stop);
+    return stop;
+}
+
+/* this implementation is original ported from https://github.com/streamich/react-use by Vadim Dalecky */
+const isFocusedElementEditable = () => {
+    const { activeElement, body } = document;
+    if (!activeElement)
+        return false;
+    // If not element has focus, we assume it is not editable, too.
+    if (activeElement === body)
+        return false;
+    // Assume <input> and <textarea> elements are editable.
+    switch (activeElement.tagName) {
+        case 'INPUT':
+        case 'TEXTAREA':
+            return true;
+    }
+    // Check if any other focused element id editable.
+    return activeElement.hasAttribute('contenteditable');
+};
+const isTypedCharGood = ({ keyCode, metaKey, ctrlKey, altKey, }) => {
+    if (metaKey || ctrlKey || altKey)
+        return false;
+    // 0...9
+    if ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 96 && keyCode <= 105))
+        return true;
+    // a...z
+    if (keyCode >= 65 && keyCode <= 90)
+        return true;
+    // All other keys.
+    return false;
+};
+/**
+ * Fires when users start typing on non-editable elements.
+ *
+ * @see   {@link https://vueuse.js.org/onStartTyping}
+ * @param callback
+ * @param options
+ */
+function onStartTyping(callback, { document = defaultDocument } = {}) {
+    const keydown = (event) => {
+        !isFocusedElementEditable()
+            && isTypedCharGood(event)
+            && callback(event);
+    };
+    if (document)
+        useEventListener(document, 'keydown', keydown, { passive: true });
+}
+
+/**
+ * Shorthand for binding ref to template element.
+ *
+ * @see   {@link https://vueuse.js.org/templateRef}
+ * @param key
+ * @param initialValue
+ */
+function templateRef(key, initialValue = null) {
+    const instance = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["getCurrentInstance"])();
+    let _trigger = () => { };
+    const element = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["customRef"])((track, trigger) => {
+        _trigger = trigger;
+        return {
+            get() {
+                var _a, _b;
+                track();
+                return (_b = (_a = instance === null || instance === void 0 ? void 0 : instance.proxy) === null || _a === void 0 ? void 0 : _a.$refs[key]) !== null && _b !== void 0 ? _b : initialValue;
+            },
+            set() { },
+        };
+    });
+    Object(external_commonjs_vue_commonjs2_vue_root_Vue_["onMounted"])(_trigger);
+    Object(external_commonjs_vue_commonjs2_vue_root_Vue_["onUpdated"])(_trigger);
+    return element;
+}
+
+/**
+ * Reactive async state. Will not block your setup function and will triggers changes once
+ * the promise is ready.
+ *
+ * @see   {@link https://vueuse.js.org/useAsyncState}
+ * @param promise         The promise / async function to be resolved
+ * @param initialState    The initial state, used until the first evaluation finishes
+ * @param delay           Delay (ms)
+ * @param catchFn         Error handling callback
+ */
+function useAsyncState(promise, initialState, delay = 0, catchFn = (e) => { }) {
+    const state = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(initialState);
+    const ready = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(false);
+    function run() {
+        promise
+            .then((data) => {
+            // @ts-ignore
+            state.value = data;
+            ready.value = true;
+        })
+            .catch(catchFn);
+    }
+    if (!delay)
+        run();
+    else
+        setTimeout(run, delay);
+    return { state, ready };
+}
+
+/* this implementation is original ported from https://github.com/logaretm/vue-use-web by Abdelrahman Awad */
+/**
+ * Reactive Battery Status API.
+ *
+ * @see   {@link https://vueuse.js.org/useBattery}
+ * @param options
+ */
+function useBattery({ navigator = defaultNavigator } = {}) {
+    const events = ['chargingchange', 'chargingtimechange', 'dischargingtimechange', 'levelchange'];
+    const isSupported = navigator && 'getBattery' in navigator;
+    const charging = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(false);
+    const chargingTime = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0);
+    const dischargingTime = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0);
+    const level = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(1);
+    let battery;
+    function updateBatteryInfo() {
+        charging.value = this.charging;
+        chargingTime.value = this.chargingTime || 0;
+        dischargingTime.value = this.dischargingTime || 0;
+        level.value = this.level;
+    }
+    if (isSupported) {
+        navigator
+            .getBattery()
+            .then((_battery) => {
+            battery = _battery;
+            updateBatteryInfo.call(battery);
+            for (const event of events)
+                useEventListener(battery, event, updateBatteryInfo, { passive: true });
+        });
+    }
+    return {
+        isSupported,
+        charging,
+        chargingTime,
+        dischargingTime,
+        level,
+    };
+}
+
+/* this implementation is original ported from https://github.com/logaretm/vue-use-web by Abdelrahman Awad */
+/**
+ * Reactive browser location.
+ *
+ * @see   {@link https://vueuse.js.org/useBrowserLocation}
+ * @param options
+ */
+function useBrowserLocation({ window = defaultWindow } = {}) {
+    const buildState = (trigger) => {
+        const { state, length } = (window === null || window === void 0 ? void 0 : window.history) || {};
+        const { hash, host, hostname, href, origin, pathname, port, protocol, search } = (window === null || window === void 0 ? void 0 : window.location) || {};
+        return {
+            trigger,
+            state,
+            length,
+            hash,
+            host,
+            hostname,
+            href,
+            origin,
+            pathname,
+            port,
+            protocol,
+            search,
+        };
+    };
+    const state = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(buildState('load'));
+    if (window)
+        useEventListener(window, 'popstate', () => state.value = buildState('popstate'), { passive: true });
+    return state;
+}
+
+/* this implementation is original ported from https://github.com/logaretm/vue-use-web by Abdelrahman Awad */
+/**
+ * Reactive Clipboard API.
+ *
+ * @see   {@link https://vueuse.js.org/useClipboard}
+ * @param options
+ */
+function useClipboard({ navigator = defaultNavigator } = {}) {
+    const events = ['copy', 'cut'];
+    const isSupported = navigator && 'clipboard' in navigator;
+    const text = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])('');
+    function updateText() {
+        // @ts-expect-error untyped API
+        navigator.clipboard.readText().then((value) => {
+            text.value = value;
+        });
+    }
+    if (isSupported) {
+        for (const event of events)
+            useEventListener(event, updateText);
+    }
+    async function copy(txt) {
+        if (isSupported) {
+            // @ts-expect-error untyped API
+            await navigator.clipboard.writeText(txt);
+            text.value = txt;
+        }
+    }
+    return {
+        isSupported,
+        text,
+        copy,
+    };
+}
+
+/**
+ * Manipulate CSS variables.
+ *
+ * @see   {@link https://vueuse.js.org/useCssVar}
+ * @param prop
+ * @param el
+ * @param options
+ */
+function useCssVar(prop, el, { window = defaultWindow } = {}) {
+    var _a;
+    const variable = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])('');
+    const _el = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(el || ((_a = window === null || window === void 0 ? void 0 : window.document) === null || _a === void 0 ? void 0 : _a.documentElement));
+    Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(_el, () => {
+        if (_el.value && window)
+            variable.value = window.getComputedStyle(_el.value).getPropertyValue(prop);
+    }, { immediate: true });
+    Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(variable, (val) => {
+        var _a;
+        if ((_a = _el.value) === null || _a === void 0 ? void 0 : _a.style)
+            _el.value.style.setProperty(prop, val);
+    });
+    return variable;
+}
+
+/* this implementation is original ported from https://github.com/logaretm/vue-use-web by Abdelrahman Awad */
+/**
+ * Reactive DeviceLightEvent.
+ *
+ * @see   {@link https://vueuse.js.org/useDeviceLight}
+ * @param options
+ */
+function useDeviceLight({ window = defaultWindow } = {}) {
+    const light = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(null);
+    if (window) {
+        useEventListener(window, 'devicelight', (event) => {
+            light.value = event.value;
+        });
+    }
+    return light;
+}
+
+/* this implementation is original ported from https://github.com/logaretm/vue-use-web by Abdelrahman Awad */
+/**
+ * Reactive DeviceMotionEvent.
+ *
+ * @see   {@link https://vueuse.js.org/useDeviceMotion}
+ * @param options
+ */
+function useDeviceMotion(options = {}) {
+    const { window = defaultWindow, eventFilter = bypassFilter, } = options;
+    const acceleration = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])({ x: null, y: null, z: null });
+    const rotationRate = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])({ alpha: null, beta: null, gamma: null });
+    const interval = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0);
+    const accelerationIncludingGravity = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])({
+        x: null,
+        y: null,
+        z: null,
+    });
+    if (window) {
+        const onDeviceMotion = createFilterWrapper(eventFilter, (event) => {
+            acceleration.value = event.acceleration;
+            accelerationIncludingGravity.value = event.accelerationIncludingGravity;
+            rotationRate.value = event.rotationRate;
+            interval.value = event.interval;
+        });
+        useEventListener(window, 'devicemotion', onDeviceMotion);
+    }
+    return {
+        acceleration,
+        accelerationIncludingGravity,
+        rotationRate,
+        interval,
+    };
+}
+
+/* this implementation is original ported from https://github.com/logaretm/vue-use-web by Abdelrahman Awad */
+/**
+ * Reactive DeviceOrientationEvent.
+ *
+ * @see   {@link https://vueuse.js.org/useDeviceOrientation}
+ * @param options
+ */
+function useDeviceOrientation(options = {}) {
+    const { window = defaultWindow } = options;
+    const isSupported = Boolean(window && 'DeviceOrientationEvent' in window);
+    const isAbsolute = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(false);
+    const alpha = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(null);
+    const beta = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(null);
+    const gamma = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(null);
+    if (window && isSupported) {
+        useEventListener(window, 'deviceorientation', (event) => {
+            isAbsolute.value = event.absolute;
+            alpha.value = event.alpha;
+            beta.value = event.beta;
+            gamma.value = event.gamma;
+        });
+    }
+    return {
+        isSupported,
+        isAbsolute,
+        alpha,
+        beta,
+        gamma,
+    };
+}
+
+/* this implementation is original ported from https://github.com/logaretm/vue-use-web by Abdelrahman Awad */
+/**
+ * Reactive Media Query.
+ *
+ * @see   {@link https://vueuse.js.org/useMediaQuery}
+ * @param query
+ * @param options
+ */
+function useMediaQuery(query, options = {}) {
+    const { window = defaultWindow } = options;
+    if (!window)
+        return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(false);
+    const mediaQuery = window.matchMedia(query);
+    const matches = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(mediaQuery.matches);
+    const handler = (event) => {
+        matches.value = event.matches;
+    };
+    if ('addEventListener' in mediaQuery) {
+        mediaQuery.addEventListener('change', handler);
+    }
+    else {
+        // @ts-expect-error - fallback for Safari < 14 and older browsers
+        mediaQuery.addListener(handler);
+    }
+    tryOnUnmounted(() => {
+        if ('removeEventListener' in mediaQuery) {
+            mediaQuery.removeEventListener('change', handler);
+        }
+        else {
+            // @ts-expect-error - fallback for Safari < 14 and older browsers
+            mediaQuery.removeListener(handler);
+        }
+    });
+    return matches;
+}
+
+// device pixel ratio statistics from https://www.mydevice.io/
+const DEVICE_PIXEL_RATIO_SCALES = [
+    1,
+    1.325,
+    1.4,
+    1.5,
+    1.8,
+    2,
+    2.4,
+    2.5,
+    2.75,
+    3,
+    3.5,
+    4,
+];
+/**
+ * Reactively track `window.devicePixelRatio`.
+ *
+ * @see   {@link https://vueuse.js.org/useDevicePixelRatio}
+ * @param options
+ */
+function useDevicePixelRatio({ window = defaultWindow, } = {}) {
+    if (!window) {
+        return {
+            pixelRatio: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(1),
+        };
+    }
+    const pixelRatio = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(window.devicePixelRatio);
+    const handleDevicePixelRatio = () => {
+        pixelRatio.value = window.devicePixelRatio;
+    };
+    useEventListener(window, 'resize', handleDevicePixelRatio, { passive: true });
+    DEVICE_PIXEL_RATIO_SCALES.forEach((dppx) => {
+        // listen mql events in both sides
+        const mqlMin = useMediaQuery(`screen and (min-resolution: ${dppx}dppx)`);
+        const mqlMax = useMediaQuery(`screen and (max-resolution: ${dppx}dppx)`);
+        Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])([mqlMin, mqlMax], handleDevicePixelRatio);
+    });
+    return { pixelRatio };
+}
+
+/**
+ * Reactively track `document.visibilityState`.
+ *
+ * @see   {@link https://vueuse.js.org/useDocumentVisibility}
+ * @param options
+ */
+function useDocumentVisibility({ document = defaultDocument } = {}) {
+    if (!document)
+        return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])('visible');
+    const visibility = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(document.visibilityState);
+    useEventListener(document, 'visibilitychange', () => {
+        visibility.value = document.visibilityState;
+    });
+    return visibility;
+}
+
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+function index_esm_rest(s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+}
+
+/**
+ * Reports changes to the dimensions of an Element's content or the border-box
+ *
+ * @see   {@link https://vueuse.js.org/useResizeObserver}
+ * @param target
+ * @param callback
+ * @param options
+ */
+function useResizeObserver(target, callback, options = {}) {
+    const { window = defaultWindow } = options, observerOptions = index_esm_rest(options, ["window"]);
+    let observer;
+    const targetRef = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(target);
+    const isSupported = window && 'ResizeObserver' in window;
+    const cleanup = () => {
+        if (observer) {
+            observer.disconnect();
+            observer = undefined;
+        }
+    };
+    const stopWatch = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(targetRef, (newValue) => {
+        cleanup();
+        if (isSupported && window && newValue) {
+            // @ts-expect-error missing type
+            observer = new window.ResizeObserver(callback);
+            observer.observe(newValue, observerOptions);
+        }
+    }, { immediate: true });
+    const stop = () => {
+        cleanup();
+        stopWatch();
+    };
+    tryOnUnmounted(stop);
+    return {
+        isSupported,
+        stop,
+    };
+}
+
+/**
+ * Reactive size of an HTML element.
+ *
+ * @see   {@link https://vueuse.js.org/useElementSize}
+ * @param target
+ * @param callback
+ * @param options
+ */
+function useElementBounding(target, options = {}) {
+    const height = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0);
+    const bottom = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0);
+    const left = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0);
+    const right = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0);
+    const top = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0);
+    const width = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0);
+    const x = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0);
+    const y = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0);
+    useResizeObserver(target, ([entry]) => {
+        height.value = entry.contentRect.height;
+        bottom.value = entry.contentRect.bottom;
+        left.value = entry.contentRect.left;
+        right.value = entry.contentRect.right;
+        top.value = entry.contentRect.top;
+        width.value = entry.contentRect.width;
+        x.value = entry.contentRect.x;
+        y.value = entry.contentRect.y;
+    }, options);
+    return {
+        x,
+        y,
+        top,
+        right,
+        bottom,
+        left,
+        width,
+        height,
+    };
+}
+
+/**
+ * Reactive size of an HTML element.
+ *
+ * @see   {@link https://vueuse.js.org/useElementSize}
+ * @param target
+ * @param callback
+ * @param options
+ */
+function useElementSize(target, initialSize = { width: 0, height: 0 }, options = {}) {
+    const width = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(initialSize.width);
+    const height = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(initialSize.height);
+    useResizeObserver(target, ([entry]) => {
+        width.value = entry.contentRect.width;
+        height.value = entry.contentRect.height;
+    }, options);
+    return {
+        width,
+        height,
+    };
+}
+
+/**
+ * Tracks the visibility of an element within the viewport.
+ *
+ * @see   {@link https://vueuse.js.org/useElementVisibility}
+ * @param element
+ * @param options
+ */
+function useElementVisibility(element, { window = defaultWindow, scrollTarget } = {}) {
+    const elementIsVisible = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(false);
+    const testBounding = () => {
+        if (!window)
+            return;
+        const document = window.document;
+        if (!element.value) {
+            elementIsVisible.value = false;
+        }
+        else {
+            const rect = element.value.getBoundingClientRect();
+            elementIsVisible.value = (rect.top <= (window.innerHeight || document.documentElement.clientHeight)
+                && rect.left <= (window.innerWidth || document.documentElement.clientWidth)
+                && rect.bottom >= 0
+                && rect.right >= 0);
+        }
+    };
+    tryOnMounted(testBounding);
+    if (window)
+        tryOnMounted(() => useEventListener((scrollTarget === null || scrollTarget === void 0 ? void 0 : scrollTarget.value) || window, 'scroll', testBounding, { capture: false, passive: true }));
+    return elementIsVisible;
+}
+
+/**
+ * Reactive wrapper for EventSource.
+ *
+ * @see   {@link https://vueuse.js.org/useEventSource}
+ * @see   {@link https://developer.mozilla.org/en-US/docs/Web/API/EventSource/EventSource|EventSource}
+ * @param url
+ * @param events
+ */
+function useEventSource(url, events = []) {
+    const event = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(null);
+    const data = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(null);
+    const status = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])('CONNECTING');
+    const eventSource = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(null);
+    const error = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(null);
+    const close = () => {
+        if (eventSource.value) {
+            eventSource.value.close();
+            eventSource.value = null;
+            status.value = 'CLOSED';
+        }
+    };
+    tryOnMounted(() => {
+        const es = new EventSource(url);
+        eventSource.value = es;
+        es.onopen = () => {
+            status.value = 'OPEN';
+            error.value = null;
+        };
+        es.onerror = (e) => {
+            status.value = 'CLOSED';
+            error.value = e;
+        };
+        es.onmessage = (e) => {
+            event.value = null;
+            data.value = e.data;
+        };
+        for (const event_name of events) {
+            useEventListener(es, event_name, (e) => {
+                event.value = event_name;
+                data.value = e.data || null;
+            });
+        }
+    });
+    tryOnUnmounted(() => {
+        close();
+    });
+    return {
+        eventSource,
+        event,
+        data,
+        status,
+        error,
+        close,
+    };
+}
+
+/**
+ * Reactive favicon.
+ *
+ * @see   {@link https://vueuse.js.org/useFavicon}
+ * @param newIcon
+ * @param options
+ */
+function useFavicon(newIcon = null, options = {}) {
+    const { baseUrl = '', rel = 'icon', document = defaultDocument, } = options;
+    const favicon = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["isRef"])(newIcon)
+        ? newIcon
+        : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(newIcon);
+    const applyIcon = (icon) => {
+        document === null || document === void 0 ? void 0 : document.head.querySelectorAll(`link[rel*="${rel}"]`).forEach(el => el.href = `${baseUrl}${icon}`);
+    };
+    Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(favicon, (i, o) => {
+        if (isString(i) && i !== o)
+            applyIcon(i);
+    }, { immediate: true });
+    return favicon;
+}
+
+/* this implementation is original ported from https://github.com/logaretm/vue-use-web by Abdelrahman Awad */
+// from: https://github.com/sindresorhus/screenfull.js/blob/master/src/screenfull.js
+const functionsMap = [
+    [
+        'requestFullscreen',
+        'exitFullscreen',
+        'fullscreenElement',
+        'fullscreenEnabled',
+        'fullscreenchange',
+        'fullscreenerror',
+    ],
+    // New WebKit
+    [
+        'webkitRequestFullscreen',
+        'webkitExitFullscreen',
+        'webkitFullscreenElement',
+        'webkitFullscreenEnabled',
+        'webkitfullscreenchange',
+        'webkitfullscreenerror',
+    ],
+    // Old WebKit
+    [
+        'webkitRequestFullScreen',
+        'webkitCancelFullScreen',
+        'webkitCurrentFullScreenElement',
+        'webkitCancelFullScreen',
+        'webkitfullscreenchange',
+        'webkitfullscreenerror',
+    ],
+    [
+        'mozRequestFullScreen',
+        'mozCancelFullScreen',
+        'mozFullScreenElement',
+        'mozFullScreenEnabled',
+        'mozfullscreenchange',
+        'mozfullscreenerror',
+    ],
+    [
+        'msRequestFullscreen',
+        'msExitFullscreen',
+        'msFullscreenElement',
+        'msFullscreenEnabled',
+        'MSFullscreenChange',
+        'MSFullscreenError',
+    ],
+];
+/**
+ * Reactive Fullscreen API.
+ *
+ * @see   {@link https://vueuse.js.org/useFullscreen}
+ * @param target
+ * @param options
+ */
+function useFullscreen(target, options = {}) {
+    const { document = defaultDocument } = options;
+    const targetRef = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(target || (document === null || document === void 0 ? void 0 : document.querySelector('html')));
+    const isFullscreen = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(false);
+    let isSupported = false;
+    let map = functionsMap[0];
+    if (!document) {
+        isSupported = false;
+    }
+    else {
+        for (const m of functionsMap) {
+            if (m[1] in document) {
+                map = m;
+                isSupported = true;
+                break;
+            }
+        }
+    }
+    const [REQUEST, EXIT, ELEMENT, _, EVENT] = map;
+    async function exit() {
+        if (!isSupported)
+            return;
+        if (document === null || document === void 0 ? void 0 : document[ELEMENT])
+            await document[EXIT]();
+        isFullscreen.value = false;
+    }
+    async function enter() {
+        if (!isSupported)
+            return;
+        await exit();
+        if (targetRef.value) {
+            await targetRef.value[REQUEST]();
+            isFullscreen.value = true;
+        }
+    }
+    async function toggle() {
+        if (isFullscreen.value)
+            await exit();
+        else
+            await enter();
+    }
+    if (document) {
+        useEventListener(document, EVENT, () => {
+            isFullscreen.value = !!(document === null || document === void 0 ? void 0 : document[ELEMENT]);
+        }, false);
+    }
+    return {
+        isSupported,
+        isFullscreen,
+        enter,
+        exit,
+        toggle,
+    };
+}
+
+/* this implementation is original ported from https://github.com/logaretm/vue-use-web by Abdelrahman Awad */
+/**
+ * Reactive Geolocation API.
+ *
+ * @see   {@link https://vueuse.js.org/useGeolocation}
+ * @param options
+ */
+function useGeolocation(options = {}) {
+    const { enableHighAccuracy = true, maximumAge = 30000, timeout = 27000, navigator = defaultNavigator, } = options;
+    const isSupported = navigator && 'geolocation' in navigator;
+    const locatedAt = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(null);
+    const error = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(null);
+    const coords = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])({
+        accuracy: 0,
+        latitude: 0,
+        longitude: 0,
+        altitude: null,
+        altitudeAccuracy: null,
+        heading: null,
+        speed: null,
+    });
+    function updatePosition(position) {
+        locatedAt.value = position.timestamp;
+        coords.value = position.coords;
+        error.value = null;
+    }
+    let watcher;
+    tryOnMounted(() => {
+        if (isSupported) {
+            watcher = navigator.geolocation.watchPosition(updatePosition, err => error.value = err, {
+                enableHighAccuracy,
+                maximumAge,
+                timeout,
+            });
+        }
+    });
+    tryOnUnmounted(() => {
+        if (watcher && navigator)
+            navigator.geolocation.clearWatch(watcher);
+    });
+    return {
+        isSupported,
+        coords,
+        locatedAt,
+        error,
+    };
+}
+
+const defaultEvents = ['mousemove', 'mousedown', 'resize', 'keydown', 'touchstart', 'wheel'];
+const oneMinute = 60000;
+/**
+ * Tracks whether the user is being inactive.
+ *
+ * @see   {@link https://vueuse.js.org/useIdle}
+ * @param timeout default to 1 minute
+ * @param options IdleOptions
+ */
+function useIdle(timeout = oneMinute, options = {}) {
+    const { initialState = false, listenForVisibilityChange = true, events = defaultEvents, window = defaultWindow, eventFilter = throttleFilter(50), } = options;
+    const idle = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(initialState);
+    const lastActive = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(timestamp());
+    let timer;
+    const onEvent = createFilterWrapper(eventFilter, () => {
+        idle.value = false;
+        lastActive.value = timestamp();
+        clearTimeout(timer);
+        timer = setTimeout(() => idle.value = true, timeout);
+    });
+    if (window) {
+        const document = window.document;
+        for (const event of events)
+            useEventListener(window, event, onEvent, { passive: true });
+        if (listenForVisibilityChange) {
+            useEventListener(document, 'visibilitychange', () => {
+                if (!document.hidden)
+                    onEvent();
+            });
+        }
+    }
+    timer = setTimeout(() => idle.value = true, timeout);
+    return { idle, lastActive };
+}
+
+/**
+ * Detects that a target element's visibility.
+ *
+ * @see   {@link https://vueuse.js.org/useIntersectionObserver}
+ * @param target
+ * @param callback
+ * @param options
+ */
+function useIntersectionObserver(target, callback, options = {}) {
+    const { root, rootMargin = '0px', threshold = 0.1, window = defaultWindow, } = options;
+    let observer;
+    const targetRef = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(target);
+    const isSupported = window && 'IntersectionObserver' in window;
+    const cleanup = () => {
+        if (observer) {
+            observer.disconnect();
+            observer = undefined;
+        }
+    };
+    const stopWatch = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(targetRef, (newValue) => {
+        cleanup();
+        if (isSupported && window && newValue) {
+            // @ts-expect-error missing type
+            observer = new window.IntersectionObserver(callback, {
+                root: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["unref"])(root),
+                rootMargin,
+                threshold,
+            });
+            observer.observe(newValue);
+        }
+    });
+    const stop = () => {
+        cleanup();
+        stopWatch();
+    };
+    tryOnUnmounted(stop);
+    return {
+        isSupported,
+        stop,
+    };
+}
+
+const Serializers = {
+    boolean: {
+        read: (v, d) => v != null ? v === 'true' : d,
+        write: (v) => String(v),
+    },
+    object: {
+        read: (v, d) => v ? JSON.parse(v) : d,
+        write: (v) => JSON.stringify(v),
+    },
+    number: {
+        read: (v, d) => v != null ? Number.parseFloat(v) : d,
+        write: (v) => String(v),
+    },
+    any: {
+        read: (v, d) => v != null ? v : d,
+        write: (v) => String(v),
+    },
+    string: {
+        read: (v, d) => v != null ? v : d,
+        write: (v) => String(v),
+    },
+};
+/**
+ * Reactive LocalStorage/SessionStorage.
+ *
+ * @see   {@link https://vueuse.js.org/useStorage}
+ * @param key
+ * @param defaultValue
+ * @param storage
+ * @param options
+ */
+function useStorage(key, defaultValue, storage = defaultWindow === null || defaultWindow === void 0 ? void 0 : defaultWindow.localStorage, options = {}) {
+    const { flush = 'pre', deep = true, listenToStorageChanges = true, window = defaultWindow, eventFilter, } = options;
+    const data = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(defaultValue);
+    const type = defaultValue == null
+        ? 'any'
+        : typeof defaultValue === 'boolean'
+            ? 'boolean'
+            : typeof defaultValue === 'string'
+                ? 'string'
+                : typeof defaultValue === 'object'
+                    ? 'object'
+                    : Array.isArray(defaultValue)
+                        ? 'object'
+                        : !Number.isNaN(defaultValue)
+                            ? 'number'
+                            : 'any';
+    function read() {
+        if (!storage)
+            return;
+        try {
+            let rawValue = storage.getItem(key);
+            if (rawValue == null && defaultValue) {
+                rawValue = Serializers[type].write(defaultValue);
+                storage.setItem(key, rawValue);
+            }
+            else {
+                data.value = Serializers[type].read(rawValue, defaultValue);
+            }
+        }
+        catch (e) {
+            console.warn(e);
+        }
+    }
+    read();
+    if (window && listenToStorageChanges)
+        useEventListener(window, 'storage', read);
+    watchWithFilter(data, () => {
+        if (!storage) // SSR
+            return;
+        try {
+            if (data.value == null)
+                storage.removeItem(key);
+            else
+                storage.setItem(key, Serializers[type].write(data.value));
+        }
+        catch (e) {
+            console.warn(e);
+        }
+    }, {
+        flush,
+        deep,
+        eventFilter,
+    });
+    return data;
+}
+
+/**
+ * Reactive LocalStorage.
+ *
+ * @see   {@link https://vueuse.js.org/useLocalStorage}
+ * @param key
+ * @param defaultValue
+ * @param options
+ */
+function useLocalStorage(key, defaultValue, options = {}) {
+    const { window = defaultWindow } = options;
+    return useStorage(key, defaultValue, window === null || window === void 0 ? void 0 : window.localStorage, options);
+}
+
+const fnClone = (v) => JSON.parse(JSON.stringify(v));
+const fnBypass = (v) => v;
+const fnSetSource = (source, value) => source.value = value;
+function defaultDump(clone) {
+    return (clone ? isFunction(clone) ? clone : fnClone : fnBypass);
+}
+function defaultParse(clone) {
+    return (clone ? isFunction(clone) ? clone : fnClone : fnBypass);
+}
+/**
+ * Track the change history of a ref, also provides undo and redo functionality.
+ *
+ * @see   {@link https://vueuse.js.org/useManualRefHistory}
+ * @param source
+ * @param options
+ */
+function useManualRefHistory(source, options = {}) {
+    const { clone = false, dump = defaultDump(clone), parse = defaultParse(clone), setSource = fnSetSource, } = options;
+    function _createHistoryRecord() {
+        return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["markRaw"])({
+            snapshot: dump(source.value),
+            timestamp: timestamp(),
+        });
+    }
+    const last = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(_createHistoryRecord());
+    const undoStack = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])([]);
+    const redoStack = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])([]);
+    const _setSource = (record) => {
+        setSource(source, parse(record.snapshot));
+        last.value = record;
+    };
+    const commit = () => {
+        undoStack.value.unshift(last.value);
+        last.value = _createHistoryRecord();
+        if (options.capacity && undoStack.value.length > options.capacity)
+            undoStack.value.splice(options.capacity, Infinity);
+        if (redoStack.value.length)
+            redoStack.value.splice(0, redoStack.value.length);
+    };
+    const clear = () => {
+        undoStack.value.splice(0, undoStack.value.length);
+        redoStack.value.splice(0, redoStack.value.length);
+    };
+    const undo = () => {
+        const state = undoStack.value.shift();
+        if (state) {
+            redoStack.value.unshift(last.value);
+            _setSource(state);
+        }
+    };
+    const redo = () => {
+        const state = redoStack.value.shift();
+        if (state) {
+            undoStack.value.unshift(last.value);
+            _setSource(state);
+        }
+    };
+    const reset = () => {
+        _setSource(last.value);
+    };
+    const history = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])(() => [last.value, ...undoStack.value]);
+    const canUndo = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])(() => undoStack.value.length > 0);
+    const canRedo = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])(() => redoStack.value.length > 0);
+    return {
+        source,
+        undoStack,
+        redoStack,
+        last,
+        history,
+        canUndo,
+        canRedo,
+        clear,
+        commit,
+        reset,
+        undo,
+        redo,
+    };
+}
+
+/**
+ * Reactive mouse position.
+ *
+ * @see   {@link https://vueuse.js.org/useMouse}
+ * @param options
+ */
+function useMouse(options = {}) {
+    const { touch = true, resetOnTouchEnds = false, initialValue = { x: 0, y: 0 }, window = defaultWindow, } = options;
+    const x = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(initialValue.x);
+    const y = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(initialValue.y);
+    const sourceType = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(null);
+    const mouseHandler = (event) => {
+        x.value = event.pageX;
+        y.value = event.pageY;
+        sourceType.value = 'mouse';
+    };
+    const reset = () => {
+        x.value = initialValue.x;
+        y.value = initialValue.y;
+    };
+    const touchHandler = (event) => {
+        if (event.touches.length > 0) {
+            x.value = event.touches[0].clientX;
+            y.value = event.touches[0].clientY;
+            sourceType.value = 'touch';
+        }
+    };
+    if (window) {
+        useEventListener(window, 'mousemove', mouseHandler, { passive: true });
+        if (touch) {
+            useEventListener(window, 'touchstart', touchHandler, { passive: true });
+            useEventListener(window, 'touchmove', touchHandler, { passive: true });
+            if (resetOnTouchEnds)
+                useEventListener(window, 'touchend', reset, { passive: true });
+        }
+    }
+    return {
+        x,
+        y,
+        sourceType,
+    };
+}
+
+/**
+ * Reactive mouse position related to an element.
+ *
+ * @see   {@link https://vueuse.js.org/useMouseInElement}
+ * @param target
+ * @param options
+ */
+function useMouseInElement(target, options = {}) {
+    const { handleOutside = true, window = defaultWindow, } = options;
+    const { x, y, sourceType } = useMouse(options);
+    const targetRef = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(target || (window === null || window === void 0 ? void 0 : window.document.body));
+    const elementX = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0);
+    const elementY = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0);
+    const elementPositionX = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0);
+    const elementPositionY = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0);
+    const elementHeight = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0);
+    const elementWidth = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0);
+    const isOutside = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(false);
+    let stop = () => { };
+    if (window) {
+        stop = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])([targetRef, x, y], () => {
+            const el = targetRef.value;
+            if (!el)
+                return;
+            const { left, top, width, height, } = el.getBoundingClientRect();
+            elementPositionX.value = left + window.pageXOffset;
+            elementPositionY.value = top + window.pageYOffset;
+            elementHeight.value = height;
+            elementWidth.value = width;
+            const elX = x.value - elementPositionX.value;
+            const elY = y.value - elementPositionY.value;
+            isOutside.value = elX < 0 || elY < 0 || elX > elementWidth.value || elY > elementHeight.value;
+            if (handleOutside || !isOutside.value) {
+                elementX.value = elX;
+                elementY.value = elY;
+            }
+        }, { immediate: true });
+    }
+    return {
+        x,
+        y,
+        sourceType,
+        elementX,
+        elementY,
+        elementPositionX,
+        elementPositionY,
+        elementHeight,
+        elementWidth,
+        isOutside,
+        stop,
+    };
+}
+
+/**
+ * Reactive mouse position.
+ *
+ * @see   {@link https://vueuse.js.org/useMousePressed}
+ * @param options
+ */
+function useMousePressed(options = {}) {
+    const { touch = true, initialValue = false, window = defaultWindow, } = options;
+    const target = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(options.target);
+    const pressed = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(initialValue);
+    const sourceType = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(null);
+    let listeners = [];
+    if (window) {
+        const cleanup = () => {
+            listeners.forEach(f => f());
+            listeners = [];
+        };
+        const onReleased = () => {
+            pressed.value = false;
+            sourceType.value = null;
+        };
+        Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(target, () => {
+            cleanup();
+            const t = target.value || window;
+            listeners.push(useEventListener(t, 'mousedown', () => {
+                pressed.value = true;
+                sourceType.value = 'mouse';
+            }, { passive: true }));
+            if (touch) {
+                listeners.push(useEventListener(t, 'touchstart', () => {
+                    pressed.value = true;
+                    sourceType.value = 'touch';
+                }, { passive: true }));
+            }
+        }, { immediate: true });
+        useEventListener(window, 'mouseleave', onReleased, { passive: true });
+        useEventListener(window, 'mouseup', onReleased, { passive: true });
+        if (touch) {
+            useEventListener(window, 'touchend', onReleased, { passive: true });
+            useEventListener(window, 'touchcancel', onReleased, { passive: true });
+        }
+    }
+    return {
+        pressed,
+        sourceType,
+    };
+}
+
+/**
+ * Watch for changes being made to the DOM tree.
+ *
+ * @see   {@link https://vueuse.js.org/useMutationObserver}
+ * @see   {@link https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver|MutationObserver MDN}
+ * @param el
+ * @param callback
+ * @param options
+ */
+function useMutationObserver(el, callback, options = {}) {
+    const { window = defaultWindow } = options, mutationOptions = index_esm_rest(options, ["window"]);
+    const elRef = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(el);
+    let observer;
+    const isSupported = window && 'IntersectionObserver' in window;
+    const cleanup = () => {
+        if (observer) {
+            observer.disconnect();
+            observer = undefined;
+        }
+    };
+    const stopWatch = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(elRef, (newEl) => {
+        cleanup();
+        if (isSupported && window && newEl) {
+            // @ts-expect-error missing type
+            observer = new window.MutationObserver(callback);
+            observer.observe(newEl, mutationOptions);
+        }
+    }, { immediate: true });
+    const stop = () => {
+        cleanup();
+        stopWatch();
+    };
+    tryOnUnmounted(stop);
+    return {
+        isSupported,
+        stop,
+    };
+}
+
+/* this implementation is original ported from https://github.com/logaretm/vue-use-web by Abdelrahman Awad */
+/**
+ * Reactive Network status.
+ *
+ * @see   {@link https://vueuse.js.org/useNetwork}
+ * @param options
+ */
+function useNetwork(options = {}) {
+    const { window = defaultWindow } = options;
+    const navigator = window === null || window === void 0 ? void 0 : window.navigator;
+    const isSupported = Boolean(navigator && 'connection' in navigator);
+    const isOnline = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(true);
+    const saveData = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(false);
+    const offlineAt = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(undefined);
+    const downlink = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(undefined);
+    const downlinkMax = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(undefined);
+    const effectiveType = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(undefined);
+    const type = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])('unknown');
+    const connection = isSupported && navigator.connection;
+    function updateNetworkInformation() {
+        if (!navigator)
+            return;
+        isOnline.value = navigator.onLine;
+        offlineAt.value = isOnline.value ? undefined : Date.now();
+        if (connection) {
+            downlink.value = connection.downlink;
+            downlinkMax.value = connection.downlinkMax;
+            effectiveType.value = connection.effectiveType;
+            saveData.value = connection.saveData;
+            type.value = connection.type;
+        }
+    }
+    if (window) {
+        useEventListener(window, 'offline', () => {
+            isOnline.value = false;
+            offlineAt.value = Date.now();
+        });
+        useEventListener(window, 'online', () => {
+            isOnline.value = true;
+        });
+    }
+    if (connection)
+        useEventListener(connection, 'change', updateNetworkInformation, false);
+    updateNetworkInformation();
+    return {
+        isSupported,
+        isOnline,
+        saveData,
+        offlineAt,
+        downlink,
+        downlinkMax,
+        effectiveType,
+        type,
+    };
+}
+
+/**
+ * Reactive online state.
+ *
+ * @see   {@link https://vueuse.js.org/useOnline}
+ * @param options
+ */
+function useOnline(options = {}) {
+    const { isOnline } = useNetwork(options);
+    return isOnline;
+}
+
+/**
+ * Reactive state to show whether mouse leaves the page.
+ *
+ * @see   {@link https://vueuse.js.org/usePageLeave}
+ * @param options
+ */
+function usePageLeave(options = {}) {
+    const { window = defaultWindow } = options;
+    const isLeft = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(false);
+    const handler = (event) => {
+        if (!window)
+            return;
+        event = event || window.event;
+        // @ts-ignore
+        const from = event.relatedTarget || event.toElement;
+        isLeft.value = !from;
+    };
+    if (window) {
+        useEventListener(window, 'mouseout', handler, { passive: true });
+        useEventListener(window.document, 'mouseleave', handler, { passive: true });
+        useEventListener(window.document, 'mouseenter', handler, { passive: true });
+    }
+    return isLeft;
+}
+
+/**
+ * Create parallax effect easily. It uses `useDeviceOrientation` and fallback to `useMouse`
+ * if orientation is not supported.
+ *
+ * @param target
+ * @param options
+ */
+function useParallax(target, options = {}) {
+    const { deviceOrientationTiltAdjust = i => i, deviceOrientationRollAdjust = i => i, mouseTiltAdjust = i => i, mouseRollAdjust = i => i, window = defaultWindow, } = options;
+    const orientation = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["reactive"])(useDeviceOrientation({ window }));
+    const { elementX: x, elementY: y, elementWidth: width, elementHeight: height, } = useMouseInElement(target, { handleOutside: false, window });
+    const source = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])(() => {
+        if (orientation.isSupported
+            && ((orientation.alpha != null && orientation.alpha !== 0) || (orientation.gamma != null && orientation.gamma !== 0)))
+            return 'deviceOrientation';
+        return 'mouse';
+    });
+    const roll = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])(() => {
+        if (source.value === 'deviceOrientation') {
+            const value = -orientation.beta / 90;
+            return deviceOrientationRollAdjust(value);
+        }
+        else {
+            const value = -(y.value - height.value / 2) / height.value;
+            return mouseRollAdjust(value);
+        }
+    });
+    const tilt = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])(() => {
+        if (source.value === 'deviceOrientation') {
+            const value = orientation.gamma / 90;
+            return deviceOrientationTiltAdjust(value);
+        }
+        else {
+            const value = (x.value - width.value / 2) / width.value;
+            return mouseTiltAdjust(value);
+        }
+    });
+    return { roll, tilt, source };
+}
+
+/**
+ * Reactive Permissions API.
+ *
+ * @see   {@link https://vueuse.js.org/usePermission}
+ * @param permissionDesc
+ * @param options
+ */
+function usePermission(permissionDesc, options = {}) {
+    const { navigator = defaultNavigator } = options;
+    let permissionStatus = null;
+    const desc = typeof permissionDesc === 'string'
+        ? { name: permissionDesc }
+        : permissionDesc;
+    const state = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])('');
+    const onChange = () => {
+        if (permissionStatus)
+            state.value = permissionStatus.state;
+    };
+    if (navigator && 'permissions' in navigator) {
+        navigator.permissions
+            .query(desc)
+            .then((status) => {
+            permissionStatus = status;
+            useEventListener(permissionStatus, 'change', onChange);
+            onChange();
+        })
+            .catch(noop);
+    }
+    return state;
+}
+
+/**
+ * Reactive prefers-color-scheme media query.
+ *
+ * @see   {@link https://vueuse.js.org/usePreferredColorScheme}
+ * @param [options]
+ */
+function usePreferredColorScheme(options) {
+    const isLight = useMediaQuery('(prefers-color-scheme: light)', options);
+    const isDark = useMediaQuery('(prefers-color-scheme: dark)', options);
+    return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])(() => {
+        if (isDark.value)
+            return 'dark';
+        if (isLight.value)
+            return 'light';
+        return 'no-preference';
+    });
+}
+
+/**
+ * Reactive dark theme preference.
+ *
+ * @see   {@link https://vueuse.js.org/usePreferredDark}
+ * @param [options]
+ */
+function usePreferredDark(options) {
+    return useMediaQuery('(prefers-color-scheme: dark)', options);
+}
+
+/**
+ * Reactive Navigator Languages.
+ *
+ * @see   {@link https://vueuse.js.org/usePreferredLanguages}
+ * @param options
+ */
+function usePreferredLanguages(options = {}) {
+    const { window = defaultWindow } = options;
+    if (!window)
+        return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(['en']);
+    const navigator = window.navigator;
+    const value = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(navigator.languages);
+    useEventListener(window, 'languagechange', () => {
+        value.value = navigator.languages;
+    });
+    return value;
+}
+
+/**
+ * Call function on every `requestAnimationFrame`. With controls of pausing and resuming.
+ *
+ * @see   {@link https://vueuse.js.org/useRafFn}
+ * @param fn
+ * @param options
+ */
+function useRafFn(fn, options = {}) {
+    const { immediate = true, window = defaultWindow, } = options;
+    const isActive = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(false);
+    function loop() {
+        if (!isActive.value)
+            return;
+        fn();
+        if (window)
+            window.requestAnimationFrame(loop);
+    }
+    function resume() {
+        if (!isActive.value) {
+            isActive.value = true;
+            loop();
+        }
+    }
+    function pause() {
+        isActive.value = false;
+    }
+    if (immediate)
+        resume();
+    tryOnUnmounted(pause);
+    return {
+        isActive,
+        pause,
+        resume,
+        stop: pause,
+        start: resume,
+    };
+}
+
+/**
+ * Track the change history of a ref, also provides undo and redo functionality.
+ *
+ * @see   {@link https://vueuse.js.org/useRefHistory}
+ * @param source
+ * @param options
+ */
+function useRefHistory(source, options = {}) {
+    const { deep = false, flush = 'pre', } = options;
+    const setSource = (source, value) => {
+        // Support changes that are done after the last history operation
+        // examples:
+        //   undo, modify
+        //   undo, undo, modify
+        // If there were already changes in the state, they will be ignored
+        // examples:
+        //   modify, undo
+        //   undo, modify, undo
+        ignorePrevAsyncUpdates();
+        ignoreUpdates(() => {
+            source.value = value;
+        });
+    };
+    const manualHistory = useManualRefHistory(source, Object.assign(Object.assign({}, options), { clone: options.clone || deep, setSource }));
+    const { clear, commit: manualCommit } = manualHistory;
+    const commit = () => {
+        // This guard only applies for flush 'pre' and 'post'
+        // If the user triggers a commit manually, then reset the watcher
+        // so we do not trigger an extra commit in the async watcher
+        ignorePrevAsyncUpdates();
+        manualCommit();
+    };
+    const { eventFilter, pause, resume: resumeTracking, isActive: isTracking } = pausableFilter();
+    const { ignoreUpdates, ignorePrevAsyncUpdates, stop } = ignorableWatch(source, commit, { deep, flush, eventFilter });
+    const resume = (commitNow) => {
+        resumeTracking();
+        if (commitNow)
+            commit();
+    };
+    const batch = (fn) => {
+        let canceled = false;
+        const cancel = () => canceled = true;
+        ignoreUpdates(() => {
+            fn(cancel);
+        });
+        if (!canceled)
+            commit();
+    };
+    const dispose = () => {
+        stop();
+        clear();
+    };
+    return Object.assign(Object.assign({}, manualHistory), { isTracking,
+        pause,
+        resume,
+        commit,
+        batch,
+        dispose });
+}
+
+/**
+ * Async script tag loading.
+ *
+ * @see   {@link https://vueuse.js.org/useScriptTag}
+ * @param src
+ */
+function useScriptTag(src, onLoaded = noop, options = {}) {
+    const { immediate = true, manual = false, type = 'text/javascript', async = true, crossOrigin, referrerPolicy, noModule, defer, document = defaultDocument, } = options;
+    const scriptTag = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(null);
+    let _promise = null;
+    /**
+     * Load the script specified via `src`.
+     *
+     * @param waitForScriptLoad Whether if the Promise should resolve once the "load" event is emitted by the <script> attribute, or right after appending it to the DOM.
+     * @returns Promise<HTMLScriptElement>
+     */
+    const loadScript = (waitForScriptLoad) => new Promise((resolve, reject) => {
+        // Some little closure for resolving the Promise.
+        const resolveWithElement = (el) => {
+            scriptTag.value = el;
+            resolve(el);
+            return el;
+        };
+        // Check if document actually exists, otherwise resolve the Promise (SSR Support).
+        if (!document) {
+            resolve(false);
+            return;
+        }
+        // Local variable defining if the <script> tag should be appended or not.
+        let shouldAppend = false;
+        let el = document.querySelector(`script[src="${src}"]`);
+        // Script tag not found, preparing the element for appending
+        if (!el) {
+            el = document.createElement('script');
+            el.type = type;
+            el.async = async;
+            el.src = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["unref"])(src);
+            // Optional attributes
+            if (defer)
+                el.defer = defer;
+            if (crossOrigin)
+                el.crossOrigin = crossOrigin;
+            if (noModule)
+                el.noModule = noModule;
+            if (referrerPolicy)
+                el.referrerPolicy = referrerPolicy;
+            // Enables shouldAppend
+            shouldAppend = true;
+        }
+        // Script tag already exists, resolve the loading Promise with it.
+        else if (el.hasAttribute('data-loaded')) {
+            resolveWithElement(el);
+        }
+        // Event listeners
+        el.addEventListener('error', event => reject(event));
+        el.addEventListener('abort', event => reject(event));
+        el.addEventListener('load', () => {
+            el.setAttribute('data-loaded', 'true');
+            onLoaded(el);
+            resolveWithElement(el);
+        });
+        // Append the <script> tag to head.
+        if (shouldAppend)
+            el = document.head.appendChild(el);
+        // If script load awaiting isn't needed, we can resolve the Promise.
+        if (!waitForScriptLoad)
+            resolveWithElement(el);
+    });
+    /**
+     * Exposed singleton wrapper for `loadScript`, avoiding calling it twice.
+     *
+     * @param waitForScriptLoad Whether if the Promise should resolve once the "load" event is emitted by the <script> attribute, or right after appending it to the DOM.
+     * @returns Promise<HTMLScriptElement>
+     */
+    const load = (waitForScriptLoad = true) => {
+        if (!_promise)
+            _promise = loadScript(waitForScriptLoad);
+        return _promise;
+    };
+    /**
+     * Unload the script specified by `src`.
+     */
+    const unload = () => {
+        if (!document)
+            return;
+        _promise = null;
+        if (scriptTag.value) {
+            document.head.removeChild(scriptTag.value);
+            scriptTag.value = null;
+        }
+    };
+    if (immediate && !manual)
+        tryOnMounted(load);
+    if (!manual)
+        tryOnUnmounted(unload);
+    return { scriptTag, load, unload };
+}
+
+/**
+ * Reactive SessionStorage.
+ *
+ * @see   {@link https://vueuse.js.org/useSessionStorage}
+ * @param key
+ * @param defaultValue
+ * @param options
+ */
+function useSessionStorage(key, defaultValue, options = {}) {
+    const { window = defaultWindow } = options;
+    return useStorage(key, defaultValue, window === null || window === void 0 ? void 0 : window.sessionStorage, options);
+}
+
+/**
+ * Reactive Web Share API.
+ *
+ * @use   {@link https://vueuse.js.org/useShare}
+ * @param shareOptions
+ * @param options
+ */
+function useShare(shareOptions = {}, options = {}) {
+    const { navigator = defaultNavigator } = options;
+    const _navigator = navigator;
+    const isSupported = _navigator && 'canShare' in _navigator;
+    const share = async (overrideOptions = {}) => {
+        if (isSupported) {
+            const data = Object.assign(Object.assign({}, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["unref"])(shareOptions)), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["unref"])(overrideOptions));
+            let granted = true;
+            if (data.files && _navigator.canShare)
+                granted = _navigator.canShare({ files: data.files });
+            if (granted)
+                return _navigator.share(data);
+        }
+    };
+    return {
+        isSupported,
+        share,
+    };
+}
+
+// ported from https://www.reddit.com/r/vuejs/comments/jksizl/speech_recognition_as_a_vue_3_hook
+/**
+ * Reactive SpeechRecognition.
+ *
+ * @see   {@link https://vueuse.js.org/useSpeechRecognition}
+ * @see   {@link https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition|SpeechRecognition}
+ * @param options
+ */
+function useSpeechRecognition(options = {}) {
+    const { lang = 'en-US', interimResults = true, continuous = true, window = defaultWindow, } = options;
+    const isListening = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(false);
+    const isFinal = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(false);
+    const result = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])('');
+    const error = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(null);
+    const toggle = (value = !isListening.value) => {
+        isListening.value = value;
+    };
+    const start = () => {
+        isListening.value = true;
+    };
+    const stop = () => {
+        isListening.value = false;
+    };
+    const SpeechRecognition = window && (window.SpeechRecognition || window.webkitSpeechRecognition);
+    const isSupported = Boolean(SpeechRecognition);
+    let recognition;
+    if (isSupported) {
+        recognition = new SpeechRecognition();
+        recognition.continuous = continuous;
+        recognition.interimResults = interimResults;
+        recognition.lang = lang;
+        recognition.onstart = () => {
+            isFinal.value = false;
+        };
+        recognition.onresult = (event) => {
+            const transcript = Array.from(event.results)
+                .map((result) => {
+                isFinal.value = result.isFinal;
+                return result[0];
+            })
+                .map(result => result.transcript)
+                .join('');
+            result.value = transcript;
+            error.value = null;
+        };
+        recognition.onerror = (event) => {
+            error.value = event.error;
+        };
+        recognition.onend = () => {
+            isListening.value = false;
+        };
+        Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(isListening, () => {
+            if (isListening.value)
+                recognition.start();
+            else
+                recognition.stop();
+        });
+    }
+    tryOnUnmounted(() => {
+        isListening.value = false;
+    });
+    return {
+        isSupported,
+        isListening,
+        isFinal,
+        recognition,
+        result,
+        error,
+        toggle,
+        start,
+        stop,
+    };
+}
+
+/**
+ * Reactive current timestamp.
+ *
+ * @see   {@link https://vueuse.js.org/useTimestamp}
+ * @param options
+ */
+function useTimestamp(options = {}) {
+    const { offset = 0 } = options;
+    const ts = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(timestamp() + offset);
+    const controls = useRafFn(() => ts.value = timestamp() + offset, { immediate: true });
+    return Object.assign({ timestamp: ts }, controls);
+}
+
+/**
+ * Reactive document title.
+ *
+ * @see   {@link https://vueuse.js.org/useTitle}
+ * @param newTitle
+ * @param options
+ */
+function useTitle(newTitle = null, { document = defaultDocument } = {}) {
+    var _a;
+    const title = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])((_a = newTitle !== null && newTitle !== void 0 ? newTitle : document === null || document === void 0 ? void 0 : document.title) !== null && _a !== void 0 ? _a : null);
+    Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(title, (t, o) => {
+        if (isString(t) && t !== o && document)
+            document.title = t;
+    }, { immediate: true });
+    return title;
+}
+
+/**
+ * Create an easing function from cubic bezier points.
+ */
+function createEasingFunction([p0, p1, p2, p3]) {
+    const a = (a1, a2) => 1 - 3 * a2 + 3 * a1;
+    const b = (a1, a2) => 3 * a2 - 6 * a1;
+    const c = (a1) => 3 * a1;
+    const calcBezier = (t, a1, a2) => ((a(a1, a2) * t + b(a1, a2)) * t + c(a1)) * t;
+    const getSlope = (t, a1, a2) => 3 * a(a1, a2) * t * t + 2 * b(a1, a2) * t + c(a1);
+    const getTforX = (x) => {
+        let aGuessT = x;
+        for (let i = 0; i < 4; ++i) {
+            const currentSlope = getSlope(aGuessT, p0, p2);
+            if (currentSlope === 0)
+                return aGuessT;
+            const currentX = calcBezier(aGuessT, p0, p2) - x;
+            aGuessT -= currentX / currentSlope;
+        }
+        return aGuessT;
+    };
+    return (x) => p0 === p1 && p2 === p3 ? x : calcBezier(getTforX(x), p1, p3);
+}
+/**
+ * Common transitions
+ *
+ * @see   {@link https://easings.net}
+ */
+const TransitionPresets = {
+    linear: [0, 0, 1, 1],
+    easeInSine: [0.12, 0, 0.39, 0],
+    easeOutSine: [0.61, 1, 0.88, 1],
+    easeInQuad: [0.11, 0, 0.5, 0],
+    easeOutQuad: [0.5, 1, 0.89, 1],
+    easeInCubic: [0.32, 0, 0.67, 0],
+    easeOutCubic: [0.33, 1, 0.68, 1],
+    easeInOutCubic: [0.65, 0, 0.35, 1],
+    easeInQuart: [0.5, 0, 0.75, 0],
+    easeOutQuart: [0.25, 1, 0.5, 1],
+    easeInOutQuart: [0.76, 0, 0.24, 1],
+    easeInQuint: [0.64, 0, 0.78, 0],
+    easeOutQuint: [0.22, 1, 0.36, 1],
+    easeInOutQuint: [0.83, 0, 0.17, 1],
+    easeInExpo: [0.7, 0, 0.84, 0],
+    easeOutExpo: [0.16, 1, 0.3, 1],
+    easeInOutExpo: [0.87, 0, 0.13, 1],
+    easeInCirc: [0.55, 0, 1, 0.45],
+    easeOutCirc: [0, 0.55, 0.45, 1],
+    easeInOutCirc: [0.85, 0, 0.15, 1],
+    easeInBack: [0.36, 0, 0.66, -0.56],
+    easeOutBack: [0.34, 1.56, 0.64, 1],
+    easeInOutBack: [0.68, -0.6, 0.32, 1.6],
+};
+/**
+ * Transition between values.
+ *
+ * @see   {@link https://vueuse.js.org/useTransition}
+ * @param source
+ * @param options
+ */
+function useTransition(source, options = {}) {
+    const { duration = 500, onFinished = noop, onStarted = noop, transition = (n) => n, } = options;
+    const output = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(source.value);
+    const currentTransition = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])(() => {
+        const t = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["unref"])(transition);
+        return isFunction(t) ? t : createEasingFunction(t);
+    });
+    let currentDuration = 0;
+    let diff = 0;
+    let endAt = 0;
+    let startAt = 0;
+    let startValue = 0;
+    const { resume, pause } = useRafFn(() => {
+        const now = Date.now();
+        const progress = clamp(1 - ((endAt - now) / currentDuration), 0, 1);
+        output.value = startValue + (diff * currentTransition.value(progress));
+        if (progress >= 1) {
+            pause();
+            onFinished();
+        }
+    }, { immediate: false });
+    Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(source, () => {
+        pause();
+        currentDuration = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["unref"])(duration);
+        diff = source.value - output.value;
+        startValue = output.value;
+        startAt = Date.now();
+        endAt = startAt + currentDuration;
+        resume();
+        onStarted();
+    });
+    return output;
+}
+
+/**
+ * Reactive URLSearchParams
+ *
+ * @see   {@link https://vueuse.js.org/useUrlSearchParams}
+ * @param mode
+ * @param options
+ */
+function useUrlSearchParams(mode = 'history', options = {}) {
+    const { window = defaultWindow } = options;
+    if (!window)
+        return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["reactive"])(Object.assign({}));
+    const hashWithoutParams = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])(() => {
+        const hash = window.location.hash || '';
+        const index = hash.indexOf('?');
+        return index > 0 ? hash.substring(0, index) : hash;
+    });
+    const read = () => {
+        if (mode === 'hash') {
+            const hash = window.location.hash || '';
+            const index = hash.indexOf('?');
+            return new URLSearchParams(index ? hash.substring(index + 1) : '');
+        }
+        else {
+            return new URLSearchParams(window.location.search || '');
+        }
+    };
+    const write = (params, shouldUpdateParamsMap) => {
+        pause();
+        if (shouldUpdateParamsMap) {
+            Object.keys(paramsMap).forEach(key => delete paramsMap[key]);
+            for (const key of params.keys()) {
+                const paramsForKey = params.getAll(key);
+                writeToParamsMap(key, paramsForKey.length > 1 ? paramsForKey : (params.get(key) || ''));
+            }
+        }
+        const empty = !params.keys.length;
+        const query = empty
+            ? hashWithoutParams.value
+            : (mode === 'hash')
+                ? `${hashWithoutParams.value}?${params}`
+                : `?${params}${hashWithoutParams.value}`;
+        window.history.replaceState({}, '', window.location.pathname + query);
+        resume();
+    };
+    let params = read();
+    const paramsMap = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["reactive"])(Object.assign({}));
+    const writeToParamsMap = (key, value) => paramsMap[key] = value;
+    const { pause, resume } = pausableWatch(paramsMap, () => {
+        params = new URLSearchParams('');
+        Object.keys(paramsMap).forEach((key) => {
+            const mapEntry = paramsMap[key];
+            if (Array.isArray(mapEntry))
+                mapEntry.forEach(value => params.append(key, value));
+            else
+                params.set(key, mapEntry);
+        });
+        write(params);
+    }, { deep: true });
+    useEventListener(window, 'popstate', () => {
+        params = read();
+        write(params, true);
+    });
+    return paramsMap;
+}
+
+/**
+ * Shorthand for v-model binding, props + emit -> ref
+ *
+ * @see   {@link https://vueuse.js.org/useVModel}
+ * @param props
+ * @param key (default 'value' in Vue 2 and 'modelValue' in Vue 3)
+ * @param emit
+ */
+function useVModel(props, key, emit) {
+    var _a;
+    const vm = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["getCurrentInstance"])();
+    // @ts-expect-error mis-alignment with @vue/composition-api
+    const _emit = emit || (vm === null || vm === void 0 ? void 0 : vm.emit) || ((_a = vm === null || vm === void 0 ? void 0 : vm.$emit) === null || _a === void 0 ? void 0 : _a.bind(vm));
+    if (!key)
+        key = (index_esm["isVue2"] ? 'value' : 'modelValue');
+    return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])({
+        get() {
+            return props[key];
+        },
+        set(value) {
+            _emit(`update:${key}`, value);
+        },
+    });
+}
+
+/* this implementation is original ported from https://github.com/logaretm/vue-use-web by Abdelrahman Awad */
+/**
+ * Reactive simple WebSocket client.
+ *
+ * @see   {@link https://vueuse.js.org/useWebSocket}
+ * @param url
+ */
+function useWebSocket(url) {
+    const data = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(null);
+    const state = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])('CONNECTING');
+    let ws;
+    const close = function close(code, reason) {
+        if (!ws)
+            return;
+        ws.close(code, reason);
+    };
+    const send = function send(data) {
+        if (!ws)
+            return;
+        ws.send(data);
+    };
+    ws = new WebSocket(url);
+    ws.onopen = () => {
+        state.value = 'OPEN';
+    };
+    ws.onclose = ws.onerror = () => {
+        state.value = 'CLOSED';
+    };
+    ws.onmessage = (e) => {
+        data.value = e.data;
+    };
+    tryOnUnmounted(() => {
+        ws.close();
+    });
+    return {
+        data,
+        state,
+        close,
+        send,
+        ws,
+    };
+}
+
+/* this implementation is original ported from https://github.com/logaretm/vue-use-web by Abdelrahman Awad */
+/**
+ * Simple Web Workers registration and communication.
+ *
+ * @see   {@link https://vueuse.js.org/useWebWorker}
+ * @param url
+ */
+function useWebWorker(url) {
+    const data = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(null);
+    let worker;
+    const post = function post(val) {
+        if (!worker)
+            return;
+        worker.postMessage(val);
+    };
+    const terminate = function terminate() {
+        if (!worker)
+            return;
+        worker.terminate();
+    };
+    worker = new Worker(url);
+    worker.onmessage = (e) => {
+        data.value = e.data;
+    };
+    tryOnUnmounted(() => {
+        worker.terminate();
+    });
+    return {
+        data,
+        post,
+        terminate,
+    };
+}
+
+/**
+ * This function accepts as a parameter a function "userFunc"
+ * And as a result returns an anonymous function.
+ * This anonymous function, accepts as arguments,
+ * the parameters to pass to the function "useArgs" and returns a Promise
+ * This function can be used as a wrapper, only inside a Worker
+ * because it depends by "postMessage".
+ *
+ * @param {Function} userFunc {Function} fn the function to run with web worker
+ *
+ * @returns {Function} returns a function that accepts the parameters
+ * to be passed to the "userFunc" function
+ */
+const jobRunner = (userFunc) => (e) => {
+    const userFuncArgs = e.data[0];
+    // eslint-disable-next-line prefer-spread
+    return Promise.resolve(userFunc.apply(undefined, userFuncArgs))
+        .then((result) => {
+        // @ts-ignore
+        postMessage(['SUCCESS', result]);
+    })
+        .catch((error) => {
+        // @ts-ignore
+        postMessage(['ERROR', error]);
+    });
+};
+
+/**
+ *
+ * Concatenates the dependencies into a comma separated string.
+ * this string will then be passed as an argument to the "importScripts" function
+ *
+ * @param {Array.<String>}} deps array of string
+ * @returns {String} a string composed by the concatenation of the array
+ * elements "deps" and "importScripts".
+ *
+ * @example
+ * depsParser(['demo1', 'demo2']) // return importScripts('demo1, demo2')
+ */
+const depsParser = (deps) => {
+    if (deps.length === 0)
+        return '';
+    const depsString = deps.map(dep => `${dep}`).toString();
+    return `importScripts('${depsString}')`;
+};
+
+/**
+ * Converts the "fn" function into the syntax needed to be executed within a web worker
+ *
+ * @param {Function} fn the function to run with web worker
+ * @param {Array.<String>} deps array of strings, imported into the worker through "importScripts"
+ *
+ * @returns {String} a blob url, containing the code of "fn" as a string
+ *
+ * @example
+ * createWorkerBlobUrl((a,b) => a+b, [])
+ * // return "onmessage=return Promise.resolve((a,b) => a + b)
+ * .then(postMessage(['SUCCESS', result]))
+ * .catch(postMessage(['ERROR', error])"
+ */
+const createWorkerBlobUrl = (fn, deps) => {
+    const blobCode = `${depsParser(deps)}; onmessage=(${jobRunner})(${fn})`;
+    const blob = new Blob([blobCode], { type: 'text/javascript' });
+    const url = URL.createObjectURL(blob);
+    return url;
+};
+
+/* this implementation is a vue port of https://github.com/alewin/useWorker by Alessio Koci */
+/**
+ * Run expensive function without blocking the UI, using a simple syntax that makes use of Promise.
+ *
+ * @see   {@link https://vueuse.js.org/useWebWorkerFn}
+ * @param fn
+ * @param options
+ */
+const useWebWorkerFn = (fn, { dependencies = [], timeout, window = defaultWindow, } = {}) => {
+    const worker = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(undefined);
+    const workerStatus = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])('PENDING');
+    const promise = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])({});
+    const timeoutId = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(undefined);
+    const workerTerminate = (status = 'PENDING') => {
+        if (worker.value && worker.value._url && window) {
+            worker.value.terminate();
+            URL.revokeObjectURL(worker.value._url);
+            promise.value = {};
+            worker.value = undefined;
+            window.clearTimeout(timeoutId.value);
+            workerStatus.value = status;
+        }
+    };
+    workerTerminate();
+    tryOnUnmounted(() => {
+        workerTerminate();
+    });
+    const generateWorker = () => {
+        const blobUrl = createWorkerBlobUrl(fn, dependencies);
+        const newWorker = new Worker(blobUrl);
+        newWorker._url = blobUrl;
+        newWorker.onmessage = (e) => {
+            const { resolve = () => { }, reject = () => { }, } = promise.value;
+            const [status, result] = e.data;
+            switch (status) {
+                case 'SUCCESS':
+                    resolve(result);
+                    workerTerminate(status);
+                    break;
+                default:
+                    reject(result);
+                    workerTerminate('ERROR');
+                    break;
+            }
+        };
+        newWorker.onerror = (e) => {
+            const { reject = () => { }, } = promise.value;
+            reject(e);
+            workerTerminate('ERROR');
+        };
+        if (timeout) {
+            timeoutId.value = setTimeout(() => workerTerminate('TIMEOUT_EXPIRED'), timeout);
+        }
+        return newWorker;
+    };
+    const callWorker = (...fnArgs) => new Promise((resolve, reject) => {
+        promise.value = {
+            resolve,
+            reject,
+        };
+        worker.value && worker.value.postMessage([[...fnArgs]]);
+        workerStatus.value = 'RUNNING';
+    });
+    const workerFn = (...fnArgs) => {
+        if (workerStatus.value === 'RUNNING') {
+            /* eslint-disable-next-line no-console */
+            console.error('[useWebWorkerFn] You can only run one instance of the worker at a time.');
+            /* eslint-disable-next-line prefer-promise-reject-errors */
+            return Promise.reject();
+        }
+        worker.value = generateWorker();
+        return callWorker(...fnArgs);
+    };
+    return {
+        workerFn,
+        workerStatus,
+        workerTerminate,
+    };
+};
+
+/**
+ * Reactive window scroll.
+ *
+ * @see   {@link https://vueuse.js.org/useWindowScroll}
+ * @param options
+ */
+function useWindowScroll({ window = defaultWindow } = {}) {
+    if (!window) {
+        return {
+            x: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0),
+            y: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0),
+        };
+    }
+    const x = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(window.pageXOffset);
+    const y = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(window.pageYOffset);
+    useEventListener('scroll', () => {
+        x.value = window.pageXOffset;
+        y.value = window.pageYOffset;
+    }, {
+        capture: false,
+        passive: true,
+    });
+    return { x, y };
+}
+
+/**
+ * Reactive window size.
+ *
+ * @see   {@link https://vueuse.js.org/useWindowSize}
+ * @param options
+ */
+function useWindowSize({ window = defaultWindow, initialWidth = Infinity, initialHeight = Infinity } = {}) {
+    if (!window) {
+        return {
+            width: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(initialWidth),
+            height: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(initialHeight),
+        };
+    }
+    const width = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(window.innerWidth);
+    const height = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(window.innerHeight);
+    useEventListener('resize', () => {
+        width.value = window.innerWidth;
+        height.value = window.innerHeight;
+    }, { passive: true });
+    return { width, height };
+}
+
+
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/ts-loader??ref--13-3!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-input.vue?vue&type=script&lang=ts
+
+
+
+/* harmony default export */ var tw_inputvue_type_script_lang_ts = (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["defineComponent"])({
+  props: {
+    resize: {
+      type: Boolean,
+      "default": false
+    },
+    typing: {
+      type: Boolean,
+      "default": false
+    },
+    minSize: {
+      type: [Number, String],
+      "default": 32
+    },
+    placeholder: {
+      type: String,
+      "default": ""
+    }
+  },
+  setup: function setup(props) {
+    var input = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])();
+    var placeholderWidth = 0;
+
+    if (props.typing) {
+      onStartTyping(function () {
+        var _input$value;
+
+        if (!(input !== null && input !== void 0 && (_input$value = input.value) !== null && _input$value !== void 0 && _input$value.active)) {
+          input.value.focus();
+        }
+      });
+    }
+
+    if (props.resize) {
+      var resizeInput = function resizeInput() {
+        var el = input.value;
+        var value = el.value;
+        el.style.width = "1px";
+
+        if (value === "" && placeholderWidth) {
+          el.style.width = Math.max(+props.minSize, placeholderWidth) + "px";
+        } else {
+          el.style.width = Math.max(+props.minSize, value ? el.scrollWidth : 0) + "px";
+        }
+      };
+
+      Object(external_commonjs_vue_commonjs2_vue_root_Vue_["onMounted"])(function () {
+        var _props$placeholder;
+
+        var el = input.value;
+        el.addEventListener("input", resizeInput);
+        console.log(props.placeholder);
+
+        if (el.value === "" && ((_props$placeholder = props.placeholder) === null || _props$placeholder === void 0 ? void 0 : _props$placeholder.length) > 0) {
+          el.style.width = "1px";
+          el.value = props.placeholder;
+          placeholderWidth = el.scrollWidth;
+          console.log(placeholderWidth);
+          el.value = "";
+        }
+
+        resizeInput();
+      });
+      Object(external_commonjs_vue_commonjs2_vue_root_Vue_["onBeforeUnmount"])(function () {
+        input.value.removeEventListener("input", resizeInput);
+      });
+    }
+
+    return {
+      input: input
+    };
+  }
+}));
+// CONCATENATED MODULE: ./src/components/tw-input.vue?vue&type=script&lang=ts
+ 
+// CONCATENATED MODULE: ./src/components/tw-input.vue
+
+
+
+tw_inputvue_type_script_lang_ts.render = tw_inputvue_type_template_id_3f92536e_render
+
+/* harmony default export */ var tw_input = (tw_inputvue_type_script_lang_ts);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-notification.vue?vue&type=template&id=505a061d
+
+var tw_notificationvue_type_template_id_505a061d_hoisted_1 = {
+  "class": "tw-notification-container"
+};
+var tw_notificationvue_type_template_id_505a061d_hoisted_2 = {
+  "class": "tw-notification-title"
+};
+var tw_notificationvue_type_template_id_505a061d_hoisted_3 = {
+  "class": "tw-notification-message"
+};
+function tw_notificationvue_type_template_id_505a061d_render(_ctx, _cache, $props, $setup, $data, $options) {
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])(external_commonjs_vue_commonjs2_vue_root_Vue_["Teleport"], {
+    to: "body"
+  }, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("div", tw_notificationvue_type_template_id_505a061d_hoisted_1, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(external_commonjs_vue_commonjs2_vue_root_Vue_["TransitionGroup"], {
+    name: "notification",
+    tag: "div"
+  }, {
+    "default": Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withCtx"])(function () {
+      return [(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])(external_commonjs_vue_commonjs2_vue_root_Vue_["Fragment"], null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderList"])(_ctx.notifications, function (n) {
+        return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", {
+          "class": "tw-notification",
+          key: n.id
+        }, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("div", tw_notificationvue_type_template_id_505a061d_hoisted_2, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(n.title), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("div", tw_notificationvue_type_template_id_505a061d_hoisted_3, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(n.message), 1)]);
+      }), 128))];
+    }),
+    _: 1
+  })])]);
+}
+// CONCATENATED MODULE: ./src/components/tw-notification.vue?vue&type=template&id=505a061d
+
+// CONCATENATED MODULE: ./src/components/notification.ts
+
+
+
+
+
+var notifications = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["reactive"])([]);
+
+function deleteNotification(id) {
+  var index = notifications.findIndex(function (n) {
+    return n.id === id;
+  });
+
+  if (index >= 0) {
+    notifications.splice(index, 1);
+    console.log("remove index", index, id);
+  }
+}
+
+function notification(n) {
+  if (!n.id) n.id = UUID();
+  if (!n.timeout) n.timeout = 5 * 1000;
+  if (!n.active) n.active = true;
+
+  if (n.timeout) {
+    setTimeout(function () {
+      n.active = false;
+      deleteNotification(n.id);
+    }, n.timeout);
+  }
+
+  console.log("add id", n.id);
+  notifications.unshift(n);
+}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/ts-loader??ref--13-3!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-notification.vue?vue&type=script&lang=ts
+
+
+/* harmony default export */ var tw_notificationvue_type_script_lang_ts = (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["defineComponent"])({
+  setup: function setup(props) {
+    return {
+      notifications: notifications
+    };
+  }
+}));
+// CONCATENATED MODULE: ./src/components/tw-notification.vue?vue&type=script&lang=ts
+ 
+// CONCATENATED MODULE: ./src/components/tw-notification.vue
+
+
+
+tw_notificationvue_type_script_lang_ts.render = tw_notificationvue_type_template_id_505a061d_render
+
+/* harmony default export */ var tw_notification = (tw_notificationvue_type_script_lang_ts);
 // CONCATENATED MODULE: ./src/components/index.ts
+
+
+
 
 
 
@@ -11273,7 +14608,7 @@ tw_tag_inputvue_type_script_lang_ts.render = tw_tag_inputvue_type_template_id_f3
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
 
 
-/* harmony default export */ var entry_lib = __webpack_exports__["default"] = (/* Cannot get final name for export "default" in "./src/main.ts" (known exports: , known reexports: twButton twModal twItems twList twPopover twTooltip twTooltipTrigger twCompletion twTagInput) */ undefined);
+/* harmony default export */ var entry_lib = __webpack_exports__["default"] = (/* Cannot get final name for export "default" in "./src/main.ts" (known exports: , known reexports: twButton twModal twItems twList twPopover twTooltip twTooltipTrigger twCompletion twTagInput twInput twNotification notification) */ undefined);
 
 
 

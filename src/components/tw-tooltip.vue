@@ -28,15 +28,7 @@
 </template>
 
 <script lang="ts">
-import { createPopper } from "@popperjs/core"
-import {
-  defineComponent,
-  nextTick,
-  onBeforeUnmount,
-  reactive,
-  ref,
-  watchEffect,
-} from "vue"
+import { onBeforeUnmount, ref } from "vue"
 import { UUID } from "./lib/uuid"
 import twPopover from "./tw-popover.vue"
 

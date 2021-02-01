@@ -60,7 +60,6 @@ export default defineComponent({
   name: "tw-modal",
   props: {
     modelValue: {
-      type: Boolean,
       default: false,
     },
     title: {
@@ -142,11 +141,11 @@ export default defineComponent({
   watch: {
     async modelValue(value) {
       console.log("modal", this.modalValue)
-      if (value === true) {
+      if (value == null || value === false) {
+        this.$emit("willclose")
+      } else {
         this.$emit("didopen")
         this.doFocus()
-      } else {
-        this.$emit("willclose")
       }
     },
   },

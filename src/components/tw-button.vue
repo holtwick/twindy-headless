@@ -2,7 +2,6 @@
 
 <template>
   <button
-    :class="classnames"
     v-bind="$attrs"
     :disabled="disabled"
     :role="role"

@@ -10,6 +10,7 @@ import twTagInput from "./tw-tag-input.vue"
 import twInput from "./tw-input.vue"
 import twDropdown from "./tw-dropdown.vue"
 import twObject from "./tw-object.vue"
+import twIcon from "./tw-icon.vue"
 
 import { useNotification } from "./notification"
 import { useTooltip } from "./tooltip"
@@ -27,6 +28,7 @@ export {
   twInput,
   twDropdown,
   twObject,
+  twIcon,
   useNotification,
   useTooltip,
 }

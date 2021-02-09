@@ -7317,8 +7317,8 @@ __webpack_require__.d(__webpack_exports__, "twTooltipTrigger", function() { retu
 __webpack_require__.d(__webpack_exports__, "twCompletion", function() { return /* reexport */ tw_completion; });
 __webpack_require__.d(__webpack_exports__, "twTagInput", function() { return /* reexport */ tw_tag_input; });
 __webpack_require__.d(__webpack_exports__, "twInput", function() { return /* reexport */ tw_input; });
-__webpack_require__.d(__webpack_exports__, "twNotification", function() { return /* reexport */ tw_notification; });
-__webpack_require__.d(__webpack_exports__, "notification", function() { return /* reexport */ notification; });
+__webpack_require__.d(__webpack_exports__, "useNotification", function() { return /* reexport */ useNotification; });
+__webpack_require__.d(__webpack_exports__, "useTooltip", function() { return /* reexport */ useTooltip; });
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
 // This file is imported into lib/wc client bundles.
@@ -10568,9 +10568,9 @@ var tw_popovervue_type_script_lang_ts_RefObj = /*#__PURE__*/function () {
 tw_popovervue_type_script_lang_ts.render = tw_popovervue_type_template_id_b649b4d4_render
 
 /* harmony default export */ var tw_popover = (tw_popovervue_type_script_lang_ts);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-tooltip.vue?vue&type=template&id=041ccea4
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-tooltip.vue?vue&type=template&id=3fe9e04b
 
-function tw_tooltipvue_type_template_id_041ccea4_render(_ctx, _cache, $props, $setup, $data, $options) {
+function tw_tooltipvue_type_template_id_3fe9e04b_render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_tw_popover = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("tw-popover");
 
   return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", {
@@ -10614,7 +10614,7 @@ function tw_tooltipvue_type_template_id_041ccea4_render(_ctx, _cache, $props, $s
     _: 3
   }, 8, ["target", "id"])) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true)], 8, ["aria-describedby"]);
 }
-// CONCATENATED MODULE: ./src/components/tw-tooltip.vue?vue&type=template&id=041ccea4
+// CONCATENATED MODULE: ./src/components/tw-tooltip.vue?vue&type=template&id=3fe9e04b
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/ts-loader??ref--13-3!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-tooltip.vue?vue&type=script&lang=ts
 
@@ -10687,12 +10687,12 @@ var log = __webpack_require__("34eb")("ui:tooltip");
 
 
 
-tw_tooltipvue_type_script_lang_ts.render = tw_tooltipvue_type_template_id_041ccea4_render
+tw_tooltipvue_type_script_lang_ts.render = tw_tooltipvue_type_template_id_3fe9e04b_render
 
 /* harmony default export */ var tw_tooltip = (tw_tooltipvue_type_script_lang_ts);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-tooltip-trigger.vue?vue&type=template&id=059896ad
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-tooltip-trigger.vue?vue&type=template&id=5884a2dc
 
-function tw_tooltip_triggervue_type_template_id_059896ad_render(_ctx, _cache, $props, $setup, $data, $options) {
+function tw_tooltip_triggervue_type_template_id_5884a2dc_render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_tw_popover = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("tw-popover");
 
   return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])(_component_tw_popover, {
@@ -10707,7 +10707,7 @@ function tw_tooltip_triggervue_type_template_id_059896ad_render(_ctx, _cache, $p
     _: 1
   }, 8, ["target", "placement"]);
 }
-// CONCATENATED MODULE: ./src/components/tw-tooltip-trigger.vue?vue&type=template&id=059896ad
+// CONCATENATED MODULE: ./src/components/tw-tooltip-trigger.vue?vue&type=template&id=5884a2dc
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.date.to-string.js
 var es_date_to_string = __webpack_require__("0d03");
@@ -10746,7 +10746,6 @@ var active = false;
     var target = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])();
     var text = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])("");
     var debounceTimer = 0;
-    var currentElement;
 
     var onTooltipHover = function onTooltipHover(ev) {
       clearTimeout(debounceTimer);
@@ -10799,7 +10798,7 @@ var active = false;
 
 
 
-tw_tooltip_triggervue_type_script_lang_ts.render = tw_tooltip_triggervue_type_template_id_059896ad_render
+tw_tooltip_triggervue_type_script_lang_ts.render = tw_tooltip_triggervue_type_template_id_5884a2dc_render
 
 /* harmony default export */ var tw_tooltip_trigger = (tw_tooltip_triggervue_type_script_lang_ts);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-completion.vue?vue&type=template&id=36261d8a
@@ -14491,21 +14490,22 @@ function useWindowSize({ window = defaultWindow, initialWidth = Infinity, initia
 tw_inputvue_type_script_lang_ts.render = tw_inputvue_type_template_id_3f92536e_render
 
 /* harmony default export */ var tw_input = (tw_inputvue_type_script_lang_ts);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-notification.vue?vue&type=template&id=505a061d
+// CONCATENATED MODULE: ./src/components/state.ts
 
-var tw_notificationvue_type_template_id_505a061d_hoisted_1 = {
+var notifications = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["reactive"])([]);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-notification.vue?vue&type=template&id=5cf03f34
+
+var tw_notificationvue_type_template_id_5cf03f34_hoisted_1 = {
   "class": "tw-notification-container"
 };
-var tw_notificationvue_type_template_id_505a061d_hoisted_2 = {
+var tw_notificationvue_type_template_id_5cf03f34_hoisted_2 = {
   "class": "tw-notification-title"
 };
-var tw_notificationvue_type_template_id_505a061d_hoisted_3 = {
+var tw_notificationvue_type_template_id_5cf03f34_hoisted_3 = {
   "class": "tw-notification-message"
 };
-function tw_notificationvue_type_template_id_505a061d_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])(external_commonjs_vue_commonjs2_vue_root_Vue_["Teleport"], {
-    to: "body"
-  }, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("div", tw_notificationvue_type_template_id_505a061d_hoisted_1, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(external_commonjs_vue_commonjs2_vue_root_Vue_["TransitionGroup"], {
+function tw_notificationvue_type_template_id_5cf03f34_render(_ctx, _cache, $props, $setup, $data, $options) {
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", tw_notificationvue_type_template_id_5cf03f34_hoisted_1, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(external_commonjs_vue_commonjs2_vue_root_Vue_["TransitionGroup"], {
     name: "notification",
     tag: "div"
   }, {
@@ -14514,48 +14514,14 @@ function tw_notificationvue_type_template_id_505a061d_render(_ctx, _cache, $prop
         return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", {
           "class": "tw-notification",
           key: n.id
-        }, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("div", tw_notificationvue_type_template_id_505a061d_hoisted_2, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(n.title), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("div", tw_notificationvue_type_template_id_505a061d_hoisted_3, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(n.message), 1)]);
+        }, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("div", tw_notificationvue_type_template_id_5cf03f34_hoisted_2, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(n.title), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("div", tw_notificationvue_type_template_id_5cf03f34_hoisted_3, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(n.message), 1)]);
       }), 128))];
     }),
     _: 1
-  })])]);
+  })]);
 }
-// CONCATENATED MODULE: ./src/components/tw-notification.vue?vue&type=template&id=505a061d
+// CONCATENATED MODULE: ./src/components/tw-notification.vue?vue&type=template&id=5cf03f34
 
-// CONCATENATED MODULE: ./src/components/notification.ts
-
-
-
-
-
-var notifications = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["reactive"])([]);
-
-function deleteNotification(id) {
-  var index = notifications.findIndex(function (n) {
-    return n.id === id;
-  });
-
-  if (index >= 0) {
-    notifications.splice(index, 1);
-    console.log("remove index", index, id);
-  }
-}
-
-function notification(n) {
-  if (!n.id) n.id = UUID();
-  if (!n.timeout) n.timeout = 5 * 1000;
-  if (!n.active) n.active = true;
-
-  if (n.timeout) {
-    setTimeout(function () {
-      n.active = false;
-      deleteNotification(n.id);
-    }, n.timeout);
-  }
-
-  console.log("add id", n.id);
-  notifications.unshift(n);
-}
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/ts-loader??ref--13-3!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-notification.vue?vue&type=script&lang=ts
 
 
@@ -14572,9 +14538,61 @@ function notification(n) {
 
 
 
-tw_notificationvue_type_script_lang_ts.render = tw_notificationvue_type_template_id_505a061d_render
+tw_notificationvue_type_script_lang_ts.render = tw_notificationvue_type_template_id_5cf03f34_render
 
 /* harmony default export */ var tw_notification = (tw_notificationvue_type_script_lang_ts);
+// CONCATENATED MODULE: ./src/components/notification.ts
+
+
+
+
+
+
+
+
+function deleteNotification(id) {
+  var index = notifications.findIndex(function (n) {
+    return n.id === id;
+  });
+
+  if (index >= 0) {
+    notifications.splice(index, 1);
+    console.log("remove index", index, id);
+  }
+}
+
+var notification_container = document.createElement("div");
+document.body.appendChild(notification_container);
+Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createApp"])(tw_notification).mount(notification_container);
+function notification(n) {
+  if (!n.id) n.id = UUID();
+  if (!n.timeout) n.timeout = 5 * 1000;
+  if (!n.active) n.active = true;
+
+  if (n.timeout) {
+    setTimeout(function () {
+      n.active = false;
+      deleteNotification(n.id);
+    }, n.timeout);
+  }
+
+  console.log("add id", n.id, notification_container);
+  notifications.unshift(n);
+}
+function useNotification() {
+  return {
+    trigger: notification
+  };
+}
+// CONCATENATED MODULE: ./src/components/tooltip.ts
+
+
+var tooltip_container = document.createElement("div");
+document.body.appendChild(tooltip_container);
+Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createApp"])(tw_tooltip_trigger).mount(tooltip_container);
+function useTooltip() {
+  return {};
+}
 // CONCATENATED MODULE: ./src/components/index.ts
 
 
@@ -14608,7 +14626,7 @@ tw_notificationvue_type_script_lang_ts.render = tw_notificationvue_type_template
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
 
 
-/* harmony default export */ var entry_lib = __webpack_exports__["default"] = (/* Cannot get final name for export "default" in "./src/main.ts" (known exports: , known reexports: twButton twModal twItems twList twPopover twTooltip twTooltipTrigger twCompletion twTagInput twInput twNotification notification) */ undefined);
+/* harmony default export */ var entry_lib = __webpack_exports__["default"] = (/* Cannot get final name for export "default" in "./src/main.ts" (known exports: , known reexports: twButton twModal twItems twList twPopover twTooltip twTooltipTrigger twCompletion twTagInput twInput useNotification useTooltip) */ undefined);
 
 
 

@@ -1,7 +1,6 @@
-import { useEventListener, useResizeObserver } from "@vueuse/core"
-import { onMounted, onUpdated } from "vue"
+import { onUpdated, Ref } from "vue"
 
-export function useTextareaResize(r) {
+export function useTextareaResize(r: Ref<HTMLTextAreaElement>): void {
   const resize = () => {
     let el = r.value
     el.style.height = "1px"
@@ -9,7 +8,6 @@ export function useTextareaResize(r) {
   }
 
   onUpdated(() => {
-    console.log("ttt", r)
     r.value.setAttribute(
       "style",
       "height:" +

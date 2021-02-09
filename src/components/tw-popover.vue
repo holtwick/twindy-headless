@@ -35,7 +35,6 @@ import {
   defineComponent,
   nextTick,
   onBeforeUnmount,
-  reactive,
   ref,
   watchEffect,
 } from "vue"
@@ -71,7 +70,6 @@ class RefObj {
 export default defineComponent({
   props: {
     target: {
-      type: Object,
       default: null,
     },
     transition: {

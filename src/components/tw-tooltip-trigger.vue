@@ -9,6 +9,7 @@ import twPopover from "./tw-popover.vue"
 import { defineComponent, onBeforeUnmount, ref } from "vue"
 
 var active = false
+var ignore = false
 
 export default defineComponent({
   props: {
@@ -38,6 +39,8 @@ export default defineComponent({
     let debounceTimer: any = 0
 
     let onTooltipHover = (ev: Event) => {
+      if (ignore) return
+
       clearTimeout(debounceTimer)
       let el: any = ev.target
       debounceTimer = setTimeout(() => {
@@ -62,12 +65,19 @@ export default defineComponent({
       }, /*props.delay || */ 50) // debounce
     }
 
+    let onTouchDown = (ev: Event) => {
+      ignore = true
+    }
+
     const useCapture = true
+
+    window.addEventListener("touchdown", onTouchDown, useCapture)
     window.addEventListener("mouseover", onTooltipHover, useCapture)
     // window.addEventListener("focus", onTooltipHover, useCapture)
 
     onBeforeUnmount(() => {
       window.removeEventListener("mouseover", onTooltipHover, useCapture)
+      window.removeEventListener("touchdown", onTouchDown, useCapture)
       // window.removeEventListener("focus", onTooltipHover, useCapture)
     })
 

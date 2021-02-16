@@ -8047,8 +8047,6 @@ function _typeof(obj) {
 
 
 
-var helpers_navigator, _navigator2, _window, _window2;
-
 // Copyright (c) 2020 Dirk Holtwick. All rights reserved. https://holtwick.de/copyright
 
 /**
@@ -8166,9 +8164,13 @@ function escapeRegExp(value) {
 
   return value.replace(rxEscape, "\\$&");
 } // https://github.com/viljamis/feature.js/blob/master/feature.js#L203
-
-var supportsTouch = Boolean(window && "ontouchstart" in window || (((helpers_navigator = navigator) === null || helpers_navigator === void 0 ? void 0 : helpers_navigator.maxTouchPoints) || 0) > 1 || ((_navigator2 = navigator) === null || _navigator2 === void 0 ? void 0 : _navigator2.msPointerEnabled) && ((_window = window) === null || _window === void 0 ? void 0 : _window.MSGesture) || // @ts-ignore
-((_window2 = window) === null || _window2 === void 0 ? void 0 : _window2.DocumentTouch) && document instanceof DocumentTouch);
+// export const supportsTouch = Boolean(
+//   (window && "ontouchstart" in window) ||
+//     (navigator?.maxTouchPoints || 0) > 1 ||
+//     (navigator?.msPointerEnabled && window?.MSGesture) ||
+//     // @ts-ignore
+//     (window?.DocumentTouch && document instanceof DocumentTouch)
+// )
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/tw-link.vue?vue&type=template&id=6c6b6e08
 
 function tw_linkvue_type_template_id_6c6b6e08_render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -8802,7 +8804,6 @@ function getScrollParent(node) {
 
 
 
-
 /*
 given a DOM element, return the list of all scroll parents, up the list of ancesors
 until we get to the top window object. This list is what we attach scroll listeners
@@ -8816,7 +8817,7 @@ function listScrollParents(element, list) {
   }
 
   var scrollParent = getScrollParent(element);
-  var isBody = getNodeName(scrollParent) === 'body';
+  var isBody = scrollParent === element.ownerDocument.body;
   var win = getWindow(scrollParent);
   var target = isBody ? [win].concat(win.visualViewport || [], isScrollParent(scrollParent) ? scrollParent : []) : scrollParent;
   var updatedList = list.concat(target);
@@ -9384,6 +9385,7 @@ function popperOffsets_popperOffsets(_ref) {
 
  // eslint-disable-next-line import/no-unused-modules
 
+var round = Math.round;
 var unsetSides = {
   top: 'auto',
   right: 'auto',
@@ -9399,8 +9401,8 @@ function roundOffsetsByDPR(_ref) {
   var win = window;
   var dpr = win.devicePixelRatio || 1;
   return {
-    x: Math.round(x * dpr) / dpr || 0,
-    y: Math.round(y * dpr) / dpr || 0
+    x: round(round(x * dpr) / dpr) || 0,
+    y: round(round(y * dpr) / dpr) || 0
   };
 }
 
@@ -9416,7 +9418,7 @@ function mapToStyles(_ref2) {
       adaptive = _ref2.adaptive,
       roundOffsets = _ref2.roundOffsets;
 
-  var _ref3 = roundOffsets ? roundOffsetsByDPR(offsets) : offsets,
+  var _ref3 = roundOffsets === true ? roundOffsetsByDPR(offsets) : typeof roundOffsets === 'function' ? roundOffsets(offsets) : offsets,
       _ref3$x = _ref3.x,
       x = _ref3$x === void 0 ? 0 : _ref3$x,
       _ref3$y = _ref3.y,
@@ -11405,11 +11407,128 @@ function biSyncRef(a, b) {
  * @param fn
  */
 function controlledComputed(source, fn) {
-    const v = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(fn());
-    Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(source, () => v.value = fn(), {
-        flush: 'sync',
+    let v = undefined;
+    let track;
+    let trigger;
+    const dirty = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(true);
+    Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(source, () => {
+        dirty.value = true;
+        trigger();
+    }, { flush: 'sync' });
+    return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["customRef"])((_track, _trigger) => {
+        track = _track;
+        trigger = _trigger;
+        return {
+            get() {
+                if (dirty.value) {
+                    v = fn();
+                    dirty.value = false;
+                }
+                track();
+                return v;
+            },
+            set() { },
+        };
     });
-    return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])(() => v.value);
+}
+
+function __onlyVue3(name = 'this function') {
+    if (index_esm["isVue3"])
+        return;
+    throw new Error(`[VueUse] ${name} is only works on Vue 3.`);
+}
+
+// implementation
+function extendRef(ref, extend, { enumerable = false, unwrap = true } = {}) {
+    __onlyVue3();
+    for (const [key, value] of Object.entries(extend)) {
+        if (key === 'value')
+            continue;
+        if (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["isRef"])(value) && unwrap) {
+            Object.defineProperty(ref, key, {
+                get() {
+                    return value.value;
+                },
+                set(v) {
+                    value.value = v;
+                },
+                enumerable,
+            });
+        }
+        else {
+            Object.defineProperty(ref, key, { value, enumerable });
+        }
+    }
+    return ref;
+}
+
+/**
+ * Explicitly define the deps of computed.
+ *
+ * @param source
+ * @param fn
+ */
+function controlledRef(initial, options = {}) {
+    let source = initial;
+    let track;
+    let trigger;
+    const ref = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["customRef"])((_track, _trigger) => {
+        track = _track;
+        trigger = _trigger;
+        return {
+            get() {
+                return get();
+            },
+            set(v) {
+                set(v);
+            },
+        };
+    });
+    function get(tracking = true) {
+        if (tracking)
+            track();
+        return source;
+    }
+    function set(value, triggering = true) {
+        var _a, _b;
+        if (value === source)
+            return;
+        const old = source;
+        if (((_a = options.onBeforeChange) === null || _a === void 0 ? void 0 : _a.call(options, value, old)) === false)
+            return; // dismissed
+        source = value;
+        (_b = options.onChanged) === null || _b === void 0 ? void 0 : _b.call(options, value, old);
+        if (triggering)
+            trigger();
+    }
+    /**
+     * Get the value without tracked in the reactivity system
+     */
+    const untrackedGet = () => get(false);
+    /**
+     * Set the value without triggering the reactivity system
+     */
+    const silentSet = (v) => set(v, false);
+    /**
+     * Get the value without tracked in the reactivity system.
+     *
+     * Alias for `untrackedGet()`
+     */
+    const peek = () => get(false);
+    /**
+     * Set the value without triggering the reactivity system
+     *
+     * Alias for `silentSet(v)`
+     */
+    const lay = (v) => set(v, false);
+    return extendRef(ref, {
+        get,
+        set,
+        untrackedGet,
+        silentSet,
+        peek,
+        lay,
+    }, { enumerable: true });
 }
 
 /*! *****************************************************************************
@@ -11561,36 +11680,6 @@ function watchWithFilter(source, cb, options = {}) {
 function debouncedWatch(source, cb, options = {}) {
     const { debounce = 0 } = options, watchOptions = __rest(options, ["debounce"]);
     return watchWithFilter(source, cb, Object.assign(Object.assign({}, watchOptions), { eventFilter: debounceFilter(debounce) }));
-}
-
-function __onlyVue3(name = 'this function') {
-    if (index_esm["isVue3"])
-        return;
-    throw new Error(`[VueUse] ${name} is only works on Vue 3.`);
-}
-
-// implementation
-function extendRef(ref, extend, { enumerable = false, unwrap = true } = {}) {
-    __onlyVue3();
-    for (const [key, value] of Object.entries(extend)) {
-        if (key === 'value')
-            continue;
-        if (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["isRef"])(value) && unwrap) {
-            Object.defineProperty(ref, key, {
-                get() {
-                    return value.value;
-                },
-                set(v) {
-                    value.value = v;
-                },
-                enumerable,
-            });
-        }
-        else {
-            Object.defineProperty(ref, key, { value, enumerable });
-        }
-    }
-    return ref;
 }
 
 function index_esm_get(obj, key) {
@@ -11924,7 +12013,7 @@ function useThrottle(value, delay = 200) {
  * @param immediate
  */
 function useTimeoutFn(cb, interval, immediate = true) {
-    const isActive = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(false);
+    const isPending = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(false);
     let timer = null;
     function clear() {
         if (timer) {
@@ -11933,24 +12022,30 @@ function useTimeoutFn(cb, interval, immediate = true) {
         }
     }
     function stop() {
-        isActive.value = false;
+        isPending.value = false;
         clear();
     }
-    function start() {
+    function start(...args) {
         clear();
-        isActive.value = true;
+        isPending.value = true;
         timer = setTimeout(() => {
+            isPending.value = false;
             timer = null;
-            cb();
+            // eslint-disable-next-line standard/no-callback-literal
+            cb(...args);
         }, interval);
     }
-    if (immediate && isClient)
-        start();
+    if (immediate) {
+        isPending.value = true;
+        if (isClient)
+            start();
+    }
     tryOnUnmounted(stop);
     return {
-        isActive,
+        isPending,
         start,
         stop,
+        isActive: isPending,
     };
 }
 
@@ -12184,6 +12279,17 @@ function createGlobalState(stateFactory) {
     };
 }
 
+/**
+ * Get the dom element of a ref of element or Vue component instance
+ *
+ * @param elRef
+ */
+function unrefElement(elRef) {
+    var _a, _b;
+    const plain = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["unref"])(elRef);
+    return (_b = (_a = plain) === null || _a === void 0 ? void 0 : _a.$el) !== null && _b !== void 0 ? _b : plain;
+}
+
 function useEventListener(...args) {
     let target;
     let event;
@@ -12198,19 +12304,26 @@ function useEventListener(...args) {
     }
     if (!target)
         return;
-    let stopped = false;
-    target.addEventListener(event, listener, options);
-    const stop = () => {
-        if (stopped)
+    let cleanup = noop;
+    const stopWatch = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(() => Object(external_commonjs_vue_commonjs2_vue_root_Vue_["unref"])(target), (el) => {
+        cleanup();
+        if (!el)
             return;
-        target.removeEventListener(event, listener, options);
-        stopped = true;
+        el.addEventListener(event, listener, options);
+        cleanup = () => {
+            el.removeEventListener(event, listener, options);
+            cleanup = noop;
+        };
+    }, { immediate: true });
+    const stop = () => {
+        stopWatch();
+        cleanup();
     };
     tryOnUnmounted(stop);
     return stop;
 }
 
-const index_esm_events = ['mousedown', 'touchstart'];
+const index_esm_events = ['mousedown', 'touchstart', 'pointerdown'];
 /**
  * Listen for clicks outside of an element.
  *
@@ -12223,12 +12336,11 @@ function onClickOutside(target, handler, options = {}) {
     const { window = defaultWindow } = options;
     if (!window)
         return;
-    const targetRef = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(target);
     const listener = (event) => {
-        if (!targetRef.value)
+        const el = unrefElement(target);
+        if (!el)
             return;
-        const elements = event.composedPath();
-        if (targetRef.value === event.target || elements.includes(targetRef.value))
+        if (el === event.target || event.composedPath().includes(el))
             return;
         handler(event);
     };
@@ -12259,7 +12371,7 @@ const isFocusedElementEditable = () => {
     // Check if any other focused element id editable.
     return activeElement.hasAttribute('contenteditable');
 };
-const isTypedCharGood = ({ keyCode, metaKey, ctrlKey, altKey, }) => {
+const isTypedCharValid = ({ keyCode, metaKey, ctrlKey, altKey, }) => {
     if (metaKey || ctrlKey || altKey)
         return false;
     // 0...9
@@ -12278,10 +12390,11 @@ const isTypedCharGood = ({ keyCode, metaKey, ctrlKey, altKey, }) => {
  * @param callback
  * @param options
  */
-function onStartTyping(callback, { document = defaultDocument } = {}) {
+function onStartTyping(callback, options = {}) {
+    const { document = defaultDocument } = options;
     const keydown = (event) => {
         !isFocusedElementEditable()
-            && isTypedCharGood(event)
+            && isTypedCharValid(event)
             && callback(event);
     };
     if (document)
@@ -12422,7 +12535,8 @@ function useBrowserLocation({ window = defaultWindow } = {}) {
  * @see   {@link https://vueuse.js.org/useClipboard}
  * @param options
  */
-function useClipboard({ navigator = defaultNavigator } = {}) {
+function useClipboard(options = {}) {
+    const { navigator = defaultNavigator, read = true, } = options;
     const events = ['copy', 'cut'];
     const isSupported = navigator && 'clipboard' in navigator;
     const text = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])('');
@@ -12432,7 +12546,7 @@ function useClipboard({ navigator = defaultNavigator } = {}) {
             text.value = value;
         });
     }
-    if (isSupported) {
+    if (isSupported && read) {
         for (const event of events)
             useEventListener(event, updateText);
     }
@@ -12445,7 +12559,7 @@ function useClipboard({ navigator = defaultNavigator } = {}) {
     }
     return {
         isSupported,
-        text,
+        text: text,
         copy,
     };
 }
@@ -12458,20 +12572,193 @@ function useClipboard({ navigator = defaultNavigator } = {}) {
  * @param el
  * @param options
  */
-function useCssVar(prop, el, { window = defaultWindow } = {}) {
-    var _a;
+function useCssVar(prop, target, { window = defaultWindow } = {}) {
     const variable = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])('');
-    const _el = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(el || ((_a = window === null || window === void 0 ? void 0 : window.document) === null || _a === void 0 ? void 0 : _a.documentElement));
-    Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(_el, () => {
-        if (_el.value && window)
-            variable.value = window.getComputedStyle(_el.value).getPropertyValue(prop);
+    const elRef = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])(() => { var _a; return unrefElement(target) || ((_a = window === null || window === void 0 ? void 0 : window.document) === null || _a === void 0 ? void 0 : _a.documentElement); });
+    Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(elRef, (el) => {
+        if (el && window)
+            variable.value = window.getComputedStyle(el).getPropertyValue(prop);
     }, { immediate: true });
     Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(variable, (val) => {
         var _a;
-        if ((_a = _el.value) === null || _a === void 0 ? void 0 : _a.style)
-            _el.value.style.setProperty(prop, val);
+        if ((_a = elRef.value) === null || _a === void 0 ? void 0 : _a.style)
+            elRef.value.style.setProperty(prop, val);
     });
     return variable;
+}
+
+const Serializers = {
+    boolean: {
+        read: (v, d) => v != null ? v === 'true' : d,
+        write: (v) => String(v),
+    },
+    object: {
+        read: (v, d) => v ? JSON.parse(v) : d,
+        write: (v) => JSON.stringify(v),
+    },
+    number: {
+        read: (v, d) => v != null ? Number.parseFloat(v) : d,
+        write: (v) => String(v),
+    },
+    any: {
+        read: (v, d) => v != null ? v : d,
+        write: (v) => String(v),
+    },
+    string: {
+        read: (v, d) => v != null ? v : d,
+        write: (v) => String(v),
+    },
+};
+/**
+ * Reactive LocalStorage/SessionStorage.
+ *
+ * @see   {@link https://vueuse.js.org/useStorage}
+ * @param key
+ * @param defaultValue
+ * @param storage
+ * @param options
+ */
+function useStorage(key, defaultValue, storage = defaultWindow === null || defaultWindow === void 0 ? void 0 : defaultWindow.localStorage, options = {}) {
+    const { flush = 'pre', deep = true, listenToStorageChanges = true, window = defaultWindow, eventFilter, } = options;
+    const data = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(defaultValue);
+    const type = defaultValue == null
+        ? 'any'
+        : typeof defaultValue === 'boolean'
+            ? 'boolean'
+            : typeof defaultValue === 'string'
+                ? 'string'
+                : typeof defaultValue === 'object'
+                    ? 'object'
+                    : Array.isArray(defaultValue)
+                        ? 'object'
+                        : !Number.isNaN(defaultValue)
+                            ? 'number'
+                            : 'any';
+    function read() {
+        if (!storage)
+            return;
+        try {
+            let rawValue = storage.getItem(key);
+            if (rawValue == null && defaultValue) {
+                rawValue = Serializers[type].write(defaultValue);
+                storage.setItem(key, rawValue);
+            }
+            else {
+                data.value = Serializers[type].read(rawValue, defaultValue);
+            }
+        }
+        catch (e) {
+            console.warn(e);
+        }
+    }
+    read();
+    if (window && listenToStorageChanges)
+        useEventListener(window, 'storage', read);
+    watchWithFilter(data, () => {
+        if (!storage) // SSR
+            return;
+        try {
+            if (data.value == null)
+                storage.removeItem(key);
+            else
+                storage.setItem(key, Serializers[type].write(data.value));
+        }
+        catch (e) {
+            console.warn(e);
+        }
+    }, {
+        flush,
+        deep,
+        eventFilter,
+    });
+    return data;
+}
+
+/* this implementation is original ported from https://github.com/logaretm/vue-use-web by Abdelrahman Awad */
+/**
+ * Reactive Media Query.
+ *
+ * @see   {@link https://vueuse.js.org/useMediaQuery}
+ * @param query
+ * @param options
+ */
+function useMediaQuery(query, options = {}) {
+    const { window = defaultWindow } = options;
+    if (!window)
+        return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(false);
+    const mediaQuery = window.matchMedia(query);
+    const matches = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(mediaQuery.matches);
+    const handler = (event) => {
+        matches.value = event.matches;
+    };
+    if ('addEventListener' in mediaQuery) {
+        mediaQuery.addEventListener('change', handler);
+    }
+    else {
+        // @ts-expect-error - fallback for Safari < 14 and older browsers
+        mediaQuery.addListener(handler);
+    }
+    tryOnUnmounted(() => {
+        if ('removeEventListener' in mediaQuery) {
+            mediaQuery.removeEventListener('change', handler);
+        }
+        else {
+            // @ts-expect-error - fallback for Safari < 14 and older browsers
+            mediaQuery.removeListener(handler);
+        }
+    });
+    return matches;
+}
+
+/**
+ * Reactive dark theme preference.
+ *
+ * @see   {@link https://vueuse.js.org/usePreferredDark}
+ * @param [options]
+ */
+function usePreferredDark(options) {
+    return useMediaQuery('(prefers-color-scheme: dark)', options);
+}
+
+/**
+ * Reactive dark mode with auto data persistence.
+ *
+ * @see   {@link https://vueuse.js.org/useDark}
+ * @param options
+ */
+function useDark(options = {}) {
+    const { selector = 'html', attribute = 'class', valueDark = 'dark', valueLight = '', window = defaultWindow, storage = defaultWindow === null || defaultWindow === void 0 ? void 0 : defaultWindow.localStorage, storageKey = 'vueuse-color-scheme', listenToStorageChanges = true, } = options;
+    const preferredDark = usePreferredDark({ window });
+    const store = storageKey == null
+        ? Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])('auto')
+        : useStorage(storageKey, 'auto', storage, { window, listenToStorageChanges });
+    const isDark = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])({
+        get() {
+            return store.value === 'auto'
+                ? preferredDark.value
+                : store.value === 'dark';
+        },
+        set(v) {
+            if (v === preferredDark.value)
+                store.value = 'auto';
+            else
+                store.value = v ? 'dark' : 'light';
+        },
+    });
+    const onChanged = options.onChanged || ((v) => {
+        const el = window === null || window === void 0 ? void 0 : window.document.querySelector(selector);
+        if (attribute === 'class') {
+            el === null || el === void 0 ? void 0 : el.classList.toggle(valueDark, v);
+            if (valueLight)
+                el === null || el === void 0 ? void 0 : el.classList.toggle(valueLight, !v);
+        }
+        else {
+            el === null || el === void 0 ? void 0 : el.setAttribute(attribute, v ? valueDark : valueLight);
+        }
+    });
+    Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(isDark, onChanged, { flush: 'post' });
+    tryOnMounted(() => onChanged(isDark.value));
+    return isDark;
 }
 
 /* this implementation is original ported from https://github.com/logaretm/vue-use-web by Abdelrahman Awad */
@@ -12554,42 +12841,6 @@ function useDeviceOrientation(options = {}) {
         beta,
         gamma,
     };
-}
-
-/* this implementation is original ported from https://github.com/logaretm/vue-use-web by Abdelrahman Awad */
-/**
- * Reactive Media Query.
- *
- * @see   {@link https://vueuse.js.org/useMediaQuery}
- * @param query
- * @param options
- */
-function useMediaQuery(query, options = {}) {
-    const { window = defaultWindow } = options;
-    if (!window)
-        return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(false);
-    const mediaQuery = window.matchMedia(query);
-    const matches = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(mediaQuery.matches);
-    const handler = (event) => {
-        matches.value = event.matches;
-    };
-    if ('addEventListener' in mediaQuery) {
-        mediaQuery.addEventListener('change', handler);
-    }
-    else {
-        // @ts-expect-error - fallback for Safari < 14 and older browsers
-        mediaQuery.addListener(handler);
-    }
-    tryOnUnmounted(() => {
-        if ('removeEventListener' in mediaQuery) {
-            mediaQuery.removeEventListener('change', handler);
-        }
-        else {
-            // @ts-expect-error - fallback for Safari < 14 and older browsers
-            mediaQuery.removeListener(handler);
-        }
-    });
-    return matches;
 }
 
 // device pixel ratio statistics from https://www.mydevice.io/
@@ -12687,7 +12938,6 @@ function index_esm_rest(s, e) {
 function useResizeObserver(target, callback, options = {}) {
     const { window = defaultWindow } = options, observerOptions = index_esm_rest(options, ["window"]);
     let observer;
-    const targetRef = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(target);
     const isSupported = window && 'ResizeObserver' in window;
     const cleanup = () => {
         if (observer) {
@@ -12695,14 +12945,14 @@ function useResizeObserver(target, callback, options = {}) {
             observer = undefined;
         }
     };
-    const stopWatch = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(targetRef, (newValue) => {
+    const stopWatch = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(() => unrefElement(target), (el) => {
         cleanup();
-        if (isSupported && window && newValue) {
+        if (isSupported && window && el) {
             // @ts-expect-error missing type
             observer = new window.ResizeObserver(callback);
-            observer.observe(newValue, observerOptions);
+            observer.observe(el, observerOptions);
         }
-    }, { immediate: true });
+    }, { immediate: true, flush: 'post' });
     const stop = () => {
         cleanup();
         stopWatch();
@@ -12953,7 +13203,7 @@ function useFullscreen(target, options = {}) {
             }
         }
     }
-    const [REQUEST, EXIT, ELEMENT, _, EVENT] = map;
+    const [REQUEST, EXIT, ELEMENT, , EVENT] = map;
     async function exit() {
         if (!isSupported)
             return;
@@ -13083,27 +13333,29 @@ function useIdle(timeout = oneMinute, options = {}) {
  */
 function useIntersectionObserver(target, callback, options = {}) {
     const { root, rootMargin = '0px', threshold = 0.1, window = defaultWindow, } = options;
-    let observer;
-    const targetRef = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(target);
     const isSupported = window && 'IntersectionObserver' in window;
-    const cleanup = () => {
-        if (observer) {
-            observer.disconnect();
-            observer = undefined;
-        }
-    };
-    const stopWatch = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(targetRef, (newValue) => {
-        cleanup();
-        if (isSupported && window && newValue) {
+    let cleanup = noop;
+    const stopWatch = isSupported
+        ? Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(() => ({
+            el: unrefElement(target),
+            root: unrefElement(root),
+        }), ({ el, root }) => {
+            cleanup();
+            if (!el)
+                return;
             // @ts-expect-error missing type
-            observer = new window.IntersectionObserver(callback, {
-                root: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["unref"])(root),
+            const observer = new window.IntersectionObserver(callback, {
+                root,
                 rootMargin,
                 threshold,
             });
-            observer.observe(newValue);
-        }
-    });
+            observer.observe(el);
+            cleanup = () => {
+                observer.disconnect();
+                cleanup = noop;
+            };
+        }, { immediate: true, flush: 'post' })
+        : noop;
     const stop = () => {
         cleanup();
         stopWatch();
@@ -13113,93 +13365,6 @@ function useIntersectionObserver(target, callback, options = {}) {
         isSupported,
         stop,
     };
-}
-
-const Serializers = {
-    boolean: {
-        read: (v, d) => v != null ? v === 'true' : d,
-        write: (v) => String(v),
-    },
-    object: {
-        read: (v, d) => v ? JSON.parse(v) : d,
-        write: (v) => JSON.stringify(v),
-    },
-    number: {
-        read: (v, d) => v != null ? Number.parseFloat(v) : d,
-        write: (v) => String(v),
-    },
-    any: {
-        read: (v, d) => v != null ? v : d,
-        write: (v) => String(v),
-    },
-    string: {
-        read: (v, d) => v != null ? v : d,
-        write: (v) => String(v),
-    },
-};
-/**
- * Reactive LocalStorage/SessionStorage.
- *
- * @see   {@link https://vueuse.js.org/useStorage}
- * @param key
- * @param defaultValue
- * @param storage
- * @param options
- */
-function useStorage(key, defaultValue, storage = defaultWindow === null || defaultWindow === void 0 ? void 0 : defaultWindow.localStorage, options = {}) {
-    const { flush = 'pre', deep = true, listenToStorageChanges = true, window = defaultWindow, eventFilter, } = options;
-    const data = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(defaultValue);
-    const type = defaultValue == null
-        ? 'any'
-        : typeof defaultValue === 'boolean'
-            ? 'boolean'
-            : typeof defaultValue === 'string'
-                ? 'string'
-                : typeof defaultValue === 'object'
-                    ? 'object'
-                    : Array.isArray(defaultValue)
-                        ? 'object'
-                        : !Number.isNaN(defaultValue)
-                            ? 'number'
-                            : 'any';
-    function read() {
-        if (!storage)
-            return;
-        try {
-            let rawValue = storage.getItem(key);
-            if (rawValue == null && defaultValue) {
-                rawValue = Serializers[type].write(defaultValue);
-                storage.setItem(key, rawValue);
-            }
-            else {
-                data.value = Serializers[type].read(rawValue, defaultValue);
-            }
-        }
-        catch (e) {
-            console.warn(e);
-        }
-    }
-    read();
-    if (window && listenToStorageChanges)
-        useEventListener(window, 'storage', read);
-    watchWithFilter(data, () => {
-        if (!storage) // SSR
-            return;
-        try {
-            if (data.value == null)
-                storage.removeItem(key);
-            else
-                storage.setItem(key, Serializers[type].write(data.value));
-        }
-        catch (e) {
-            console.warn(e);
-        }
-    }, {
-        flush,
-        deep,
-        eventFilter,
-    });
-    return data;
 }
 
 /**
@@ -13347,7 +13512,7 @@ function useMouse(options = {}) {
 function useMouseInElement(target, options = {}) {
     const { handleOutside = true, window = defaultWindow, } = options;
     const { x, y, sourceType } = useMouse(options);
-    const targetRef = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(target || (window === null || window === void 0 ? void 0 : window.document.body));
+    const targetRef = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(target !== null && target !== void 0 ? target : window === null || window === void 0 ? void 0 : window.document.body);
     const elementX = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0);
     const elementY = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0);
     const elementPositionX = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(0);
@@ -13358,7 +13523,7 @@ function useMouseInElement(target, options = {}) {
     let stop = () => { };
     if (window) {
         stop = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])([targetRef, x, y], () => {
-            const el = targetRef.value;
+            const el = unrefElement(targetRef);
             if (!el)
                 return;
             const { left, top, width, height, } = el.getBoundingClientRect();
@@ -13398,39 +13563,32 @@ function useMouseInElement(target, options = {}) {
  */
 function useMousePressed(options = {}) {
     const { touch = true, initialValue = false, window = defaultWindow, } = options;
-    const target = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(options.target);
     const pressed = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(initialValue);
     const sourceType = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(null);
-    let listeners = [];
-    if (window) {
-        const cleanup = () => {
-            listeners.forEach(f => f());
-            listeners = [];
+    if (!window) {
+        return {
+            pressed,
+            sourceType,
         };
-        const onReleased = () => {
-            pressed.value = false;
-            sourceType.value = null;
-        };
-        Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(target, () => {
-            cleanup();
-            const t = target.value || window;
-            listeners.push(useEventListener(t, 'mousedown', () => {
-                pressed.value = true;
-                sourceType.value = 'mouse';
-            }, { passive: true }));
-            if (touch) {
-                listeners.push(useEventListener(t, 'touchstart', () => {
-                    pressed.value = true;
-                    sourceType.value = 'touch';
-                }, { passive: true }));
-            }
-        }, { immediate: true });
-        useEventListener(window, 'mouseleave', onReleased, { passive: true });
-        useEventListener(window, 'mouseup', onReleased, { passive: true });
-        if (touch) {
-            useEventListener(window, 'touchend', onReleased, { passive: true });
-            useEventListener(window, 'touchcancel', onReleased, { passive: true });
-        }
+    }
+    const onReleased = () => {
+        pressed.value = false;
+        sourceType.value = null;
+    };
+    const target = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])(() => unrefElement(options.target) || window);
+    useEventListener(window, 'mouseleave', onReleased, { passive: true });
+    useEventListener(window, 'mouseup', onReleased, { passive: true });
+    useEventListener(target, 'mousedown', () => {
+        pressed.value = true;
+        sourceType.value = 'mouse';
+    }, { passive: true });
+    if (touch) {
+        useEventListener(window, 'touchend', onReleased, { passive: true });
+        useEventListener(window, 'touchcancel', onReleased, { passive: true });
+        useEventListener(target, 'touchstart', () => {
+            pressed.value = true;
+            sourceType.value = 'touch';
+        }, { passive: true });
     }
     return {
         pressed,
@@ -13443,13 +13601,12 @@ function useMousePressed(options = {}) {
  *
  * @see   {@link https://vueuse.js.org/useMutationObserver}
  * @see   {@link https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver|MutationObserver MDN}
- * @param el
+ * @param target
  * @param callback
  * @param options
  */
-function useMutationObserver(el, callback, options = {}) {
+function useMutationObserver(target, callback, options = {}) {
     const { window = defaultWindow } = options, mutationOptions = index_esm_rest(options, ["window"]);
-    const elRef = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["ref"])(el);
     let observer;
     const isSupported = window && 'IntersectionObserver' in window;
     const cleanup = () => {
@@ -13458,12 +13615,12 @@ function useMutationObserver(el, callback, options = {}) {
             observer = undefined;
         }
     };
-    const stopWatch = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(elRef, (newEl) => {
+    const stopWatch = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(() => unrefElement(target), (el) => {
         cleanup();
-        if (isSupported && window && newEl) {
+        if (isSupported && window && el) {
             // @ts-expect-error missing type
             observer = new window.MutationObserver(callback);
-            observer.observe(newEl, mutationOptions);
+            observer.observe(el, mutationOptions);
         }
     }, { immediate: true });
     const stop = () => {
@@ -13656,16 +13813,6 @@ function usePreferredColorScheme(options) {
             return 'light';
         return 'no-preference';
     });
-}
-
-/**
- * Reactive dark theme preference.
- *
- * @see   {@link https://vueuse.js.org/usePreferredDark}
- * @param [options]
- */
-function usePreferredDark(options) {
-    return useMediaQuery('(prefers-color-scheme: dark)', options);
 }
 
 /**
@@ -14193,18 +14340,28 @@ function useUrlSearchParams(mode = 'history', options = {}) {
  * @param emit
  */
 function useVModel(props, key, emit) {
-    var _a;
+    var _a, _b, _c;
     const vm = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["getCurrentInstance"])();
     // @ts-expect-error mis-alignment with @vue/composition-api
     const _emit = emit || (vm === null || vm === void 0 ? void 0 : vm.emit) || ((_a = vm === null || vm === void 0 ? void 0 : vm.$emit) === null || _a === void 0 ? void 0 : _a.bind(vm));
-    if (!key)
-        key = (index_esm["isVue2"] ? 'value' : 'modelValue');
+    let event;
+    if (!key) {
+        if (index_esm["isVue2"]) {
+            const modelOptions = (_c = (_b = vm === null || vm === void 0 ? void 0 : vm.proxy) === null || _b === void 0 ? void 0 : _b.$options) === null || _c === void 0 ? void 0 : _c.model;
+            key = (modelOptions === null || modelOptions === void 0 ? void 0 : modelOptions.value) || 'value';
+            event = modelOptions === null || modelOptions === void 0 ? void 0 : modelOptions.event;
+        }
+        else {
+            key = 'modelValue';
+        }
+    }
+    event = event || `update:${key}`;
     return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])({
         get() {
             return props[key];
         },
         set(value) {
-            _emit(`update:${key}`, value);
+            _emit(event, value);
         },
     });
 }

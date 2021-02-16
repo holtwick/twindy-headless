@@ -1,6 +1,6 @@
 {
   "name": "twindy-headless",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "private": false,
   "main": "dist/twindy-headless.common.js",
   "unpkg": "dist/twindy-headless.umd.min.js",
@@ -14,8 +14,8 @@
     "src"
   ],
   "dependencies": {
-    "@popperjs/core": "^2.6.0",
-    "@vueuse/core": "^4.1.0"
+    "@popperjs/core": "^2.7.0",
+    "@vueuse/core": "^4.1.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.11",

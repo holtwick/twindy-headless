@@ -70,7 +70,8 @@ class RefObj {
 export default defineComponent({
   props: {
     target: {
-      default: null,
+      type: [Element, Boolean, Number],
+      default: false,
     },
     transition: {
       type: String,

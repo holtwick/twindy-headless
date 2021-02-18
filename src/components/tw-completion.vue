@@ -54,15 +54,7 @@
 import twPopover from "./tw-popover.vue"
 import twItems from "./tw-items.vue"
 import { UUID } from "./lib/uuid.ts"
-import {
-  defineComponent,
-  ref,
-  reactive,
-  toRefs,
-  computed,
-  watch,
-  mounted,
-} from "vue"
+import { defineComponent, ref, reactive, toRefs, watch } from "vue"
 
 export default defineComponent({
   components: {

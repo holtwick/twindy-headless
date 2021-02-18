@@ -20,8 +20,6 @@
 import { onBeforeUnmount, ref } from "vue"
 import twPopover from "./tw-popover.vue"
 
-const log = require("debug")("ui:dropdown")
-
 export default {
   components: {
     twPopover,

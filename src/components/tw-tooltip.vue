@@ -32,8 +32,6 @@ import { onBeforeUnmount, ref } from "vue"
 import { UUID } from "./lib/uuid"
 import twPopover from "./tw-popover.vue"
 
-const log = require("debug")("ui:tooltip")
-
 export default {
   components: {
     twPopover,

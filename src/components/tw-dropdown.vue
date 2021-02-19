@@ -1,18 +1,18 @@
 <!-- Copyright (c) 2020 Dirk Holtwick. All rights reserved. https://holtwick.de/copyright -->
 
 <template>
-  <div ref="target" style="display: inline-block">
+  <div ref="target" style="display: inline-block" @click="trigger">
     <slot class="tw-dropdown"></slot>
   </div>
   <tw-popover
-    v-if="title"
-    :target="target"
     arrow
+    v-model="active"
+    :target="target"
     role="dropdown"
     theme="dropdown"
     transition="tw-tooltip-transition"
   >
-    <slot name="content">{{ title }}</slot>
+    <slot name="content">Define #content</slot>
   </tw-popover>
 </template>
 
@@ -38,39 +38,22 @@ export default {
   // },
 
   setup(props: any) {
+    let active = ref<boolean>(false)
     let anchor = ref()
     let target = ref<Node>()
-    let hoverCount = 0
 
     const methods = {
-      showTooltip() {
-        target.value = anchor.value
-      },
-      hideTooltip() {
-        // @ts-ignore
-        target.value = null
-        hoverCount = 0
-      },
-      onMouseEnter() {
-        hoverCount += 1
-        if (hoverCount === 1) {
-          methods.showTooltip()
-        }
-      },
-      onMouseLeave() {
-        hoverCount -= 1
-        if (hoverCount <= 0) {
-          methods.hideTooltip()
-        }
+      trigger() {
+        active.value = !active.value
+        console.log("trigger", active.value)
       },
     }
-
-    onBeforeUnmount(methods.hideTooltip)
 
     return {
       ...methods,
       target,
       anchor,
+      active,
     }
   },
 }

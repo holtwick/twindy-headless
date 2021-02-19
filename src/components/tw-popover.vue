@@ -9,8 +9,8 @@
         :class="`-${theme}`"
         ref="popover"
         :id="id"
-        v-show="target"
-        :aria-hidden="target == null"
+        v-show="modelValue"
+        :aria-hidden="!modelValue"
         draggable="false"
       >
         <div
@@ -31,13 +31,8 @@
 
 <script lang="ts">
 import { createPopper } from "@popperjs/core"
-import {
-  defineComponent,
-  nextTick,
-  onBeforeUnmount,
-  ref,
-  watchEffect,
-} from "vue"
+import { useEventListener } from "@vueuse/core"
+import { defineComponent, nextTick, onBeforeUnmount, ref, watch } from "vue"
 import { UUID } from "./lib/uuid"
 
 interface Box {
@@ -69,6 +64,9 @@ class RefObj {
 
 export default defineComponent({
   props: {
+    modelValue: {
+      default: false,
+    },
     target: {
       type: [Element, Boolean, Number],
       default: false,
@@ -94,7 +92,8 @@ export default defineComponent({
       default: () => [0, 8],
     },
   },
-  setup(props: any) {
+  emits: ["update:modelValue"],
+  setup(props: any, { emit }) {
     let popper: any, element
     let popover = ref<HTMLElement>()
     let id = ref(UUID())
@@ -149,30 +148,38 @@ export default defineComponent({
       },
     }
 
-    // let handleClickOutside = (ev) => {
-    //   window.addEventListener("mousedown", (event) => {
-    //     if (!popper?.value?.contains(event.target)) {
-    //       methods.hide()
-    //     }
-    //   })
-    // }
-
-    // window.addEventListener("mousedown", handleClickOutside)
-
-    watchEffect(() => {
-      if (props.target != null) {
-        methods.show()
+    useEventListener(window, "mousedown", (event) => {
+      if (
+        props.modelValue === true &&
+        !(
+          props?.target?.contains(event.target) ||
+          popper?.value?.contains(event.target)
+        )
+      ) {
+        emit("update:modelValue", false)
       }
     })
 
-    onBeforeUnmount(() => {
-      // window.removeEventListener("mousedown", handleClickOutside)
-      methods.hide()
-    })
+    // watchEffect(() => {
+    //   if (props.target != null) {
+    //     methods.show()
+    //   }
+    // })
 
-    nextTick().then(() => {
-      methods.show()
-    })
+    onBeforeUnmount(methods.hide)
+
+    watch(
+      () => props.modelValue,
+      (active) => {
+        console.log("upd", props.modelValue)
+        if (active) methods.show()
+        else methods.hide()
+      }
+    )
+
+    // nextTick().then(() => {
+    //   methods.show()
+    // })
 
     return {
       id,

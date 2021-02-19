@@ -29,7 +29,8 @@
       <slot name="after" class="completion-after"></slot>
     </div>
     <tw-popover
-      :target="items.length && focus && target"
+      v-model="active"
+      :target="target"
       placement="bottom-start"
       :arrow="false"
       theme="dropdown"
@@ -54,15 +55,7 @@
 import twPopover from "./tw-popover.vue"
 import twItems from "./tw-items.vue"
 import { UUID } from "./lib/uuid.ts"
-import {
-  defineComponent,
-  ref,
-  reactive,
-  toRefs,
-  computed,
-  watch,
-  mounted,
-} from "vue"
+import { defineComponent, ref, reactive, toRefs, watch } from "vue"
 
 export default defineComponent({
   components: {
@@ -70,6 +63,9 @@ export default defineComponent({
     twPopover,
   },
   props: {
+    // active: {
+    //   default: true, // items.length && focus
+    // },
     uid: {
       type: String,
       default: UUID(),
@@ -88,6 +84,11 @@ export default defineComponent({
     },
     filter: {
       type: String,
+    },
+  },
+  computed: {
+    active() {
+      return this.items.length && this.focus
     },
   },
   emits: ["filter", "deleteLast", "add", "update:filter"],

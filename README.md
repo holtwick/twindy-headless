@@ -6,7 +6,7 @@ These components implement UI view behaviours, but do not provide a specific des
 
 ---
 
-**WORK IN PROGRESS**
+**WORK IN PROGRESS / VUE3 ONLY**
 
 ---
 

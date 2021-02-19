@@ -15,6 +15,7 @@ import twLabel from "./tw-label.vue"
 
 import { useNotification } from "./notification"
 import { useTooltip } from "./tooltip"
+import { useTextareaResize } from "./usetextarea"
 
 export {
   twButton,
@@ -33,4 +34,5 @@ export {
   twLabel,
   useNotification,
   useTooltip,
+  useTextareaResize,
 }

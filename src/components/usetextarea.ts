@@ -1,3 +1,4 @@
+import { useEventListener, useResizeObserver } from "@vueuse/core"
 import { onUpdated, Ref } from "vue"
 
 export function useTextareaResize(r: Ref<HTMLTextAreaElement>): void {
@@ -16,6 +17,6 @@ export function useTextareaResize(r: Ref<HTMLTextAreaElement>): void {
     )
   })
 
-  // useEventListener(r, "input", resize)
-  // useResizeObserver(r, resize)
+  useEventListener(r, "input", resize)
+  useResizeObserver(r, resize)
 }

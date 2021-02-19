@@ -4,15 +4,19 @@
   <div
     class="tw-modal"
     :class="{ active: modelValue }"
-    tabindex="-1"
+    :tabindex="-1"
     v-trap-focus
     aria-modal="true"
     :role="role"
   >
-    <a @click="doCancel" class="tw-modal-overlay" aria-label="Close"></a>
+    <a
+      @click="doCancel"
+      class="tw-modal-overlay overlay"
+      aria-label="Close"
+    ></a>
     <div class="tw-modal-container">
-      <header class="tw-modal-header" v-if="title || close">
-        <div class="tw-modal-title">
+      <header class="tw-modal-header header" v-if="title || close">
+        <div class="tw-modal-title title">
           <slot name="title">{{ title }}</slot>
         </div>
         <tw-link
@@ -39,10 +43,10 @@
           </svg>
         </tw-link>
       </header>
-      <section class="tw-modal-body">
+      <section class="tw-modal-body body">
         <slot></slot>
       </section>
-      <footer class="tw-modal-footer">
+      <footer class="tw-modal-footer footer">
         <slot name="footer"></slot>
       </footer>
     </div>

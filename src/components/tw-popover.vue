@@ -2,30 +2,28 @@
 
 <template>
   <teleport to="body">
-    <transition :name="transition">
+    <div
+      :data-transition="transition"
+      class="tw-popover"
+      :class="`-${theme}`"
+      ref="popover"
+      :id="id"
+      v-show="modelValue && target"
+      :aria-hidden="!(modelValue && target)"
+      draggable="false"
+    >
       <div
-        :data-transition="transition"
-        class="tw-popover"
-        :class="`-${theme}`"
-        ref="popover"
-        :id="id"
-        v-show="modelValue"
-        :aria-hidden="!modelValue"
-        draggable="false"
-      >
-        <div
-          v-show="arrow"
-          id="arrow"
-          class="tw-popover-arrow"
-          :class="`-${theme}-arrow`"
-          data-popper-arrow
-        ></div>
-        <div class="tw-popover-inner" :class="`-${theme}-inner`">
-          {{ text }}
-          <slot />
-        </div>
+        v-show="arrow"
+        id="arrow"
+        class="tw-popover-arrow"
+        :class="`-${theme}-arrow`"
+        data-popper-arrow
+      ></div>
+      <div class="tw-popover-inner" :class="`-${theme}-inner`">
+        {{ text }}
+        <slot />
       </div>
-    </transition>
+    </div>
   </teleport>
 </template>
 
@@ -34,6 +32,16 @@ import { createPopper } from "@popperjs/core"
 import { useEventListener } from "@vueuse/core"
 import { defineComponent, nextTick, onBeforeUnmount, ref, watch } from "vue"
 import { UUID } from "./lib/uuid"
+
+// if (document.getElementById("__popoverContainer") == null) {
+//   var popoverContainer = document.createElement("div")
+//   popoverContainer.id = "__popoverContainer"
+//   popoverContainer.setAttribute(
+//     "style",
+//     "position: absolute; top: 0; left: 0; width: 1px; height: 1px; overflow: hidden"
+//   )
+//   document.body.appendChild(popoverContainer)
+// }
 
 interface Box {
   left: number
@@ -160,9 +168,11 @@ export default defineComponent({
 
     onBeforeUnmount(hide)
 
-    watch([() => props.modelValue, () => props.target], (active) => {
-      if (active && props.target) {
+    watch([() => props.modelValue, () => props.target], () => {
+      if (props.modelValue && props.target) {
         console.log("show", props.modelValue)
+        hide()
+        nextTick()
         show()
       } else {
         console.log("hide", props.modelValue)

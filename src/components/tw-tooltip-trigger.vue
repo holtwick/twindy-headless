@@ -1,5 +1,4 @@
 <template>
-  {{ active }} {{ text }} {{ target }}
   <tw-popover
     v-model="active"
     :target="target"
@@ -13,7 +12,7 @@
 
 <script lang="ts">
 import twPopover from "./tw-popover.vue"
-import { defineComponent, onBeforeUnmount, ref } from "vue"
+import { defineComponent, ref } from "vue"
 import { useEventListener } from "@vueuse/core"
 
 var _activated = false

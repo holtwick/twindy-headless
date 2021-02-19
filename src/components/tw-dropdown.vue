@@ -1,14 +1,13 @@
 <!-- Copyright (c) 2020 Dirk Holtwick. All rights reserved. https://holtwick.de/copyright -->
 
 <template>
-  <div ref="target" style="display: inline-block" @click="trigger">
+  <div ref="target" style="display: inline-block" @click="active = !active">
     <slot class="tw-dropdown"></slot>
   </div>
   <tw-popover
     arrow
     v-model="active"
     :target="target"
-    role="dropdown"
     theme="dropdown"
     transition="tw-tooltip-transition"
   >
@@ -17,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { onBeforeUnmount, ref } from "vue"
+import { ref } from "vue"
 import twPopover from "./tw-popover.vue"
 
 export default {
@@ -39,20 +38,10 @@ export default {
 
   setup(props: any) {
     let active = ref<boolean>(false)
-    let anchor = ref()
     let target = ref<Node>()
 
-    const methods = {
-      trigger() {
-        active.value = !active.value
-        console.log("trigger", active.value)
-      },
-    }
-
     return {
-      ...methods,
       target,
-      anchor,
       active,
     }
   },

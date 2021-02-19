@@ -65,6 +65,7 @@ class RefObj {
 export default defineComponent({
   props: {
     modelValue: {
+      type: Boolean,
       default: false,
     },
     target: {

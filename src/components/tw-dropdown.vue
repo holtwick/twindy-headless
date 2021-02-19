@@ -1,23 +1,22 @@
 <!-- Copyright (c) 2020 Dirk Holtwick. All rights reserved. https://holtwick.de/copyright -->
 
 <template>
-  <div ref="target" style="display: inline-block">
+  <div ref="target" style="display: inline-block" @click="active = !active">
     <slot class="tw-dropdown"></slot>
   </div>
   <tw-popover
-    v-if="title"
-    :target="target"
     arrow
-    role="dropdown"
+    v-model="active"
+    :target="target"
     theme="dropdown"
     transition="tw-tooltip-transition"
   >
-    <slot name="content">{{ title }}</slot>
+    <slot name="content">Define #content</slot>
   </tw-popover>
 </template>
 
 <script lang="ts">
-import { onBeforeUnmount, ref } from "vue"
+import { ref } from "vue"
 import twPopover from "./tw-popover.vue"
 
 export default {
@@ -38,39 +37,12 @@ export default {
   // },
 
   setup(props: any) {
-    let anchor = ref()
+    let active = ref<boolean>(false)
     let target = ref<Node>()
-    let hoverCount = 0
-
-    const methods = {
-      showTooltip() {
-        target.value = anchor.value
-      },
-      hideTooltip() {
-        // @ts-ignore
-        target.value = null
-        hoverCount = 0
-      },
-      onMouseEnter() {
-        hoverCount += 1
-        if (hoverCount === 1) {
-          methods.showTooltip()
-        }
-      },
-      onMouseLeave() {
-        hoverCount -= 1
-        if (hoverCount <= 0) {
-          methods.hideTooltip()
-        }
-      },
-    }
-
-    onBeforeUnmount(methods.hideTooltip)
 
     return {
-      ...methods,
       target,
-      anchor,
+      active,
     }
   },
 }

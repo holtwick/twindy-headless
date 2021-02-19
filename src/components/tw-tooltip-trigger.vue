@@ -1,14 +1,21 @@
 <template>
-  <tw-popover :target="target" arrow theme="tooltip" :placement="placement">
+  <tw-popover
+    v-model="active"
+    :target="target"
+    arrow
+    theme="tooltip"
+    :placement="placement"
+  >
     {{ text }}
   </tw-popover>
 </template>
 
 <script lang="ts">
 import twPopover from "./tw-popover.vue"
-import { defineComponent, onBeforeUnmount, ref } from "vue"
+import { defineComponent, ref } from "vue"
+import { useEventListener } from "@vueuse/core"
 
-var active = false
+var _activated = false
 var ignore = false
 
 export default defineComponent({
@@ -26,13 +33,14 @@ export default defineComponent({
     twPopover,
   },
   setup(props: any) {
-    if (active) {
+    if (_activated) {
       console.error("tw-tooltip-trigger can only be activated once")
       return
     }
 
-    active = true
+    _activated = true
 
+    let active = ref(false)
     let placement = ref(props.placement)
     let target = ref()
     let text = ref("")
@@ -54,37 +62,34 @@ export default defineComponent({
             // el.title = ""
             target.value = el
             text.value = tooltip?.toString()?.trim() || ""
-
             placement.value =
               el.getAttribute("tooltip-placement") || props.placement
+            active.value = true
             return
           }
           el = el.parentElement
         }
+        active.value = false
         target.value = null
       }, /*props.delay || */ 50) // debounce
     }
 
     let onTouchDown = (ev: Event) => {
-      ignore = true
+      active.value = false
+      // ignore = true
     }
 
     const useCapture = true
 
-    window.addEventListener("touchdown", onTouchDown, useCapture)
-    window.addEventListener("mouseover", onTooltipHover, useCapture)
-    // window.addEventListener("focus", onTooltipHover, useCapture)
-
-    onBeforeUnmount(() => {
-      window.removeEventListener("mouseover", onTooltipHover, useCapture)
-      window.removeEventListener("touchdown", onTouchDown, useCapture)
-      // window.removeEventListener("focus", onTooltipHover, useCapture)
-    })
+    useEventListener(window, "touchdown", onTouchDown, useCapture)
+    useEventListener(window, "mouseover", onTooltipHover, useCapture)
+    // useEventListener(window, "focus", onTooltipHover, useCapture)
 
     return {
       placement,
       target,
       text,
+      active,
     }
   },
 })

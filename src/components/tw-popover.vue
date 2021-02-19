@@ -2,43 +2,46 @@
 
 <template>
   <teleport to="body">
-    <transition :name="transition">
+    <div
+      :data-transition="transition"
+      class="tw-popover"
+      :class="`-${theme}`"
+      ref="popover"
+      :id="id"
+      v-show="modelValue && target"
+      :aria-hidden="!(modelValue && target)"
+      draggable="false"
+    >
       <div
-        :data-transition="transition"
-        class="tw-popover"
-        :class="`-${theme}`"
-        ref="popover"
-        :id="id"
-        v-show="target"
-        :aria-hidden="target == null"
-        draggable="false"
-      >
-        <div
-          v-show="arrow"
-          id="arrow"
-          class="tw-popover-arrow"
-          :class="`-${theme}-arrow`"
-          data-popper-arrow
-        ></div>
-        <div class="tw-popover-inner" :class="`-${theme}-inner`">
-          {{ text }}
-          <slot />
-        </div>
+        v-show="arrow"
+        id="arrow"
+        class="tw-popover-arrow"
+        :class="`-${theme}-arrow`"
+        data-popper-arrow
+      ></div>
+      <div class="tw-popover-inner" :class="`-${theme}-inner`">
+        {{ text }}
+        <slot />
       </div>
-    </transition>
+    </div>
   </teleport>
 </template>
 
 <script lang="ts">
 import { createPopper } from "@popperjs/core"
-import {
-  defineComponent,
-  nextTick,
-  onBeforeUnmount,
-  ref,
-  watchEffect,
-} from "vue"
+import { useEventListener } from "@vueuse/core"
+import { defineComponent, nextTick, onBeforeUnmount, ref, watch } from "vue"
 import { UUID } from "./lib/uuid"
+
+// if (document.getElementById("__popoverContainer") == null) {
+//   var popoverContainer = document.createElement("div")
+//   popoverContainer.id = "__popoverContainer"
+//   popoverContainer.setAttribute(
+//     "style",
+//     "position: absolute; top: 0; left: 0; width: 1px; height: 1px; overflow: hidden"
+//   )
+//   document.body.appendChild(popoverContainer)
+// }
 
 interface Box {
   left: number
@@ -69,6 +72,10 @@ class RefObj {
 
 export default defineComponent({
   props: {
+    modelValue: {
+      type: Boolean,
+      default: false,
+    },
     target: {
       type: [Element, Boolean, Number],
       default: false,
@@ -94,84 +101,83 @@ export default defineComponent({
       default: () => [0, 8],
     },
   },
-  setup(props: any) {
+  emits: ["update:modelValue"],
+  setup(props: any, { emit }) {
     let popper: any, element
     let popover = ref<HTMLElement>()
     let id = ref(UUID())
 
-    const methods = {
-      async show() {
-        let target = <Node | Box>props.target
-        console.log("target", target)
-        if (target != null) {
-          methods.hide()
-          await nextTick()
-          element = popover.value
-          if (element) {
-            let popperTarget: Node | RefObj
-            if (target instanceof Node) {
-              popperTarget = target
-            } else {
-              popperTarget = new RefObj(target)
-            }
-
-            // https://popper.js.org/docs/v2/tutorial/
-            // @ts-ignore
-            popper = createPopper(popperTarget, element, {
-              // https://popper.js.org/popper-documentation.html#defaults
-              placement: props.placement,
-              modifiers: [
-                {
-                  name: "offset",
-                  options: {
-                    offset: props.offset,
-                  },
-                },
-                {
-                  name: "preventOverflow",
-                  options: {
-                    // escapeWithReference: true,
-                    boundariesElement: "window",
-                    padding: 8,
-                  },
-                },
-              ],
-            })
+    async function show() {
+      let target = <Node | Box>props.target
+      if (target != null) {
+        hide()
+        await nextTick()
+        element = popover.value
+        if (element) {
+          let popperTarget: Node | RefObj
+          if (target instanceof Node) {
+            popperTarget = target
+          } else {
+            popperTarget = new RefObj(target)
           }
-        }
-      },
 
-      hide() {
-        if (popper != null) {
-          popper.destroy()
-          popper = null
+          // https://popper.js.org/docs/v2/tutorial/
+          // @ts-ignore
+          popper = createPopper(popperTarget, element, {
+            // https://popper.js.org/popper-documentation.html#defaults
+            placement: props.placement,
+            modifiers: [
+              {
+                name: "offset",
+                options: {
+                  offset: props.offset,
+                },
+              },
+              {
+                name: "preventOverflow",
+                options: {
+                  // escapeWithReference: true,
+                  boundariesElement: "window",
+                  padding: 8,
+                },
+              },
+            ],
+          })
         }
-      },
+      }
     }
 
-    // let handleClickOutside = (ev) => {
-    //   window.addEventListener("mousedown", (event) => {
-    //     if (!popper?.value?.contains(event.target)) {
-    //       methods.hide()
-    //     }
-    //   })
-    // }
+    function hide() {
+      if (popper != null) {
+        popper.destroy()
+        popper = null
+      }
+    }
 
-    // window.addEventListener("mousedown", handleClickOutside)
-
-    watchEffect(() => {
-      if (props.target != null) {
-        methods.show()
+    useEventListener(window, "mousedown", (event) => {
+      if (
+        props.modelValue === true &&
+        !(
+          props?.target?.contains(event.target) ||
+          popper?.value?.contains(event.target)
+        )
+      ) {
+        emit("update:modelValue", false)
       }
     })
 
-    onBeforeUnmount(() => {
-      // window.removeEventListener("mousedown", handleClickOutside)
-      methods.hide()
-    })
+    onBeforeUnmount(hide)
 
-    nextTick().then(() => {
-      methods.show()
+    watch([() => props.modelValue, () => props.target], () => {
+      if (props.modelValue && props.target) {
+        console.log("show", props.modelValue)
+        hide()
+        nextTick()
+        show()
+      } else {
+        console.log("hide", props.modelValue)
+        hide()
+      }
     })
 
     return {

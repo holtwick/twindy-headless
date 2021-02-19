@@ -99,54 +99,51 @@ export default defineComponent({
     let popover = ref<HTMLElement>()
     let id = ref(UUID())
 
-    const methods = {
-      async show() {
-        let target = <Node | Box>props.target
-        console.log("target", target)
-        if (target != null) {
-          methods.hide()
-          await nextTick()
-          element = popover.value
-          if (element) {
-            let popperTarget: Node | RefObj
-            if (target instanceof Node) {
-              popperTarget = target
-            } else {
-              popperTarget = new RefObj(target)
-            }
-
-            // https://popper.js.org/docs/v2/tutorial/
-            // @ts-ignore
-            popper = createPopper(popperTarget, element, {
-              // https://popper.js.org/popper-documentation.html#defaults
-              placement: props.placement,
-              modifiers: [
-                {
-                  name: "offset",
-                  options: {
-                    offset: props.offset,
-                  },
-                },
-                {
-                  name: "preventOverflow",
-                  options: {
-                    // escapeWithReference: true,
-                    boundariesElement: "window",
-                    padding: 8,
-                  },
-                },
-              ],
-            })
+    async function show() {
+      let target = <Node | Box>props.target
+      if (target != null) {
+        hide()
+        await nextTick()
+        element = popover.value
+        if (element) {
+          let popperTarget: Node | RefObj
+          if (target instanceof Node) {
+            popperTarget = target
+          } else {
+            popperTarget = new RefObj(target)
           }
-        }
-      },
 
-      hide() {
-        if (popper != null) {
-          popper.destroy()
-          popper = null
+          // https://popper.js.org/docs/v2/tutorial/
+          // @ts-ignore
+          popper = createPopper(popperTarget, element, {
+            // https://popper.js.org/popper-documentation.html#defaults
+            placement: props.placement,
+            modifiers: [
+              {
+                name: "offset",
+                options: {
+                  offset: props.offset,
+                },
+              },
+              {
+                name: "preventOverflow",
+                options: {
+                  // escapeWithReference: true,
+                  boundariesElement: "window",
+                  padding: 8,
+                },
+              },
+            ],
+          })
         }
-      },
+      }
+    }
+
+    function hide() {
+      if (popper != null) {
+        popper.destroy()
+        popper = null
+      }
     }
 
     useEventListener(window, "mousedown", (event) => {
@@ -161,26 +158,17 @@ export default defineComponent({
       }
     })
 
-    // watchEffect(() => {
-    //   if (props.target != null) {
-    //     methods.show()
-    //   }
-    // })
+    onBeforeUnmount(hide)
 
-    onBeforeUnmount(methods.hide)
-
-    watch(
-      () => props.modelValue,
-      (active) => {
-        console.log("upd", props.modelValue)
-        if (active) methods.show()
-        else methods.hide()
+    watch([() => props.modelValue, () => props.target], (active) => {
+      if (active && props.target) {
+        console.log("show", props.modelValue)
+        show()
+      } else {
+        console.log("hide", props.modelValue)
+        hide()
       }
-    )
-
-    // nextTick().then(() => {
-    //   methods.show()
-    // })
+    })
 
     return {
       id,

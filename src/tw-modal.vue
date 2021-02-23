@@ -56,8 +56,8 @@
   </transition>
 </template>
 
-<script>
-import { defineComponent } from "vue"
+<script lang="ts">
+import { defineComponent, nextTick } from "vue"
 import trapFocus from "./lib/directives/trapFocus"
 import { removeElement } from "./lib/helpers"
 import TwLink from "./tw-link.vue"
@@ -67,6 +67,7 @@ export default defineComponent({
   name: "tw-modal",
   props: {
     modelValue: {
+      type: Boolean,
       default: false,
     },
     title: {
@@ -102,14 +103,14 @@ export default defineComponent({
   directives: {
     trapFocus,
   },
-  emits: ["close", "update:modelValue", "didopen", "willclose"],
+  emits: ["close", "update:modelValue", "didopen", "willclose", "cancel"],
   methods: {
     doCancel() {
       this.$emit("cancel")
-      let onCancel = this?.$parent?.onCancel || this?.onCancel
-      if (onCancel) {
-        onCancel.apply(null, arguments)
-      }
+      // let onCancel = this?.$parent?.onCancel || this?.onCancel
+      // if (onCancel) {
+      //   onCancel.apply(null, arguments)
+      // }
       this.doClose()
     },
     doClose() {
@@ -126,14 +127,14 @@ export default defineComponent({
         }, 150)
       }
     },
-    keyPress(event) {
+    keyPress(event: KeyboardEvent) {
       if (this.modelValue && event.keyCode === 27) {
         // Esc key
-        this.doCancel("escape")
+        this.doCancel()
       }
     },
     doFocus() {
-      this.$nextTick(() => {
+      nextTick(() => {
         let el = this.$el.querySelector(".focus")
         console.log("FOCUS", this.$el)
         if (el) {
@@ -147,7 +148,7 @@ export default defineComponent({
   },
   watch: {
     async modelValue(value) {
-      console.log("modal", this.modalValue)
+      console.log("modal", this.modelValue)
       if (value == null || value === false) {
         this.$emit("willclose")
       } else {
@@ -167,7 +168,7 @@ export default defineComponent({
   beforeMount() {
     // Insert the Dialog component in the element container
     if (this.standalone && typeof window !== "undefined") {
-      this.$nextTick(() => {
+      nextTick(() => {
         const container =
           /* document.querySelector(this.container) || */ document.body
         container.appendChild(this.$el)

@@ -14,6 +14,7 @@ import twLabel from "./tw-label.vue"
 import { useNotification } from "./notification"
 import { useTooltip } from "./tooltip"
 import { useTextareaResize } from "./usetextarea"
+import { useMenu } from "./menu"
 
 export {
   twButton,
@@ -31,4 +32,7 @@ export {
   useNotification,
   useTooltip,
   useTextareaResize,
+  useMenu,
 }
+
+export type { TwindyMenuItem, TwindyNotification } from "./types"

@@ -7,3 +7,11 @@ export interface TwindyNotification {
   confirm?: (id: string) => void
   cancel?: (id: string) => void
 }
+
+export interface TwindyMenuItem {
+  id: string | number
+  title?: string
+  checked?: boolean
+  blocked?: boolean
+  action?: (item: any) => void
+}

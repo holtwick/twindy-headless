@@ -171,12 +171,10 @@ export default defineComponent({
 
     watch([() => props.modelValue, () => props.target], () => {
       if (props.modelValue && props.target) {
-        console.log("show", props.modelValue)
         hide()
         nextTick()
         show()
       } else {
-        console.log("hide", props.modelValue)
         hide()
       }
     })

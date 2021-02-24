@@ -4,8 +4,8 @@
   <transition name="tw-modal-animation">
     <div
       class="tw-modal"
-      :class="{ active: modelValue }"
-      v-if="modelValue"
+      :class="{ active: !!modelValue }"
+      v-if="!!modelValue"
       :tabindex="-1"
       v-trap-focus
       aria-modal="true"
@@ -67,7 +67,7 @@ export default defineComponent({
   name: "tw-modal",
   props: {
     modelValue: {
-      type: Boolean,
+      type: [Boolean, Object],
       default: false,
     },
     title: {
@@ -148,8 +148,7 @@ export default defineComponent({
   },
   watch: {
     async modelValue(value) {
-      console.log("modal", this.modelValue)
-      if (value == null || value === false) {
+      if (!value) {
         this.$emit("willclose")
       } else {
         this.$emit("didopen")

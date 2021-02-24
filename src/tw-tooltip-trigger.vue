@@ -32,7 +32,7 @@ export default defineComponent({
   components: {
     twPopover,
   },
-  setup(props: any) {
+  setup(props) {
     if (_activated) {
       console.error("tw-tooltip-trigger can only be activated once")
       return

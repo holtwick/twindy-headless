@@ -10,9 +10,8 @@
     :target="target"
     theme="dropdown"
     transition="tw-tooltip-transition"
+    ><div><slot name="content">Define #content</slot></div></tw-popover
   >
-    <slot name="content">Define #content</slot>
-  </tw-popover>
 </template>
 
 <script lang="ts">

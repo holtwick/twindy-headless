@@ -9,8 +9,9 @@ export interface TwindyNotification {
 }
 
 export interface TwindyMenuItem {
-  id: string
+  id: string | number
   title?: string
   checked?: boolean
-  action: (item: any) => void
+  blocked?: boolean
+  action?: (item: any) => void
 }

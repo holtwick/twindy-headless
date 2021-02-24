@@ -10,6 +10,7 @@ import twDropdown from "./tw-dropdown.vue"
 import twObject from "./tw-object.vue"
 import twIcon from "./tw-icon.vue"
 import twLabel from "./tw-label.vue"
+import twMenu from "./tw-menu.vue"
 
 import { useNotification } from "./notification"
 import { useTooltip } from "./tooltip"
@@ -29,6 +30,7 @@ export {
   twObject,
   twIcon,
   twLabel,
+  twMenu,
   useNotification,
   useTooltip,
   useTextareaResize,

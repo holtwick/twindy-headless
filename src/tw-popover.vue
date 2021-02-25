@@ -29,6 +29,7 @@
 
 <script lang="ts">
 import { createPopper } from "@popperjs/core"
+import type { StrictModifiers } from "@popperjs/core"
 import { useEventListener } from "@vueuse/core"
 import { defineComponent, nextTick, onBeforeUnmount, ref, watch } from "vue"
 import { UUID } from "./lib/uuid"
@@ -123,7 +124,7 @@ export default defineComponent({
 
           // https://popper.js.org/docs/v2/tutorial/
           // @ts-ignore
-          popper = createPopper(popperTarget, element, {
+          popper = createPopper<StrictModifiers>(popperTarget, element, {
             // https://popper.js.org/popper-documentation.html#defaults
             placement: props.placement,
             modifiers: [
@@ -170,12 +171,10 @@ export default defineComponent({
 
     watch([() => props.modelValue, () => props.target], () => {
       if (props.modelValue && props.target) {
-        console.log("show", props.modelValue)
         hide()
         nextTick()
         show()
       } else {
-        console.log("hide", props.modelValue)
         hide()
       }
     })

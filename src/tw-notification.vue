@@ -1,6 +1,6 @@
 <template>
   <div class="tw-notification-container">
-    <transition-group name="notification" tag="div">
+    <transition-group name="tw-notification" tag="div">
       <div class="tw-notification" v-for="n in notifications" :key="n.id">
         <div class="tw-notification-title">{{ n.title }}</div>
         <div class="tw-notification-message">{{ n.message }}</div>

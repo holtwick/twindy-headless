@@ -1,6 +1,6 @@
 {
   "name": "twindy-headless",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "private": false,
   "main": "./dist/twindy-headless.umd.js",
   "module": "./dist/twindy-headless.es.js",

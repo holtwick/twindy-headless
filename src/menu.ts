@@ -1,5 +1,5 @@
-import { createApp, Ref } from "vue"
-import twMenu from "./tw-menu.vue"
+import { Ref } from "vue"
+// import twMenu from "./tw-menu.vue"
 import { TwindyMenuItem } from "./types"
 
 // let container = document.createElement("div")
@@ -7,8 +7,10 @@ import { TwindyMenuItem } from "./types"
 // createApp(twMenu).mount(container)
 
 export function useMenu(items: TwindyMenuItem[], ref?: Ref) {
+  items
+  ref
   return {
-    toggleMenu(event?: MouseEvent) {
+    toggleMenu() {
       console.log("toggle menu")
     },
   }

@@ -11,10 +11,6 @@ declare const _default: import("vue").DefineComponent<{
         type: BooleanConstructor;
         default: boolean;
     };
-    standalone: {
-        type: BooleanConstructor;
-        default: boolean;
-    };
     role: {
         default: string;
     };
@@ -26,16 +22,16 @@ declare const _default: import("vue").DefineComponent<{
         type: FunctionConstructor;
         default: () => void;
     };
-}, unknown, unknown, {}, {
+}, {
+    root: import("vue").Ref<any>;
     doCancel(): void;
     doClose(): void;
-    keyPress(event: any): void;
     doFocus(): void;
-}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("close" | "update:modelValue" | "didopen" | "willclose" | "cancel")[], "close" | "update:modelValue" | "didopen" | "willclose" | "cancel", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<{
+    didAppear(): void;
+}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("close" | "update:modelValue" | "didOpen" | "willClose" | "didClose" | "cancel")[], "close" | "update:modelValue" | "didOpen" | "willClose" | "didClose" | "cancel", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<{
     close: boolean;
     modelValue: boolean;
     title: string;
-    standalone: boolean;
     role: string;
     canCancel: boolean;
     onCancel: Function;
@@ -43,7 +39,6 @@ declare const _default: import("vue").DefineComponent<{
     close: boolean;
     modelValue: boolean;
     title: string;
-    standalone: boolean;
     role: string;
     canCancel: boolean;
     onCancel: Function;

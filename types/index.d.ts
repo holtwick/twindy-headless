@@ -13,6 +13,6 @@ import twLabel from "./tw-label.vue";
 import twMenu from "./tw-menu.vue";
 import { useNotification } from "./notification";
 import { useTooltip } from "./tooltip";
-import { useTextareaResize } from "./usetextarea";
+import { useTextareaResize } from "./use/textarea-grow";
 import { useMenu } from "./menu";
 export { twButton, twModal, twItems, twList, twPopover, twCompletion, twTagInput, twInput, twDropdown, twObject, twIcon, twLabel, twMenu, useNotification, useTooltip, useTextareaResize, useMenu };

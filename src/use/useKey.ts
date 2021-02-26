@@ -3,7 +3,7 @@ import { onBeforeUnmount, onMounted } from "vue"
 export function useKey(
   key: string,
   fn: EventHandlerNonNull,
-  opt?: { ignoreInputElements: boolean }
+  opt: { ignoreInputElements: boolean } = { ignoreInputElements: true }
 ) {
   let handler = (ev: KeyboardEvent) => {
     console.log("key", key, opt?.ignoreInputElements, ev.key)
@@ -11,8 +11,8 @@ export function useKey(
     let tagName = ev.target.tagName
     console.log("key match", key)
     if (ev.key === key) {
-      const check = opt?.ignoreInputElements !== true
-      if ((check && !["INPUT", "TEXTAREA"].includes(tagName)) || !check) {
+      const ignoreInput = opt?.ignoreInputElements === true
+      if (ignoreInput !== true || !["INPUT", "TEXTAREA"].includes(tagName)) {
         fn(ev)
       }
       ev.preventDefault()

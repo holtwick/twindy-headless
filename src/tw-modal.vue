@@ -10,6 +10,7 @@
       v-trap-focus
       aria-modal="true"
       :role="role"
+      ref="root"
     >
       <a
         @click="doCancel"
@@ -57,9 +58,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick } from "vue"
+import { defineComponent, ref } from "vue"
 import trapFocus from "./lib/directives/trapFocus"
-import { removeElement } from "./lib/helpers"
 import TwLink from "./tw-link.vue"
 import TwSymbol from "./tw-symbol.vue"
 import { useKey } from "./use/useKey"
@@ -105,89 +105,36 @@ export default defineComponent({
     trapFocus,
   },
   emits: ["close", "update:modelValue", "didopen", "willclose", "cancel"],
-  methods: {
-    doCancel() {
-      this.$emit("cancel")
-      // let onCancel = this?.$parent?.onCancel || this?.onCancel
-      // if (onCancel) {
-      //   onCancel.apply(null, arguments)
-      // }
-      this.doClose()
-    },
-    doClose() {
-      this.$emit("close", false)
-      this.$emit("update:modelValue", false)
-
-      if (this.standalone) {
-        // Timeout for the animation complete before destroying
-        setTimeout(() => {
-          // this.value = false
-          // @ts-ignore
-          this.$destroy()
-          removeElement(this.$el)
-        }, 150)
-      }
-    },
-    keyPress(event: KeyboardEvent) {
-      if (this.modelValue && event.keyCode === 27) {
-        // Esc key
-        this.doCancel()
-      }
-    },
-    doFocus() {
-      let el = this.$el.querySelector(".focus")
-      console.log("FOCUS", this.$el)
-      if (el) {
-        el.focus()
-      }
-    },
-    didAppear() {
-      console.log("did appear")
-      this.doFocus()
-      this.$emit("didopen")
-    },
-  },
-  created() {
-    // document?.addEventListener("keyup", this.keyPress)
-  },
-  watch: {
-    async modelValue(value) {
-      if (!value) {
-        this.$emit("willclose")
-      } else {
-        // this.$emit("didopen")
-        // this.doFocus()
-      }
-    },
-  },
-  // mounted() {
-  //   this.$nextTick(() => {
-  //     console.log("mounted", this.modalValue)
-  //     if (this.modalValue) {
-  //       this.doFocus()
-  //     }
-  //   })
-  // },
-  beforeMount() {
-    // Insert the Dialog component in the element container
-    if (this.standalone && typeof window !== "undefined") {
-      nextTick(() => {
-        const container =
-          /* document.querySelector(this.container) || */ document.body
-        container.appendChild(this.$el)
-      })
-    }
-  },
-  beforeUnmount() {
-    if (typeof window !== "undefined") {
-      // document?.removeEventListener("keyup", this.keyPress)
-      // reset scroll
-      // document?.documentElement.classList.remove('is-clipped')
-    }
-  },
   setup(props, { emit }) {
     console.log("setup")
-    useKey("Escape", () => console.log("esc"))
+
+    let root = ref()
+
+    const methods = {
+      doCancel() {
+        emit("cancel")
+        methods.doClose()
+      },
+      doClose() {
+        emit("close", false)
+        emit("update:modelValue", false)
+      },
+      doFocus() {
+        root.value?.querySelector(".focus")?.focus()
+      },
+      didAppear() {
+        console.log("did appear")
+        methods.doFocus()
+        emit("didopen")
+      },
+    }
+
+    useKey("Escape", methods.doCancel, { ignoreInputElements: false })
+
+    return {
+      ...methods,
+      root,
+    }
   },
 })
 </script>

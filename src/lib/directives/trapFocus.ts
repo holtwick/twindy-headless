@@ -21,8 +21,6 @@ const findFocusable = (element: HTMLElement): HTMLElement[] => {
     `.trim()
     ) || []
   )
-  //     .tw-button,
-  //     .tw-link,
 }
 
 let onKeyDown: any

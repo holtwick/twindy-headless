@@ -1,1 +1,1 @@
-export declare function useTextareaResize(r: any): void
+export declare function useTextareaResize(r: any): void;

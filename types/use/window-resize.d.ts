@@ -1,1 +1,1 @@
-export declare function useWindowResize(fn: any): void
+export declare function useWindowResize(fn: any): void;

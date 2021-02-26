@@ -1,1 +1,1 @@
-export declare function cloneObject(obj: any): any
+export declare function cloneObject(obj: any): any;

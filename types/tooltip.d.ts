@@ -1,1 +1,1 @@
-export declare function useTooltip(): {}
+export declare function useTooltip(): {};

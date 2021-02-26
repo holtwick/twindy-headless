@@ -1,1 +1,1 @@
-export declare function useResizeInput(input: any, props: any): void
+export declare function useResizeInput(input: any, props: any): void;

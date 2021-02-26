@@ -14,7 +14,7 @@ import twMenu from "./tw-menu.vue"
 
 import { useNotification } from "./notification"
 import { useTooltip } from "./tooltip"
-import { useTextareaResize } from "./usetextarea"
+import { useTextareaResize } from "./use/useTextarea"
 import { useMenu } from "./menu"
 
 export {

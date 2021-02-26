@@ -1,7 +1,7 @@
 <!-- Copyright (c) 2020 Dirk Holtwick. All rights reserved. https://holtwick.de/copyright -->
 
 <template>
-  <transition name="tw-modal-animation">
+  <transition name="tw-modal-animation" @after-enter="didAppear">
     <div
       class="tw-modal"
       :class="{ active: !!modelValue }"
@@ -62,6 +62,7 @@ import trapFocus from "./lib/directives/trapFocus"
 import { removeElement } from "./lib/helpers"
 import TwLink from "./tw-link.vue"
 import TwSymbol from "./tw-symbol.vue"
+import { useKey } from "./use/useKey"
 
 export default defineComponent({
   name: "tw-modal",
@@ -134,25 +135,28 @@ export default defineComponent({
       }
     },
     doFocus() {
-      nextTick(() => {
-        let el = this.$el.querySelector(".focus")
-        console.log("FOCUS", this.$el)
-        if (el) {
-          el.focus()
-        }
-      })
+      let el = this.$el.querySelector(".focus")
+      console.log("FOCUS", this.$el)
+      if (el) {
+        el.focus()
+      }
+    },
+    didAppear() {
+      console.log("did appear")
+      this.doFocus()
+      this.$emit("didopen")
     },
   },
   created() {
-    document?.addEventListener("keyup", this.keyPress)
+    // document?.addEventListener("keyup", this.keyPress)
   },
   watch: {
     async modelValue(value) {
       if (!value) {
         this.$emit("willclose")
       } else {
-        this.$emit("didopen")
-        this.doFocus()
+        // this.$emit("didopen")
+        // this.doFocus()
       }
     },
   },
@@ -176,11 +180,14 @@ export default defineComponent({
   },
   beforeUnmount() {
     if (typeof window !== "undefined") {
-      document?.removeEventListener("keyup", this.keyPress)
+      // document?.removeEventListener("keyup", this.keyPress)
       // reset scroll
       // document?.documentElement.classList.remove('is-clipped')
     }
   },
-  // setup(props) {},
+  setup(props, { emit }) {
+    console.log("setup")
+    useKey("Escape", () => console.log("esc"))
+  },
 })
 </script>

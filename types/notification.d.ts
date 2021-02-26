@@ -1,4 +1,4 @@
-export declare function notification(n: any): void;
-export declare function useNotification(): {
-    trigger: typeof notification;
-};
+export declare function emitNotification(n: any): void;
+export declare function useNotification(n?: {
+    title: string;
+}): (nn: any) => void;

@@ -1,2 +1,1 @@
-import { TwindyEventEmitter } from "../types";
-export declare function useOn(emitter: TwindyEventEmitter, eventName: string, fn: EventHandlerNonNull, trigger?: boolean): () => void;
+export declare function useOn(emitter: any, eventName: any, fn: any, trigger?: boolean): () => void;

@@ -1,1 +1,1 @@
-export declare function useWindowResize(fn: EventHandlerNonNull): void;
+export declare function useWindowResize(fn: any): void;

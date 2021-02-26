@@ -16,7 +16,7 @@ let container = document.createElement("div")
 document.body.appendChild(container)
 createApp(twNotification).mount(container)
 
-export function notification(n: TwindyNotification) {
+export function emitNotification(n: TwindyNotification) {
   if (!n.id) n.id = UUID()
   if (!n.timeout) n.timeout = 5 * 1000
   if (!n.active) n.active = true
@@ -32,8 +32,12 @@ export function notification(n: TwindyNotification) {
   notifications.unshift(n)
 }
 
-export function useNotification() {
-  return {
-    trigger: notification,
+export function useNotification(
+  n: TwindyNotification = {
+    title: "title is missing!",
+  }
+) {
+  return (nn: TwindyNotification) => {
+    emitNotification(Object.assign({}, n, nn))
   }
 }

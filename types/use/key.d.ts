@@ -1,3 +1,7 @@
-export declare function useKey(key: any, fn: any, opt?: {
-    ignoreInputElements: boolean;
-}): void;
+export declare function useKey(
+  key: any,
+  fn: any,
+  opt?: {
+    ignoreInputElements: boolean
+  }
+): void

@@ -1,1 +1,1 @@
-export declare function useFocusDesktopInput(input: any): void;
+export declare function useFocusDesktopInput(input: any): void

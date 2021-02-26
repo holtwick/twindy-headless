@@ -17,6 +17,8 @@ import { useTooltip } from "./tooltip"
 import { useTextareaResize } from "./use/textarea-grow"
 import { useMenu } from "./menu"
 
+export * from "./use/index"
+
 export {
   twButton,
   twModal,

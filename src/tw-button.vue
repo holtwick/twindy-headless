@@ -32,7 +32,9 @@ import { defineComponent } from "vue"
 // @action, @click
 
 export default defineComponent({
-  components: { TwSymbol },
+  components: {
+    TwSymbol,
+  },
   props: {
     title: {
       type: String,

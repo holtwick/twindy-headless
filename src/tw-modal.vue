@@ -1,7 +1,12 @@
 <!-- Copyright (c) 2020 Dirk Holtwick. All rights reserved. https://holtwick.de/copyright -->
 
 <template>
-  <transition name="tw-modal-animation" @after-enter="didAppear">
+  <transition
+    name="tw-modal-animation"
+    @after-leave=""
+    @after-enter="didAppear"
+    appear
+  >
     <div
       class="tw-modal"
       :class="{ active: !!modelValue }"
@@ -62,10 +67,13 @@ import { defineComponent, ref } from "vue"
 import trapFocus from "./lib/directives/trapFocus"
 import TwLink from "./tw-link.vue"
 import TwSymbol from "./tw-symbol.vue"
-import { useKey } from "./use/useKey"
+import { useKey } from "./use/key"
 
 export default defineComponent({
-  name: "tw-modal",
+  components: {
+    TwSymbol,
+    TwLink,
+  },
   props: {
     modelValue: {
       type: [Boolean, Object],
@@ -78,10 +86,6 @@ export default defineComponent({
     close: {
       type: Boolean,
       default: true,
-    },
-    standalone: {
-      type: Boolean,
-      default: false,
     },
     role: {
       default: "dialog",
@@ -97,14 +101,20 @@ export default defineComponent({
       },
     },
   },
-  components: {
-    TwSymbol,
-    TwLink,
-  },
   directives: {
     trapFocus,
   },
-  emits: ["close", "update:modelValue", "didopen", "willclose", "cancel"],
+
+  // https://v3.vuejs.org/guide/transitions-enterleave.html#javascript-hooks
+  emits: [
+    "close",
+    "update:modelValue",
+    "didOpen",
+    "willClose",
+    "didClose",
+    "cancel",
+  ],
+
   setup(props, { emit }) {
     console.log("setup")
 
@@ -125,7 +135,7 @@ export default defineComponent({
       didAppear() {
         console.log("did appear")
         methods.doFocus()
-        emit("didopen")
+        emit("didOpen")
       },
     }
 

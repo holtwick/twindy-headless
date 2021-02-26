@@ -1,6 +1,6 @@
 import { useEventListener } from "@vueuse/core"
 import { onMounted, Ref } from "vue"
-import { useWindowResize } from "./useWindowResize"
+import { useWindowResize } from "./window-resize"
 
 export function useResizeInput(
   input: Ref<HTMLInputElement>,

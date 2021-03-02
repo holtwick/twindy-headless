@@ -24,7 +24,9 @@ export default defineConfig({
       },
       plugins: [
         typescript({
-          check: false,
+          check: true,
+          clean: true,
+          abortOnError: false,
           useTsconfigDeclarationDir: true,
           tsconfigOverride: {
             compilerOptions: {

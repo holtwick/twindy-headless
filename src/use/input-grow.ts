@@ -15,7 +15,7 @@ export function useResizeInput(
     if (value === "") {
       el.value = placeholder
       el.style.width = Math.max(+minSize, el.scrollWidth) + "px"
-      el.value = ""
+      // el.value = ""
     } else {
       el.style.width = Math.max(+minSize, value ? el.scrollWidth : 0) + "px"
     }

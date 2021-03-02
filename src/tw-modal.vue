@@ -63,7 +63,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue"
+import { defineComponent, ref, PropType } from "vue"
 import trapFocus from "./lib/directives/trapFocus"
 import TwLink from "./tw-link.vue"
 import TwSymbol from "./tw-symbol.vue"
@@ -76,7 +76,7 @@ export default defineComponent({
   },
   props: {
     modelValue: {
-      type: [Boolean, Object],
+      type: [Boolean, Object] as PropType<any>,
       default: false,
     },
     title: {

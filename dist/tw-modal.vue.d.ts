@@ -1,6 +1,10 @@
 declare const _default: import("vue").DefineComponent<{
     modelValue: {
-        type: (BooleanConstructor | ObjectConstructor)[];
+        type: BooleanConstructor;
+        default: boolean;
+    };
+    active: {
+        type: BooleanConstructor;
         default: boolean;
     };
     title: {
@@ -24,6 +28,7 @@ declare const _default: import("vue").DefineComponent<{
     };
 }, {
     root: import("vue").Ref<any>;
+    open: import("vue").Ref<boolean>;
     doCancel(): void;
     doClose(): void;
     doFocus(): void;
@@ -31,6 +36,7 @@ declare const _default: import("vue").DefineComponent<{
 }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("close" | "update:modelValue" | "didOpen" | "willClose" | "didClose" | "cancel")[], "close" | "update:modelValue" | "didOpen" | "willClose" | "didClose" | "cancel", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<{
     close: boolean;
     modelValue: boolean;
+    active: boolean;
     title: string;
     role: string;
     canCancel: boolean;
@@ -38,6 +44,7 @@ declare const _default: import("vue").DefineComponent<{
 } & {}>, {
     close: boolean;
     modelValue: boolean;
+    active: boolean;
     title: string;
     role: string;
     canCancel: boolean;

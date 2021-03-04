@@ -16,11 +16,13 @@ export interface TwindyMenuItem {
   action?: (item: any) => void
 }
 
+export type TwindyEventHandler = (...args: any[]) => void
+
 // export type TwindyEventHandler = (event: Event) => any
 
 export interface TwindyEventEmitter {
-  on?(name: string, fn: Function): void
-  off?(name: string, fn: Function): void
-  addEventListener?(name: string, fn: Function): void
-  removeEventListener?(name: string, fn: Function): void
+  on?(name: string, fn: TwindyEventHandler): void
+  off?(name: string, fn: TwindyEventHandler): void
+  addEventListener?(name: string, fn: TwindyEventHandler): void
+  removeEventListener?(name: string, fn: TwindyEventHandler): void
 }

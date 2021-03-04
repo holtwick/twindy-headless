@@ -8,7 +8,7 @@ function deleteNotification(id?: string) {
   let index = notifications.findIndex((n) => n.id === id)
   if (index >= 0) {
     notifications.splice(index, 1)
-    console.log("remove index", index, id)
+    // console.log("remove index", index, id)
   }
 }
 
@@ -28,7 +28,7 @@ export function emitNotification(n: TwindyNotification) {
     }, n.timeout)
   }
 
-  console.log("add id", n.id, container)
+  // console.log("add id", n.id, container)
   notifications.unshift(n)
 }
 

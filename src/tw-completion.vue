@@ -29,7 +29,7 @@
       <slot name="after" class="completion-after"></slot>
     </div>
     <tw-popover
-      v-model="active"
+      :active="active"
       :target="target"
       placement="bottom-start"
       :arrow="false"
@@ -51,11 +51,11 @@
   </div>
 </template>
 
-<script script="ts">
+<script lang="ts">
 import twPopover from "./tw-popover.vue"
 import twItems from "./tw-items.vue"
-import { UUID } from "./lib/uuid.ts"
-import { defineComponent, ref, reactive, toRefs, watch } from "vue"
+import { UUID } from "./lib/uuid"
+import { defineComponent, ref, reactive, toRefs, watch, computed } from "vue"
 
 export default defineComponent({
   components: {
@@ -63,9 +63,6 @@ export default defineComponent({
     twPopover,
   },
   props: {
-    // active: {
-    //   default: true, // items.length && focus
-    // },
     uid: {
       type: String,
       default: UUID(),
@@ -84,13 +81,10 @@ export default defineComponent({
     },
     filter: {
       type: String,
+      default: "",
     },
   },
-  computed: {
-    active() {
-      return this.items.length && this.focus
-    },
-  },
+
   emits: ["filter", "deleteLast", "add", "update:filter"],
   setup(props, { emit }) {
     let target = ref()
@@ -108,6 +102,8 @@ export default defineComponent({
       focus: false,
     })
 
+    let active = computed(() => Boolean(props.items.length && data.focus))
+
     let methods = {
       resizeInput() {
         const el = input.value
@@ -116,29 +112,29 @@ export default defineComponent({
         el.style.width =
           Math.max(+props.minSize, value ? el.scrollWidth : 0) + "px"
       },
-      doInput(event) {
+      doInput() {
         methods.resizeInput()
       },
       doClear() {
         filterText.value = ""
         emit("filter", "")
       },
-      doMove(delta) {
+      doMove(delta: number) {
         data.selected = Math.max(
           0,
           Math.min(props.items.length - 1, data.selected + delta)
         )
       },
       doAddItem(item) {
-        console.log("add item", item.title, filterText.value)
+        // console.log("add item", item.title, filterText.value)
         emit("add", item)
         methods.doClear()
       },
       doAddSelection() {
-        const item = props.items[this.selected]
+        const item = props.items[data.selected]
         methods.doAddItem(item)
       },
-      doDeleteLast(ev) {
+      doDeleteLast(ev: Event) {
         if (!filterText.value) {
           ev.preventDefault()
           emit("deleteLast")
@@ -158,6 +154,7 @@ export default defineComponent({
       filterText,
       target,
       input,
+      active,
     }
   },
 })

@@ -1,1 +1,1 @@
-export declare let notifications: any[];
+export declare let notifications: never[];

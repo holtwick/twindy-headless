@@ -3,11 +3,11 @@ declare const _default: import("vue").DefineComponent<{
         type: BooleanConstructor;
         default: boolean;
     };
+    active: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
     target: {
-        type: (BooleanConstructor | {
-            new (): Element;
-            prototype: Element;
-        } | NumberConstructor)[];
         default: boolean;
     };
     transition: {
@@ -33,15 +33,11 @@ declare const _default: import("vue").DefineComponent<{
 }, {
     id: import("vue").Ref<string>;
     popover: import("vue").Ref<any>;
+    open: import("vue").Ref<boolean>;
 }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, "update:modelValue"[], "update:modelValue", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<{
     modelValue: boolean;
-    target: {
-        type: (BooleanConstructor | {
-            new (): Element;
-            prototype: Element;
-        } | NumberConstructor)[];
-        default: boolean;
-    };
+    active: boolean;
+    target: boolean;
     transition: string;
     arrow: boolean;
     placement: string;
@@ -50,13 +46,8 @@ declare const _default: import("vue").DefineComponent<{
     offset: number[];
 } & {}>, {
     modelValue: boolean;
-    target: {
-        type: (BooleanConstructor | {
-            new (): Element;
-            prototype: Element;
-        } | NumberConstructor)[];
-        default: boolean;
-    };
+    active: boolean;
+    target: boolean;
     transition: string;
     arrow: boolean;
     placement: string;

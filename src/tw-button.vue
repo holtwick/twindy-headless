@@ -25,11 +25,9 @@
   </button>
 </template>
 
-<script>
+<script lang="ts">
 import TwSymbol from "./tw-symbol.vue"
 import { defineComponent } from "vue"
-
-// @action, @click
 
 export default defineComponent({
   components: {
@@ -55,7 +53,7 @@ export default defineComponent({
     role: {
       type: String,
       default: "button",
-      validator(value) {
+      validator(value: string) {
         return ["button", "link"].includes(value)
       },
     },

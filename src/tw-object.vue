@@ -34,17 +34,19 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { cloneObject } from "./lib/clone"
+import { defineComponent, PropType } from "vue"
 
-export default {
+export default defineComponent({
   props: {
     value: {
+      type: Object as PropType<any>,
       default: null,
     },
   },
   computed: {
-    obj() {
+    obj(): any {
       return cloneObject(this.value)
     },
     entries() {
@@ -55,30 +57,30 @@ export default {
       }
       return []
     },
-    isArray() {
+    isArray(): boolean {
       return Array.isArray(this.obj)
     },
-    isObject() {
+    isObject(): boolean {
       return !Array.isArray(this.obj) && typeof this.obj === "object"
     },
-    isNull() {
+    isNull(): boolean {
       return this.value == null
     },
-    isTrue() {
+    isTrue(): boolean {
       return this.value === true
     },
-    isFalse() {
+    isFalse(): boolean {
       return this.value === false
     },
-    isDate() {
+    isDate(): boolean {
       return this.obj instanceof Date
     },
-    isNumber() {
+    isNumber(): boolean {
       return typeof this.value === "number"
     },
-    isString() {
+    isString(): boolean {
       return typeof this.value === "string"
     },
   },
-}
+})
 </script>

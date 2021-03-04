@@ -10,7 +10,7 @@
       @mousedown="doAction(item)"
       @keydown.enter="doAction(item)"
       class="tw-items-item"
-      :class="{ '-selected': selected === index || selected === item._id }"
+      :class="{ '-selected': selected === index || selected === item.id }"
     >
       <slot :item="item" :index="index"> {{ index }}. {{ item }} </slot>
     </div>
@@ -19,12 +19,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
+import { defineComponent, PropType } from "vue"
+import { TwindyMenuItem } from "./types"
 
 export default defineComponent({
   props: {
     items: {
-      type: Array,
+      type: Array as PropType<TwindyMenuItem[]>,
       default: () => [],
     },
     selected: {

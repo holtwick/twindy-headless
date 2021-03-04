@@ -8,7 +8,7 @@ declare const _default: {
             default: string;
         };
     };
-    setup(props: any): {
+    setup(): {
         target: import("vue").Ref<any>;
         active: import("vue").Ref<boolean>;
     };

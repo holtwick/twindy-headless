@@ -10,13 +10,13 @@ declare const _default: import("vue").DefineComponent<{
     candidates: import("vue").Ref<any[]>;
     tags: import("vue").ComputedRef<any[]>;
     filter: import("vue").Ref<string>;
-    setTags(tags2?: any[]): void;
+    setTags(tags2?: never[]): void;
     doRemoveTag(id: any): void;
     handleSelection(item: any): Promise<void>;
     handleFilter(filter2: any): void;
     handleDeleteLast(): void;
 }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("update:modelValue" | "create")[], "update:modelValue" | "create", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<{} & {
-    modelValue?: unknown[];
-    allTags?: Record<string, any>;
+    modelValue?: unknown[] | undefined;
+    allTags?: Record<string, any> | undefined;
 }>, {}>;
 export default _default;

@@ -76,7 +76,7 @@ export default defineComponent({
     let filter = ref("")
 
     let tags = computed(() => {
-      console.log("calc tags")
+      // console.log("calc tags")
       return (props.modelValue || []).map((tagID: string) => {
         return props.allTags[tagID]
       })
@@ -91,22 +91,22 @@ export default defineComponent({
         methods.setTags(arrayRemoveElement(props.modelValue, id))
       },
       async handleSelection(item: any) {
-        console.log("add item", item)
+        // console.log("add item", item)
         if (item.action) {
           let title = item.value.toString().trim()
           if (title) {
-            console.log("add item title", title)
+            // console.log("add item title", title)
             emit("create", title)
           }
         } else if (item.id) {
           methods.setTags([...props.modelValue, item.id])
-        } else {
-          console.log("unknown item", item)
+          // } else {
+          //   console.log("unknown item", item)
         }
       },
       handleFilter(filter: string) {
         let value = filter.trim()
-        console.log("calc candidates", value)
+        // console.log("calc candidates", value)
         let lvalue = value.toLowerCase()
         let exactMatch = false
         let currentTags = props.modelValue || []
@@ -130,7 +130,7 @@ export default defineComponent({
         candidates.value = items
       },
       handleDeleteLast() {
-        console.log("delete last")
+        // console.log("delete last")
         // TODO:2020-06-16 Mark before deletion
         let tags = props.modelValue
         if (tags.pop()) {

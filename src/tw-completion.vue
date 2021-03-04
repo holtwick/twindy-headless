@@ -130,7 +130,7 @@ export default defineComponent({
         )
       },
       doAddItem(item) {
-        console.log("add item", item.title, filterText.value)
+        // console.log("add item", item.title, filterText.value)
         emit("add", item)
         methods.doClear()
       },

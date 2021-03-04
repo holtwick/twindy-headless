@@ -69,7 +69,4 @@ See also: `tw-popover`
 - Uses Typescript
 - Plans to support ARIA
 - Mobile friendly
-
-```
-
-```
+ 

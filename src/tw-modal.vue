@@ -9,8 +9,8 @@
   >
     <div
       class="tw-modal"
-      :class="{ active: !!modelValue }"
-      v-if="!!modelValue"
+      :class="{ active: show }"
+      v-if="show"
       :tabindex="-1"
       v-trap-focus
       aria-modal="true"
@@ -63,7 +63,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType } from "vue"
+import { defineComponent, ref, watch } from "vue"
 import trapFocus from "./lib/directives/trapFocus"
 import TwLink from "./tw-link.vue"
 import TwSymbol from "./tw-symbol.vue"
@@ -76,7 +76,11 @@ export default defineComponent({
   },
   props: {
     modelValue: {
-      type: [Boolean, Object] as PropType<any>,
+      type: Boolean,
+      default: false,
+    },
+    active: {
+      type: Boolean,
       default: false,
     },
     title: {
@@ -116,9 +120,24 @@ export default defineComponent({
   ],
 
   setup(props, { emit }) {
-    console.log("setup")
+    // console.log("setup")
 
     let root = ref()
+    let show = ref(false)
+
+    watch(
+      () => props.active,
+      () => {
+        show.value = props.active
+      }
+    )
+
+    watch(
+      () => props.modelValue,
+      () => {
+        show.value = props.modelValue
+      }
+    )
 
     const methods = {
       doCancel() {
@@ -128,12 +147,13 @@ export default defineComponent({
       doClose() {
         emit("close", false)
         emit("update:modelValue", false)
+        show.value = false
       },
       doFocus() {
         root.value?.querySelector(".focus")?.focus()
       },
       didAppear() {
-        console.log("did appear")
+        // console.log("did appear")
         methods.doFocus()
         emit("didOpen")
       },
@@ -144,6 +164,7 @@ export default defineComponent({
     return {
       ...methods,
       root,
+      show,
     }
   },
 })

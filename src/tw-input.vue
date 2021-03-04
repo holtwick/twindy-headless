@@ -53,12 +53,12 @@ export default defineComponent({
       onMounted(() => {
         let el = input.value
         el.addEventListener("input", resizeInput)
-        console.log(props.placeholder)
+        // console.log(props.placeholder)
         if (el.value === "" && props.placeholder?.length > 0) {
           el.style.width = "1px"
           el.value = props.placeholder
           placeholderWidth = el.scrollWidth
-          console.log(placeholderWidth)
+          // console.log(placeholderWidth)
           el.value = ""
         }
         resizeInput()

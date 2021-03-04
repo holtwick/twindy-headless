@@ -82,4 +82,3 @@ let show = useActive(props)
 - Uses Typescript
 - Plans to support ARIA
 - Mobile friendly
- 

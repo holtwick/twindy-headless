@@ -10,10 +10,10 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue"
+
 export default defineComponent({
-  name: "tw-list",
   props: {
     distance: {
       type: Number,
@@ -40,14 +40,14 @@ export default defineComponent({
         end: this.distance,
       })
     },
-    onScroll(ev) {
+    onScroll(ev: any) {
       const scrollY = ev.target.scrollTop
       const visible = ev.target.clientHeight
       const bufferHeight = /* this.getFillHeight */ +visible * 0.75 // px before scroll end
       const pageHeight = ev.target.scrollHeight - bufferHeight
       const bottomOfPage = visible + scrollY >= pageHeight
       if (bottomOfPage) {
-        this.doMore(false)
+        this.doMore()
       }
     },
   },

@@ -20,11 +20,6 @@ var ignore = false
 
 export default defineComponent({
   props: {
-    // delay: {
-    //   // ms
-    //   type: Number,
-    //   default: 500,
-    // },
     placement: {
       default: "top",
     },
@@ -40,9 +35,9 @@ export default defineComponent({
 
     _activated = true
 
-    let active = ref(false)
+    let active = ref<boolean>(false)
     let placement = ref(props.placement)
-    let target = ref()
+    let target = ref<HTMLElement | null>(null)
     let text = ref("")
     let debounceTimer: any = 0
 

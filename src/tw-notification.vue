@@ -14,7 +14,7 @@ import { defineComponent } from "vue"
 import { notifications } from "./state"
 
 export default defineComponent({
-  setup(props) {
+  setup() {
     return {
       notifications,
     }

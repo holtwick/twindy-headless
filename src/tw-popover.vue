@@ -39,6 +39,7 @@ import {
   ref,
   watch,
   onUpdated,
+  PropType,
 } from "vue"
 import { UUID } from "./lib/uuid"
 import { useActive } from "./use/active"
@@ -91,6 +92,7 @@ export default defineComponent({
       default: false,
     },
     target: {
+      type: [Object, Boolean] as PropType<HTMLElement | false>,
       default: false,
     },
     transition: {
@@ -105,7 +107,7 @@ export default defineComponent({
       default: "top",
     },
     theme: {
-      default: "popover",
+      default: "dropdown",
     },
     text: {
       default: "",

@@ -35,9 +35,9 @@ export default {
   //   }
   // },
 
-  setup(props: any) {
+  setup() {
     let active = ref<boolean>(false)
-    let target = ref<Node>()
+    let target = ref<HTMLElement>()
 
     return {
       target,

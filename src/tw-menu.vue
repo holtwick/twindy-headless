@@ -19,12 +19,14 @@
 </template>
 
 <script lang="ts">
+import { PropType, defineComponent } from "vue"
 import { TwindyMenuItem } from "./types"
 
-export default {
+export default defineComponent({
   props: {
     items: {
-      type: Array,
+      type: Array as PropType<TwindyMenuItem[]>,
+      default: () => [],
     },
     target: {
       type: Element,
@@ -42,5 +44,5 @@ export default {
       }
     },
   },
-}
+})
 </script>

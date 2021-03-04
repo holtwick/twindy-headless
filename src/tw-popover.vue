@@ -31,7 +31,15 @@
 import { createPopper } from "@popperjs/core"
 import type { StrictModifiers } from "@popperjs/core"
 import { useEventListener } from "@vueuse/core"
-import { defineComponent, nextTick, onBeforeUnmount, ref, watch } from "vue"
+import {
+  defineComponent,
+  nextTick,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+  watch,
+  onUpdated,
+} from "vue"
 import { UUID } from "./lib/uuid"
 import { useActive } from "./use/active"
 
@@ -83,7 +91,6 @@ export default defineComponent({
       default: false,
     },
     target: {
-      type: [Element, Boolean, Number],
       default: false,
     },
     transition: {
@@ -115,6 +122,7 @@ export default defineComponent({
     let open = useActive(props)
 
     async function show() {
+      console.log("tw-popover show")
       let target = <Node | Box>props.target
       if (target != null) {
         hide()
@@ -155,6 +163,7 @@ export default defineComponent({
     }
 
     function hide() {
+      console.log("tw-popover hide")
       if (popper != null) {
         popper.destroy()
         popper = null
@@ -163,7 +172,7 @@ export default defineComponent({
 
     useEventListener(window, "mousedown", (event) => {
       if (
-        props.modelValue === true &&
+        open.value === true &&
         !(
           props?.target?.contains(event.target) ||
           popper?.value?.contains(event.target)
@@ -173,17 +182,28 @@ export default defineComponent({
       }
     })
 
-    onBeforeUnmount(hide)
-
-    watch([() => props.modelValue, () => props.target], () => {
-      if (props.modelValue && props.target) {
+    function checkActive() {
+      console.log(
+        "open",
+        props.active,
+        props.modelValue,
+        props.target,
+        open.value
+      )
+      if (open.value && props.target) {
         hide()
         nextTick()
         show()
       } else {
         hide()
       }
-    })
+    }
+
+    watch([() => open.value, () => props.target], checkActive)
+
+    onMounted(checkActive)
+    onUpdated(checkActive)
+    onBeforeUnmount(hide)
 
     return {
       id,

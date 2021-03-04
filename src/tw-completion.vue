@@ -102,7 +102,7 @@ export default defineComponent({
       focus: false,
     })
 
-    let active = computed(() => props.items.length && data.focus)
+    let active = computed(() => Boolean(props.items.length && data.focus))
 
     let methods = {
       resizeInput() {

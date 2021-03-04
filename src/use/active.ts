@@ -1,4 +1,4 @@
-import { ref, watch } from "vue"
+import { ref, Ref, watch } from "vue"
 
 /*
 props: {
@@ -12,20 +12,22 @@ props: {
     },
 */
 
-export function useActive(props: any) {
-  let show = ref(false)
+export function useActive(props: any): Ref<boolean> {
+  let show = ref(Boolean(props?.active || props?.modelValue))
 
   watch(
-    () => props.active,
+    () => props?.active,
     () => {
-      show.value = props.active
+      console.log("useActive :active =", props?.active)
+      show.value = props?.active
     }
   )
 
   watch(
-    () => props.modelValue,
+    () => props?.modelValue,
     () => {
-      show.value = props.modelValue
+      console.log("useActive v-model =", props?.modelValue)
+      show.value = props?.modelValue
     }
   )
 

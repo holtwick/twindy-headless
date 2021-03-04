@@ -8,7 +8,6 @@
 import { defineComponent } from "vue"
 
 export default defineComponent({
-  name: "tw-symbol",
   props: {
     name: {
       type: String,

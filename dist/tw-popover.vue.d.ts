@@ -8,6 +8,7 @@ declare const _default: import("vue").DefineComponent<{
         default: boolean;
     };
     target: {
+        type: (BooleanConstructor | ObjectConstructor)[];
         default: boolean;
     };
     transition: {

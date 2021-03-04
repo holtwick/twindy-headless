@@ -14,9 +14,10 @@ export interface TwindyMenuItem {
     blocked?: boolean;
     action?: (item: any) => void;
 }
+export declare type TwindyEventHandler = (...args: any[]) => void;
 export interface TwindyEventEmitter {
-    on?(name: string, fn: Function): void;
-    off?(name: string, fn: Function): void;
-    addEventListener?(name: string, fn: Function): void;
-    removeEventListener?(name: string, fn: Function): void;
+    on?(name: string, fn: TwindyEventHandler): void;
+    off?(name: string, fn: TwindyEventHandler): void;
+    addEventListener?(name: string, fn: TwindyEventHandler): void;
+    removeEventListener?(name: string, fn: TwindyEventHandler): void;
 }

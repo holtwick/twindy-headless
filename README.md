@@ -66,10 +66,19 @@ See also: `tw-popover`
 
 ---
 
+### useActive(props)
+
+This helper is used to activate an element. `tw-modal` and `tw-popover` use it and can be activated through two separate ways:
+
+1. Attach a reactive boolean to `v-model`. If `true` the element will show up and on `false` will hide. If the element closes itself it reflects the state in the value.
+2. Trigger via setting the property `:active` to `true`. You need to make sure to set it to `false` yourself or listen to `@close` events to trigger more than once.
+
+```ts
+let show = useActive(props)
+```
+
+---
+
 - Uses Typescript
 - Plans to support ARIA
 - Mobile friendly
-
-```
-
-```

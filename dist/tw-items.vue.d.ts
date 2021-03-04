@@ -1,7 +1,7 @@
 declare const _default: import("vue").DefineComponent<{
     items: {
         type: ArrayConstructor;
-        default: () => any[];
+        default: () => never[];
     };
     selected: {
         type: (StringConstructor | NumberConstructor)[];

@@ -45,7 +45,7 @@ import { defineComponent, ref, computed, PropType } from "vue"
 
 export function arrayRemoveElement(arr: any[], el: any) {
   if (arr && Array.isArray(arr)) {
-    let index
+    let index: number
     while ((index = arr.indexOf(el)) !== -1) {
       arr.splice(index, 1)
     }

@@ -9,8 +9,8 @@
   >
     <div
       class="tw-modal"
-      :class="{ active: show }"
-      v-if="show"
+      :class="{ active: open }"
+      v-if="open"
       :tabindex="-1"
       v-trap-focus
       aria-modal="true"
@@ -67,6 +67,7 @@ import { defineComponent, ref, watch } from "vue"
 import trapFocus from "./lib/directives/trapFocus"
 import TwLink from "./tw-link.vue"
 import TwSymbol from "./tw-symbol.vue"
+import { useActive } from "./use/active"
 import { useKey } from "./use/key"
 
 export default defineComponent({
@@ -123,21 +124,7 @@ export default defineComponent({
     // console.log("setup")
 
     let root = ref()
-    let show = ref(false)
-
-    watch(
-      () => props.active,
-      () => {
-        show.value = props.active
-      }
-    )
-
-    watch(
-      () => props.modelValue,
-      () => {
-        show.value = props.modelValue
-      }
-    )
+    let open = useActive(props)
 
     const methods = {
       doCancel() {
@@ -147,7 +134,7 @@ export default defineComponent({
       doClose() {
         emit("close", false)
         emit("update:modelValue", false)
-        show.value = false
+        open.value = false
       },
       doFocus() {
         root.value?.querySelector(".focus")?.focus()
@@ -164,7 +151,7 @@ export default defineComponent({
     return {
       ...methods,
       root,
-      show,
+      open,
     }
   },
 })

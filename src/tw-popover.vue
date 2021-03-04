@@ -8,8 +8,8 @@
       :class="`-${theme}`"
       ref="popover"
       :id="id"
-      v-show="modelValue && target"
-      :aria-hidden="!(modelValue && target)"
+      v-show="open && target"
+      :aria-hidden="!(open && target)"
       draggable="false"
     >
       <div
@@ -33,6 +33,7 @@ import type { StrictModifiers } from "@popperjs/core"
 import { useEventListener } from "@vueuse/core"
 import { defineComponent, nextTick, onBeforeUnmount, ref, watch } from "vue"
 import { UUID } from "./lib/uuid"
+import { useActive } from "./use/active"
 
 // if (document.getElementById("__popoverContainer") == null) {
 //   var popoverContainer = document.createElement("div")
@@ -77,6 +78,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    active: {
+      type: Boolean,
+      default: false,
+    },
     target: {
       type: [Element, Boolean, Number],
       default: false,
@@ -107,6 +112,7 @@ export default defineComponent({
     let popper: any, element
     let popover = ref<HTMLElement>()
     let id = ref(UUID())
+    let open = useActive(props)
 
     async function show() {
       let target = <Node | Box>props.target
@@ -182,6 +188,7 @@ export default defineComponent({
     return {
       id,
       popover,
+      open,
     }
   },
 })

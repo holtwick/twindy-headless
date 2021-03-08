@@ -3,8 +3,10 @@
 <template>
   <transition
     name="tw-modal-animation"
-    @after-leave=""
-    @after-enter="didAppear"
+    @before-enter="$emit('willOpen')"
+    @after-enter="didOpen"
+    @before-leave="$emit('willClose')"
+    @after-leave="$emit('didClose')"
     appear
   >
     <div
@@ -115,6 +117,7 @@ export default defineComponent({
     "close",
     "update:modelValue",
     "didOpen",
+    "willOpen",
     "willClose",
     "didClose",
     "cancel",
@@ -136,12 +139,8 @@ export default defineComponent({
         emit("update:modelValue", false)
         open.value = false
       },
-      doFocus() {
+      didOpen() {
         root.value?.querySelector(".focus")?.focus()
-      },
-      didAppear() {
-        // console.log("did appear")
-        methods.doFocus()
         emit("didOpen")
       },
     }

@@ -5,7 +5,7 @@ declare const _default: {
             default: null;
         };
     };
-    data(): {
+    setup(): {
         id: string;
     };
 };

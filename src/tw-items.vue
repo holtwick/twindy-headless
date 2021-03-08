@@ -37,7 +37,7 @@ export default defineComponent({
   setup(props, { emit }) {
     let methods = {
       doAction(item: any) {
-        console.log("item selected", item)
+        // console.log("item selected", item)
         emit("selected", item)
       },
     }

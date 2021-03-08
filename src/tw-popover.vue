@@ -124,7 +124,7 @@ export default defineComponent({
     let open = useActive(props)
 
     async function show() {
-      console.log("tw-popover show")
+      // console.log("tw-popover show")
       let target = <Node | Box>props.target
       if (target != null) {
         hide()
@@ -165,7 +165,7 @@ export default defineComponent({
     }
 
     function hide() {
-      console.log("tw-popover hide")
+      // console.log("tw-popover hide")
       if (popper != null) {
         popper.destroy()
         popper = null
@@ -185,13 +185,13 @@ export default defineComponent({
     })
 
     function checkActive() {
-      console.log(
-        "open",
-        props.active,
-        props.modelValue,
-        props.target,
-        open.value
-      )
+      // console.log(
+      //   "open",
+      //   props.active,
+      //   props.modelValue,
+      //   props.target,
+      //   open.value
+      // )
       if (open.value && props.target) {
         hide()
         nextTick()

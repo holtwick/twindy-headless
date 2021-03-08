@@ -11,7 +11,7 @@ export function useMenu(items: TwindyMenuItem[], ref?: Ref) {
   ref
   return {
     toggleMenu() {
-      console.log("toggle menu")
+      // console.log("toggle menu")
     },
   }
 }

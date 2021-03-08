@@ -18,7 +18,7 @@ export function useActive(props: any): Ref<boolean> {
   watch(
     () => props?.active,
     () => {
-      console.log("useActive :active =", props?.active)
+      // console.log("useActive :active =", props?.active)
       show.value = props?.active
     }
   )
@@ -26,7 +26,7 @@ export function useActive(props: any): Ref<boolean> {
   watch(
     () => props?.modelValue,
     () => {
-      console.log("useActive v-model =", props?.modelValue)
+      // console.log("useActive v-model =", props?.modelValue)
       show.value = props?.modelValue
     }
   )

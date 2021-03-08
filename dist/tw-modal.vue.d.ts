@@ -31,9 +31,8 @@ declare const _default: import("vue").DefineComponent<{
     open: import("vue").Ref<boolean>;
     doCancel(): void;
     doClose(): void;
-    doFocus(): void;
-    didAppear(): void;
-}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("close" | "update:modelValue" | "didOpen" | "willClose" | "didClose" | "cancel")[], "close" | "update:modelValue" | "didOpen" | "willClose" | "didClose" | "cancel", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<{
+    didOpen(): void;
+}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("close" | "update:modelValue" | "didOpen" | "willOpen" | "willClose" | "didClose" | "cancel")[], "close" | "update:modelValue" | "didOpen" | "willOpen" | "willClose" | "didClose" | "cancel", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<{
     close: boolean;
     modelValue: boolean;
     active: boolean;

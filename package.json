@@ -20,12 +20,10 @@
   "files": [
     "dist"
   ],
-  "peerDependencies": {
-    "vue": ">=3.0.0"
-  },
   "dependencies": {
     "@popperjs/core": "^2.9.1",
-    "@vueuse/core": "^4.3.4"
+    "@vueuse/core": "^4.3.4",
+    "vue": ">=3.0.0"
   },
   "devDependencies": {
     "@types/node": "^14.14.32",

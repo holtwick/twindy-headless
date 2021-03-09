@@ -85,7 +85,6 @@ Executes `action` when the font specified in `fontName` is loaded. Example:
 useFontLoaded("Inter", resizeInputField)
 ```
 
-
 ---
 
 - Uses Typescript

@@ -77,6 +77,14 @@ This helper is used to activate an element. `tw-modal` and `tw-popover` use it a
 let show = useActive(props)
 ```
 
+### useFontLoaded(fontName:string, action: Function)
+
+Executes `action` when the font specified in `fontName` is loaded. Example:
+
+```
+useFontLoaded("Inter", resizeInputField)
+```
+
 ---
 
 - Uses Typescript

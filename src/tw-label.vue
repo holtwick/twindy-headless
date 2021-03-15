@@ -21,7 +21,7 @@ export default {
       default: null,
     },
   },
-  data() {
+  setup() {
     return {
       id: UUID(),
     }

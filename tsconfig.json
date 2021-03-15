@@ -6,13 +6,17 @@
     "strict": true,
     "jsx": "preserve",
     "sourceMap": true,
+    "baseUrl": "src",
+    "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "lib": ["esnext", "dom"],
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
     "types": ["vite/client"],
     "declaration": true,
     "outDir": "dist",
     "isolatedModules": true
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
+  "files": ["./shims/vue.d.ts"],
+  "include": ["src/**/*.ts", "src/**/*.vue"],
+  "exclude": ["**/node_modules", "**/dist"]
 }

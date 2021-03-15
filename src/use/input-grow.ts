@@ -1,5 +1,6 @@
 import { useEventListener } from "@vueuse/core"
 import { onMounted, Ref } from "vue"
+import { useFontLoaded } from "./font-loaded"
 import { useWindowResize } from "./window-resize"
 
 export function useResizeInput(
@@ -9,13 +10,14 @@ export function useResizeInput(
   let { minSize = 32, placeholder = "" } = props
 
   let resizeInput = () => {
+    console.log("resize")
     const el = input.value
     let value = el.value
     el.style.width = "1px"
     if (value === "") {
       el.value = placeholder
       el.style.width = Math.max(+minSize, el.scrollWidth) + "px"
-      // el.value = ""
+      el.value = ""
     } else {
       el.style.width = Math.max(+minSize, value ? el.scrollWidth : 0) + "px"
     }
@@ -24,15 +26,16 @@ export function useResizeInput(
 
   useWindowResize(resizeInput)
 
+  // Some triggers
   useEventListener(input, "input", resizeInput)
+  useEventListener(window, "load", resizeInput)
+  useFontLoaded("Inter", resizeInput)
 
   onMounted(() => {
-    // let el = input.value
-    // el.addEventListener("input", resizeInput)
     resizeInput()
   })
 
-  // onBeforeUnmount(() => {
-  //   input.value.removeEventListener("input", resizeInput)
-  // })
+  return {
+    resize: resizeInput,
+  }
 }

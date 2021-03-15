@@ -1,6 +1,6 @@
 <template>
   <svg v-if="name" preserveAspectRatio="xMinYMin">
-    <use :xlink:href="`/sprites.svg#${name}`"></use>
+    <use :xlink:href="`${base}assets/sprites.svg#${name}`"></use>
   </svg>
   <svg
     v-else
@@ -20,6 +20,12 @@ import { defineComponent } from "vue"
 export default defineComponent({
   props: {
     name: String,
+    default: "",
+  },
+  setup() {
+    return {
+      base: import.meta.env.BASE_URL,
+    }
   },
 })
 </script>

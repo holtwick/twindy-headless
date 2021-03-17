@@ -4,17 +4,13 @@
   "private": false,
   "types": "./dist/index.d.ts",
   "module": "./dist/twindy-headless.es.js",
-  "exports": {
-    ".": {
-      "import": "./dist/twindy-headless.es.js"
-    }
-  },
   "scripts": {
     "dev": "vite",
     "build": "vuedx-typecheck . && vite build",
     "check": "vuedx-typecheck .",
     "serve": "vite preview",
     "format": "prettier --write .",
+    "upgrade": "ncu -u -x @babel/standalone,vite && echo '' && echo '>>> Now run `npm up` if changes were made.'",
     "prepublishOnly": "npm run format && npm run build"
   },
   "files": [
@@ -23,12 +19,12 @@
   ],
   "dependencies": {
     "@popperjs/core": "^2.9.1",
-    "@vueuse/core": "^4.3.4",
+    "@vueuse/core": "^4.4.1",
     "vue": "^3.0.7"
   },
   "devDependencies": {
     "@types/dom-screen-wake-lock": "^1.0.0",
-    "@types/node": "^14.14.32",
+    "@types/node": "^14.14.35",
     "@vitejs/plugin-vue": "^1.1.5",
     "@vue/compiler-sfc": "^3.0.7",
     "@vuedx/typecheck": "^0.6.3",

@@ -12,9 +12,10 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from "vue"
 import { UUID } from "./lib/uuid"
 
-export default {
+export default defineComponent({
   props: {
     label: {
       type: String,
@@ -26,5 +27,5 @@ export default {
       id: UUID(),
     }
   },
-}
+})
 </script>

@@ -12,31 +12,15 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
-      name: "twindy-headless",
       formats: ["es"],
     },
     rollupOptions: {
       external: ["vue"],
-      output: {
-        globals: {
-          vue: "Vue",
-        },
-      },
       plugins: [
         typescript({
           check: true,
           clean: true,
           abortOnError: false,
-          // verbosity: 1,
-          // include: ["*.ts+(|x)", "**/*.ts+(|x)"],
-          // useTsconfigDeclarationDir: true,
-          // tsconfigOverride: {
-          //   compilerOptions: {
-          //     module: "ESNext",
-          //     declaration: true,
-          //     declarationDir: "types",
-          //   },
-          // },
         }),
       ],
     },

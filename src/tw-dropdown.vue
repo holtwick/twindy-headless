@@ -15,10 +15,10 @@
 </template>
 
 <script lang="ts">
-import { ref } from "vue"
+import { ref, defineComponent } from "vue"
 import twPopover from "./tw-popover.vue"
 
-export default {
+export default defineComponent({
   components: {
     twPopover,
   },
@@ -44,5 +44,5 @@ export default {
       active,
     }
   },
-}
+})
 </script>

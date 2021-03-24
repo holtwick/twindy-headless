@@ -1,7 +1,11 @@
 <!-- Copyright (c) 2020 Dirk Holtwick. All rights reserved. https://holtwick.de/copyright -->
 
 <template>
-  <div ref="target" style="display: inline-block" @click="active = !active">
+  <div
+    ref="target"
+    style="display: inline-block"
+    @click.stop="active = !active"
+  >
     <slot class="tw-dropdown"></slot>
   </div>
   <tw-popover

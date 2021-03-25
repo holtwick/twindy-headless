@@ -19,8 +19,10 @@ import { defineComponent } from "vue"
 
 export default defineComponent({
   props: {
-    name: String,
-    default: "",
+    name: {
+      type: String,
+      default: "",
+    },
   },
   setup() {
     return {

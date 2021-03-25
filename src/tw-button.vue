@@ -1,9 +1,9 @@
 <template>
   <button class="tc-button" v-bind="$attrs" :disabled="disabled">
-    <slot v-if="left" />
+    <span v-if="left"><slot /></span>
     <tw-icon v-if="name || icon" :name="name || icon" />
     <tw-symbol v-if="symbol" :name="symbol" />
-    <slot v-if="!left" />
+    <span v-if="!left"><slot /></span>
   </button>
 </template>
 

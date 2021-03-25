@@ -30,4 +30,21 @@ export default defineComponent({
     }
   },
 })
+
+/*
+
+Create a file in `public/assets/sprites.svg` which looks like this:
+
+<svg xmlns="http://www.w3.org/2000/svg">
+
+  <!-- When adding new entries, please remove the following propertiers, such it can be set via CSS: -->
+  <!-- stroke-width, width, height, xmlns -->
+  <!-- Add `id` for direct access -->
+
+  <svg id="test" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <!-- ... -->
+  </svg>
+ 
+</svg>
+*/
 </script>

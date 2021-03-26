@@ -1,5 +1,10 @@
 <template>
-  <button class="tc-button" v-bind="$attrs" :disabled="disabled">
+  <button
+    class="tw-button"
+    @click="$emit('action')"
+    v-bind="$attrs"
+    :disabled="disabled"
+  >
     <span v-if="left"><slot /></span>
     <tw-icon v-if="name || icon" :name="name || icon" />
     <tw-symbol v-if="symbol" :name="symbol" />
@@ -17,6 +22,7 @@ export default defineComponent({
     twIcon,
     twSymbol,
   },
+  emits: ["action"],
   props: {
     name: String,
     icon: String,

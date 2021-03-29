@@ -10,7 +10,7 @@
     "check": "vuedx-typecheck .",
     "serve": "vite preview",
     "format": "prettier --write .",
-    "upgrade": "ncu -u && npm i'",
+    "upgrade": "ncu -u -x \"vue,@vue/compiler-sfc\" && npm i",
     "prepublishOnly": "npm run format && npm run build"
   },
   "files": [
@@ -20,13 +20,13 @@
   "dependencies": {
     "@popperjs/core": "^2.9.1",
     "@vueuse/core": "^4.6.2",
-    "vue": "^3.0.9"
+    "vue": "^3.0.7"
   },
   "devDependencies": {
     "@types/dom-screen-wake-lock": "^1.0.0",
     "@types/node": "^14.14.37",
     "@vitejs/plugin-vue": "^1.2.0",
-    "@vue/compiler-sfc": "^3.0.9",
+    "@vue/compiler-sfc": "^3.0.7",
     "@vuedx/typecheck": "^0.6.3",
     "@vuedx/typescript-plugin-vue": "^0.6.3",
     "prettier": "^2.2.1",

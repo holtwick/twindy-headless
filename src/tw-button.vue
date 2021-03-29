@@ -1,14 +1,14 @@
 <template>
   <button
-    class="tw-button"
+    :class="class"
     @click="$emit('action'), $emit('click', $event)"
     v-bind="$attrs"
     :disabled="disabled"
   >
-    <span v-if="left && $slots.default"><slot /></span>
+    <span v-if="left && (title || $slots.default)">{{ title }}<slot /></span>
     <tw-icon v-if="name || icon" :name="name || icon" />
     <tw-symbol v-if="symbol" :name="symbol" />
-    <span v-if="!left && $slots.default"><slot /></span>
+    <span v-if="!left && (title || $slots.default)">{{ title }}<slot /></span>
   </button>
 </template>
 
@@ -33,11 +33,16 @@ export default defineComponent({
   },
   emits: ["action", "click"],
   props: {
+    class: {
+      type: String,
+      default: "tw-button",
+    },
     name: String,
     icon: String,
     symbol: String,
     left: Boolean,
     disabled: Boolean,
+    title: String,
   },
 })
 </script>

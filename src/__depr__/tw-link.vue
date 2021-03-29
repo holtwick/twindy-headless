@@ -11,6 +11,8 @@ import { defineComponent } from "vue"
 import TwButton from "./tw-button.vue"
 
 export default defineComponent({
-  components: { TwButton },
+  components: {
+    TwButton,
+  },
 })
 </script>

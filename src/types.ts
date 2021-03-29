@@ -19,8 +19,6 @@ export interface TwindyMenuItem {
 
 export type TwindyEventHandler = (...args: any[]) => void
 
-// export type TwindyEventHandler = (event: Event) => any
-
 export interface TwindyEventEmitter {
   on?(name: string, fn: TwindyEventHandler): void
   off?(name: string, fn: TwindyEventHandler): void

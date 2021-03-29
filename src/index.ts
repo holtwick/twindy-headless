@@ -33,4 +33,16 @@ export * from "./tooltip"
 export * from "./menu"
 export * from "./use/index"
 
-export type { TwindyMenuItem, TwindyNotification } from "./types"
+import type {
+  TwindyMenuItem,
+  TwindyNotification,
+  TwindyEventEmitter,
+  TwindyEventHandler,
+} from "./types"
+
+export type {
+  TwindyMenuItem,
+  TwindyNotification,
+  TwindyEventEmitter,
+  TwindyEventHandler,
+}

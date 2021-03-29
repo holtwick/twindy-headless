@@ -64,7 +64,7 @@ export default defineComponent({
         resizeInput()
       })
       onBeforeUnmount(() => {
-        input.value.removeEventListener("input", resizeInput)
+        input.value?.removeEventListener("input", resizeInput)
       })
     }
     return {

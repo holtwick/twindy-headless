@@ -25,7 +25,7 @@ import { TwindyMenuItem } from "./types"
 export default defineComponent({
   props: {
     items: {
-      type: Array as PropType<TwindyMenuItem[] | any>,
+      type: Array as PropType<TwindyMenuItem[] | any[]>,
       default: () => [],
     },
     selected: {

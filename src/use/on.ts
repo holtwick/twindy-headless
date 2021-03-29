@@ -7,6 +7,8 @@ export function useOn(
   fn: TwindyEventHandler,
   trigger = false
 ) {
+  if (emitter == null) return
+
   onMounted(() => {
     if (trigger === true) {
       fn(null)

@@ -5,10 +5,10 @@ import { TwindyNotification } from "./types"
 import twNotification from "./tw-notification.vue"
 
 function deleteNotification(id?: string) {
-  let index = notifications.findIndex((n) => n.id === id)
+  let index = notifications.value.findIndex((n) => n.id === id)
   if (index >= 0) {
-    notifications.splice(index, 1)
-    // console.log("remove index", index, id)
+    notifications.value.splice(index, 1)
+    console.log("remove index", index, id)
   }
 }
 
@@ -28,8 +28,8 @@ export function emitNotification(n: TwindyNotification) {
     }, n.timeout)
   }
 
-  // console.log("add id", n.id, container)
-  notifications.unshift(n)
+  notifications.value.unshift(n)
+  console.log("add id", n.id, container, notifications)
 }
 
 export function useNotification(

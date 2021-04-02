@@ -7,6 +7,7 @@ import twCompletion from "./tw-completion.vue"
 import twTagInput from "./tw-tag-input.vue"
 import twInput from "./tw-input.vue"
 import twDropdown from "./tw-dropdown.vue"
+import twNotification from "./tw-notification.vue"
 import twObject from "./tw-object.vue"
 import twIcon from "./tw-icon.vue"
 import twLabel from "./tw-label.vue"
@@ -19,6 +20,7 @@ export {
   twList,
   twPopover,
   twCompletion,
+  twNotification,
   twTagInput,
   twInput,
   twDropdown,
@@ -32,6 +34,8 @@ export * from "./notification"
 export * from "./tooltip"
 export * from "./menu"
 export * from "./use/index"
+
+export * from "./state"
 
 import type {
   TwindyMenuItem,

@@ -1,4 +1,5 @@
 import { useSessionStorage } from "@vueuse/core"
+import { names } from "../config"
 import { watch, Ref } from "vue"
 
 const query = "(prefers-color-scheme: dark)"
@@ -10,7 +11,7 @@ if ("addEventListener" in mediaQuery) {
   })
 }
 
-let darkMode = useSessionStorage("darkMode", mediaQuery.matches)
+let darkMode = useSessionStorage(names.darkMode, mediaQuery.matches)
 
 function setDarkMode(value: boolean) {
   darkMode.value = !!value

@@ -5,10 +5,10 @@
     v-bind="$attrs"
     :disabled="disabled"
   >
-    <span v-if="left && (title || $slots.default)">{{ title }}<slot /></span>
+    <span v-if="right && (title || $slots.default)">{{ title }}<slot /></span>
     <tw-icon v-if="name || icon" :name="name || icon" />
     <tw-symbol v-if="symbol" :name="symbol" />
-    <span v-if="!left && (title || $slots.default)">{{ title }}<slot /></span>
+    <span v-if="!right && (title || $slots.default)">{{ title }}<slot /></span>
   </button>
 </template>
 
@@ -40,7 +40,8 @@ export default defineComponent({
     name: String,
     icon: String,
     symbol: String,
-    left: Boolean,
+    // left: Boolean,
+    right: Boolean,
     disabled: Boolean,
     title: String,
   },

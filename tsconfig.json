@@ -14,7 +14,7 @@
     "types": ["vite/client"],
     "declaration": true,
     "outDir": "dist",
-    "isolatedModules": true
+    "isolatedModules": false
   },
   "files": ["./shims/vue.d.ts"],
   "include": ["src/**/*.ts", "src/**/*.vue"],

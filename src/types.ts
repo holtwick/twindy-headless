@@ -6,6 +6,7 @@ export interface TwindyNotification {
   timeout?: number
   confirm?: (id: string) => void
   cancel?: (id: string) => void
+  close?: () => void
 }
 
 export interface TwindyMenuItem {

@@ -37,7 +37,7 @@ export * from "./use/index"
 
 export * from "./state"
 
-import type {
+import {
   TwindyMenuItem,
   TwindyNotification,
   TwindyEventEmitter,

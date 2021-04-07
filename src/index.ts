@@ -44,7 +44,7 @@ import {
   TwindyEventHandler,
 } from "./types"
 
-export {
+export type {
   TwindyMenuItem,
   TwindyNotification,
   TwindyEventEmitter,

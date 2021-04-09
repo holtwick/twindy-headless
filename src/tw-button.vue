@@ -1,8 +1,8 @@
 <template>
   <button
     :class="class"
-    @click="$emit('action'), $emit('click', $event)"
     v-bind="$attrs"
+    @click.prevent="$emit('action'), $emit('click', $event)"
     :disabled="disabled"
   >
     <span v-if="right && (title || $slots.default)">{{ title }}<slot /></span>
@@ -40,7 +40,6 @@ export default defineComponent({
     name: String,
     icon: String,
     symbol: String,
-    // left: Boolean,
     right: Boolean,
     disabled: Boolean,
     title: String,

@@ -18,10 +18,10 @@ export function closeNotification(id?: string) {
 
 export function emitNotification(n: TwindyNotification): TwindyNotification {
   if (!n.id) n.id = UUID()
-  if (!n.timeout) n.timeout = 5 * 1000
   if (!n.active) n.active = true
+  if (n.timeout == null) n.timeout = 5 * 1000
 
-  if (n.timeout) {
+  if (n.timeout != null && n.timeout > 0) {
     setTimeout(() => {
       n.active = false
       closeNotification(n.id)
@@ -31,7 +31,7 @@ export function emitNotification(n: TwindyNotification): TwindyNotification {
   n.close = () => closeNotification(n.id)
 
   notifications.value.unshift(n)
-  // console.log("add id", n.id, container, notifications)
+  console.log("add id", n.id, notifications)
 
   return n
 }

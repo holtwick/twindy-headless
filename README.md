@@ -85,9 +85,9 @@ Executes `action` when the font specified in `fontName` is loaded. Example:
 useFontLoaded("Inter", resizeInputField)
 ```
 
-### useAppMode()
+### useDocumentClass(className)
 
-Add `overflow: hidden; height: 100%;` to `html` and `body` on mount. It will be removed on unmount. This allows a real app like experience where whole viewport scrolling is not desired.
+For the lifetime of a component adds the `className` to `html` element.
 
 ---
 

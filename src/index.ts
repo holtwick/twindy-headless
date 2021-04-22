@@ -12,6 +12,7 @@ import twObject from "./tw-object.vue"
 import twIcon from "./tw-icon.vue"
 import twLabel from "./tw-label.vue"
 import twMenu from "./tw-menu.vue"
+import twDebug from "./tw-debug.vue"
 
 export {
   twButton,
@@ -28,6 +29,7 @@ export {
   twIcon,
   twLabel,
   twMenu,
+  twDebug,
 }
 
 export * from "./notification"

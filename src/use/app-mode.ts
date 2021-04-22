@@ -1,5 +1,7 @@
 import { onBeforeMount, onBeforeUnmount } from "vue"
 
+// deprecated: prefer useDocumentClass
+
 export function useAppMode() {
   let oldOverflow: string
   let oldHeight: string

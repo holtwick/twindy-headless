@@ -1,5 +1,5 @@
 .tw-debug {
-  border-radius: 4px;
+  border-radius: 0.25rem;
   overflow-x: auto;
   margin: 0;
   padding: 10px;
@@ -14,11 +14,25 @@
   padding-bottom: 0;
 }
 
+.tw-debug .tw-debug {
+  border-radius: 0;
+  overflow-x: initial;
+}
+
+.indent {
+  margin: 0;
+  padding: 10px;
+  font-family: Menlo;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  background-color: hsl(0, 0%, 13%);
+}
+
 .array > .value,
 .object > .value {
   display: flex;
   flex-direction: column;
-  margin-left: 2rem;
+  margin-left: 1rem;
 }
 
 .key {
@@ -56,15 +70,19 @@
   color: hsl(0, 0%, 50%);
 }
 
+.array,
+.object {
+  position: relative;
+}
+
 .array > .key,
 .object > .key {
   cursor: pointer;
 }
 
-.value > .array,
-.value > .object {
-  position: relative;
-  left: -0.8rem;
+.value > .array > .indicator,
+.value > .object > .indicator {
+  margin-left: -1em;
 }
 
 .count,

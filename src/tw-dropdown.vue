@@ -9,11 +9,13 @@
     <slot class="tw-dropdown"></slot>
   </div>
   <tw-popover
-    arrow
+    :arrow="false"
     v-model="active"
     :target="target"
     theme="dropdown"
     transition="tw-tooltip-transition"
+    :offset="() => [0, 4]"
+    placement="bottom-start"
     ><div><slot name="content">Define #content</slot></div></tw-popover
   >
 </template>

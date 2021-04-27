@@ -4,25 +4,31 @@
       v-if="objectToString(data) === 'Null'"
       :name="name"
       :data="data"
-    ></null-wrapper>
+    />
+
+    <undefined-wrapper
+      v-if="objectToString(data) === 'Undefined'"
+      :name="name"
+      :data="data"
+    />
 
     <boolean-wrapper
       v-else-if="objectToString(data) === 'Boolean'"
       :name="name"
       :data="data"
-    ></boolean-wrapper>
+    />
 
     <number-wrapper
       v-else-if="objectToString(data) === 'Number'"
       :name="name"
       :data="data"
-    ></number-wrapper>
+    />
 
     <string-wrapper
       v-else-if="objectToString(data) === 'String'"
       :name="name"
       :data="data"
-    ></string-wrapper>
+    />
 
     <array-wrapper
       v-else-if="objectToString(data) === 'Array'"
@@ -33,7 +39,7 @@
       :expand-signal="expandSignal"
       :expandOnCreatedAndUpdated="expandOnCreatedAndUpdated"
       :getKeys="getKeys"
-    ></array-wrapper>
+    />
 
     <object-wrapper
       v-else-if="objectToString(data) === 'Object'"
@@ -44,7 +50,7 @@
       :expand-signal="expandSignal"
       :expandOnCreatedAndUpdated="expandOnCreatedAndUpdated"
       :getKeys="getKeys"
-    ></object-wrapper>
+    />
   </div>
 </template>
 
@@ -52,6 +58,7 @@
 
 <script>
 import NullWrapper from "./debug/NullWrapper.vue"
+import UndefinedWrapper from "./debug/UndefinedWrapper.vue"
 import BooleanWrapper from "./debug/BooleanWrapper.vue"
 import NumberWrapper from "./debug/NumberWrapper.vue"
 import StringWrapper from "./debug/StringWrapper.vue"
@@ -76,16 +83,18 @@ const Wrapper = {
     },
     data: {
       required: true,
-      validator(data) {
-        return (
-          objectToString(data) === "Null" ||
-          objectToString(data) === "Boolean" ||
-          objectToString(data) === "Number" ||
-          objectToString(data) === "String" ||
-          objectToString(data) === "Array" ||
-          objectToString(data) === "Object"
-        )
-      },
+      // validator(data) {
+      //   let ok =
+      //     objectToString(data) === "Null" ||
+      //     objectToString(data) === "Undefined" ||
+      //     objectToString(data) === "Boolean" ||
+      //     objectToString(data) === "Number" ||
+      //     objectToString(data) === "String" ||
+      //     objectToString(data) === "Array" ||
+      //     objectToString(data) === "Object"
+      //   console.log(">>>", objectToString(data))
+      //   return ok
+      // },
     },
     name: {
       type: String,
@@ -124,6 +133,7 @@ const Wrapper = {
   },
   components: {
     NullWrapper,
+    UndefinedWrapper,
     BooleanWrapper,
     NumberWrapper,
     StringWrapper,

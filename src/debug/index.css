@@ -3,7 +3,18 @@
   overflow-x: auto;
   margin: 0;
   padding: 10px;
-  font-family: Menlo;
+  font-family: var(
+    --font-mono,
+    ui-monospace,
+    "JetBrains Mono",
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    "Liberation Mono",
+    "Courier New",
+    monospace
+  );
   font-size: 0.8rem;
   line-height: 1.4;
   background-color: hsl(0, 0%, 13%);
@@ -22,7 +33,6 @@
 .indent {
   margin: 0;
   padding: 10px;
-  font-family: Menlo;
   font-size: 0.8rem;
   line-height: 1.4;
   background-color: hsl(0, 0%, 13%);

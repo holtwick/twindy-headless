@@ -10,7 +10,7 @@ export function useResizeInput(
   let { minSize = 32, placeholder = "" } = props
 
   let resizeInput = () => {
-    console.log("resize")
+    // console.log("resize")
     const el = input.value
     let value = el.value
     el.style.width = "1px"

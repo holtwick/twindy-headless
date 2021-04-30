@@ -1,6 +1,6 @@
 <template>
   <span class="array">
-    <span class="indicator" @click="handleClick">{{
+    <span class="indicator" @click="handleClick" v-if="data.length > 0">{{
       isExpanding ? "\u25BC" : "\u25B6"
     }}</span>
     <span class="key" @click="handleClick">{{ name === "" ? "" : name }}</span>
@@ -8,13 +8,9 @@
       name === "" ? "" : ": "
     }}</span>
     <span class="count" @click="handleClick">
-      {{
-        isExpanding === false && data.length >= 2 ? "(" + data.length + ")" : ""
-      }}
+      {{ !isExpanding ? `Array(${data.length})` : "" }}
     </span>
-    <span class="preview" @click="handleClick">
-      {{ isExpanding ? "Array(" + data.length + ")" : "[...]" }}
-    </span>
+    <span class="preview" @click="handleClick"> </span>
 
     <template v-if="isCircular">
       <span v-if="isExpanding" class="value">

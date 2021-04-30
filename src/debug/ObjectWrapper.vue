@@ -1,14 +1,23 @@
 <template>
   <span class="object">
-    <span class="indicator" @click="handleClick">{{
+    <span class="indicator" @click="handleClick" v-if="keys.length > 0">{{
       isExpanding ? "\u25BC" : "\u25B6"
     }}</span>
+
     <span class="key" @click="handleClick">{{ name === "" ? "" : name }}</span>
+
     <span class="separator" @click="handleClick">
       {{ name === "" ? "" : ": " }}
     </span>
+
     <span class="preview" @click="handleClick">
-      {{ isExpanding ? "" : ` (${Object.keys(data).length}){...}` }}
+      {{
+        isExpanding
+          ? ""
+          : keys.length > 0
+          ? "{ " + keys.join(", ") + " }"
+          : "{}"
+      }}
     </span>
 
     <template v-if="isCircular">

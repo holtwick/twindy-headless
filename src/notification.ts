@@ -8,7 +8,7 @@ export function closeNotification(id?: string) {
   let index = notifications.value.findIndex((n) => n.id === id)
   if (index >= 0) {
     notifications.value.splice(index, 1)
-    console.log("remove index", index, id)
+    // console.log("remove index", index, id)
   }
 }
 
@@ -31,7 +31,7 @@ export function emitNotification(n: TwindyNotification): TwindyNotification {
   n.close = () => closeNotification(n.id)
 
   notifications.value.unshift(n)
-  console.log("add id", n.id, notifications)
+  // console.log("add id", n.id, notifications)
 
   return n
 }

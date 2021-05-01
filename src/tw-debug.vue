@@ -110,7 +110,7 @@ const Wrapper = {
     },
     level: {
       default: 1,
-      type: Number,
+      type: [Number, String],
     },
     getKeys: {
       type: Function,
@@ -123,7 +123,7 @@ const Wrapper = {
   },
   computed: {
     expandOnCreatedAndUpdated() {
-      return (path) => path.length < this.level
+      return (path) => path.length < +this.level
     },
   },
   setup() {

@@ -23,6 +23,9 @@ export default defineComponent({
     placement: {
       default: "top",
     },
+    active: Boolean,
+    target: HTMLElement,
+    text: String,
   },
   components: {
     twPopover,

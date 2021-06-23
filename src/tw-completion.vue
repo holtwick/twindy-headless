@@ -125,7 +125,7 @@ export default defineComponent({
           Math.min(props.items.length - 1, data.selected + delta)
         )
       },
-      doAddItem(item) {
+      doAddItem(item: any) {
         // console.log("add item", item.title, filterText.value)
         emit("add", item)
         methods.doClear()

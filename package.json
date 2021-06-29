@@ -1,6 +1,6 @@
 {
   "name": "twindy-headless",
-  "version": "0.11.3",
+  "version": "0.11.4",
   "private": false,
   "types": "./dist/index.d.ts",
   "module": "./dist/twindy-headless.es.js",

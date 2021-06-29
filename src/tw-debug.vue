@@ -130,7 +130,7 @@ const Wrapper = {
     return {
       objectToString,
     }
-  }, 
+  },
   components: {
     NullWrapper,
     UndefinedWrapper,

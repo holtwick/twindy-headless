@@ -41,6 +41,9 @@ function removeListener(listener: KeyListener) {
   }
 }
 
+/**
+ * @deprecated better use https://vueuse.org/core/usemagickeys/#usemagickeys
+ */
 export function useKey(
   key: string,
   fn: EventHandlerNonNull,

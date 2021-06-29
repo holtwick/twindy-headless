@@ -1,5 +1,3 @@
-// Copyright (c) 2020 Dirk Holtwick. All rights reserved. https://holtwick.de/copyright
-
 const findFocusable = (element: HTMLElement): HTMLElement[] => {
   if (!element) {
     return []

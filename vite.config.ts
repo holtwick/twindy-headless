@@ -20,6 +20,7 @@ export default defineConfig({
     dedupe: ["vue"],
   },
   build: {
+    sourcemap: true,
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
       formats: ["es"],

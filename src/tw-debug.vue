@@ -56,7 +56,7 @@
 
 <style src="./debug/index.css"></style>
 
-<script>
+<script lang="js">
 import NullWrapper from "./debug/NullWrapper.vue"
 import UndefinedWrapper from "./debug/UndefinedWrapper.vue"
 import BooleanWrapper from "./debug/BooleanWrapper.vue"
@@ -110,7 +110,7 @@ const Wrapper = {
     },
     level: {
       default: 1,
-      type: Number,
+      type: [Number, String],
     },
     getKeys: {
       type: Function,
@@ -123,7 +123,7 @@ const Wrapper = {
   },
   computed: {
     expandOnCreatedAndUpdated() {
-      return (path) => path.length < this.level
+      return (path) => path.length < Number(this.level)
     },
   },
   setup() {

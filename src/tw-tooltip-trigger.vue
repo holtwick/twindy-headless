@@ -14,6 +14,10 @@
 import twPopover from "./tw-popover.vue"
 import { defineComponent, ref } from "vue"
 import { useEventListener } from "@vueuse/core"
+import { Logger } from "zeed"
+
+// const log = Logger("tw:tooltip")
+// log.active = false
 
 var _activated = false
 var ignore = false
@@ -45,6 +49,7 @@ export default defineComponent({
     let debounceTimer: any = 0
 
     let onTooltipHover = (ev: Event) => {
+      // log("onTooltipHover", ignore, ev)
       if (ignore) return
 
       clearTimeout(debounceTimer)
@@ -73,15 +78,29 @@ export default defineComponent({
     }
 
     let onTouchDown = (ev: Event) => {
+      // log("onTouchDown")
       active.value = false
-      // ignore = true
+      ignore = true
+    }
+
+    let onTouchUp = (ev: Event) => {
+      // log("onTouchUp")
+      ignore = false
     }
 
     const useCapture = true
 
-    useEventListener(window, "touchdown", onTouchDown, useCapture)
     useEventListener(window, "mouseover", onTooltipHover, useCapture)
+
+    // These are for handling touch events. Since mouseover comes AFTER touch events
+    // we use `mouseup` to finish the touch exception. We cannot generally set
+    // ignore on first touch, because these days devices may have mixed input
+    useEventListener(window, "touchstart", onTouchDown, useCapture)
+    useEventListener(window, "mouseup", onTouchUp, useCapture)
+
     // useEventListener(window, "focus", onTooltipHover, useCapture)
+
+    // log("did setup tooltips")
 
     return {
       placement,

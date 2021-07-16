@@ -20,20 +20,21 @@
   ],
   "dependencies": {
     "@popperjs/core": "^2.9.2",
-    "@vueuse/core": "^5.0.3",
-    "vue": "^3.1.2"
+    "@vueuse/core": "^5.1.3",
+    "vue": "^3.1.2",
+    "zeed": "^0.5.0"
   },
   "devDependencies": {
     "@types/dom-screen-wake-lock": "^1.0.0",
-    "@types/node": "^15.12.5",
-    "@vitejs/plugin-vue": "^1.2.4",
-    "@vue/compiler-sfc": "^3.1.2",
+    "@types/node": "^16.3.2",
+    "@vitejs/plugin-vue": "^1.2.5",
+    "@vue/compiler-sfc": "^3.1.4",
     "@vuedx/typecheck": "^0.7.4",
     "@vuedx/typescript-plugin-vue": "^0.7.4",
     "prettier": "^2.3.2",
     "rollup-plugin-typescript2": "0.30.0",
-    "typescript": "^4.3.4",
-    "vite": "^2.3.8",
-    "vue-tsc": "^0.2.0"
+    "typescript": "^4.3.5",
+    "vite": "^2.4.2",
+    "vue-tsc": "^0.2.1"
   }
 }

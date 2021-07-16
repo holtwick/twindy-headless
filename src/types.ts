@@ -1,3 +1,5 @@
+export {}
+
 export interface TwindyNotification {
   id?: string
   active?: boolean

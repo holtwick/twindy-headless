@@ -1,7 +1,8 @@
 {
   "name": "twindy-headless",
-  "version": "0.11.5",
+  "version": "0.11.6",
   "private": false,
+  "type": "module",
   "types": "./dist/index.d.ts",
   "module": "./dist/twindy-headless.es.js",
   "scripts": {
@@ -15,8 +16,7 @@
     "prepublishOnly": "npm run format && npm run build"
   },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "dependencies": {
     "@popperjs/core": "^2.9.2",

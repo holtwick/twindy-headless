@@ -8,7 +8,7 @@
     <div v-else-if="isTrue" class="-true">true</div>
     <div v-else-if="isFalse" class="-false">false</div>
     <div v-else-if="isDate" class="-date">
-      {{ date }}
+      {{ value }}
     </div>
     <div v-else-if="isArray">
       <div>[</div>
@@ -29,7 +29,7 @@
         </td>
       </tr>
     </table>
-    <div v-else>{{ value.toString() }}</div>
+    <div v-else>{{ String(value) }}</div>
     <slot></slot>
   </div>
 </template>

@@ -1,7 +1,6 @@
 <template>
   <button
     :class="class"
-    v-bind="$attrs"
     @click.prevent="$emit('action'), $emit('click', $event)"
     :disabled="disabled"
   >

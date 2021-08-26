@@ -1,4 +1,3 @@
-import { UUID } from "./lib/uuid"
 import { notifications } from "./state"
 import { TwindyNotification } from "./types"
 // import { createApp } from "vue"
@@ -17,7 +16,7 @@ export function closeNotification(id?: string) {
 // createApp(twNotification).mount(container)
 
 export function emitNotification(n: TwindyNotification): TwindyNotification {
-  if (!n.id) n.id = UUID()
+  if (!n.id) n.id = uname("tw-notification")
   if (!n.active) n.active = true
   if (n.timeout == null) n.timeout = 5 * 1000
 

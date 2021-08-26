@@ -54,8 +54,8 @@
 <script lang="ts">
 import twPopover from "./tw-popover.vue"
 import twItems from "./tw-items.vue"
-import { UUID } from "./lib/uuid"
 import { defineComponent, ref, reactive, toRefs, watch, computed } from "vue"
+import { uname } from "zeed"
 
 export default defineComponent({
   components: {
@@ -65,7 +65,7 @@ export default defineComponent({
   props: {
     uid: {
       type: String,
-      default: UUID(),
+      default: uname("tw-completion"),
     },
     items: {
       type: Array,

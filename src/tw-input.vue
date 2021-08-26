@@ -1,5 +1,5 @@
 <template>
-  <input type="text" v-bind="$attrs" :placeholder="placeholder" ref="input" />
+  <input type="text" :placeholder="placeholder" ref="input" />
 </template>
 
 <script lang="ts">

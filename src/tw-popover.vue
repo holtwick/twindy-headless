@@ -41,8 +41,8 @@ import {
   onUpdated,
   PropType,
 } from "vue"
-import { UUID } from "./lib/uuid"
 import { useActive } from "./use/active"
+import { uname } from "zeed"
 
 // if (document.getElementById("__popoverContainer") == null) {
 //   var popoverContainer = document.createElement("div")
@@ -120,7 +120,7 @@ export default defineComponent({
   setup(props: any, { emit }) {
     let popper: any, element
     let popover = ref<HTMLElement>()
-    let id = ref(UUID())
+    let id = ref(uname("tw-popover"))
     let open = useActive(props)
 
     async function show() {

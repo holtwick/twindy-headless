@@ -3,10 +3,10 @@
   "version": "0.11.10",
   "private": false,
   "type": "module",
-  "types": "./dist/index.d.ts",
-  "module": "./dist/twindy-headless.es.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/twindy-headless.es.js",
   "files": [
-    "./dist"
+    "dist"
   ],
   "exports": {
     ".": {
@@ -17,18 +17,18 @@
     "@popperjs/core": "^2.9.3",
     "@vueuse/core": "^6.0.0",
     "vue": "^3.2.6",
-    "zeed": "^0.6.14"
+    "zeed": "^0.6.15"
   },
   "devDependencies": {
     "@types/dom-screen-wake-lock": "^1.0.0",
-    "@types/node": "^16.7.2",
+    "@types/node": "^16.7.3",
     "@vitejs/plugin-vue": "^1.6.0",
     "@vue/compiler-sfc": "^3.2.6",
     "@vuedx/typecheck": "^0.7.4",
     "@vuedx/typescript-plugin-vue": "^0.7.4",
     "prettier": "^2.3.2",
     "rollup-plugin-typescript2": "0.30.0",
-    "typescript": "^4.3.5",
+    "typescript": "^4.4.2",
     "vite": "2.5.0",
     "vue-tsc": "^0.3.0"
   },

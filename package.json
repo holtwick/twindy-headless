@@ -1,6 +1,6 @@
 {
   "name": "twindy-headless",
-  "version": "0.11.11",
+  "version": "0.11.12",
   "private": false,
   "type": "module",
   "types": "dist/index.d.ts",
@@ -14,16 +14,16 @@
     }
   },
   "dependencies": {
-    "@popperjs/core": "^2.9.3",
-    "@vueuse/core": "^6.0.0",
-    "vue": "^3.2.6",
-    "zeed": "^0.6.15"
+    "@popperjs/core": "^2.10.1",
+    "@vueuse/core": "^6.2.0",
+    "vue": "^3.2.9",
+    "zeed": "^0.6.22"
   },
   "devDependencies": {
     "@types/dom-screen-wake-lock": "^1.0.0",
-    "@types/node": "^16.7.3",
+    "@types/node": "^16.7.10",
     "@vitejs/plugin-vue": "^1.6.0",
-    "@vue/compiler-sfc": "^3.2.6",
+    "@vue/compiler-sfc": "^3.2.9",
     "@vuedx/typecheck": "^0.7.4",
     "@vuedx/typescript-plugin-vue": "^0.7.4",
     "prettier": "^2.3.2",

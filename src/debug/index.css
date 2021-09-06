@@ -30,7 +30,7 @@
   overflow-x: initial;
 }
 
-.indent {
+.tw-debug .indent {
   margin: 0;
   padding: 10px;
   font-size: 0.8rem;
@@ -38,40 +38,40 @@
   background-color: hsl(0, 0%, 13%);
 }
 
-.array > .value,
-.object > .value {
+.tw-debug .array > .value,
+.tw-debug .object > .value {
   display: flex;
   flex-direction: column;
   margin-left: 1rem;
 }
 
-.key {
+.tw-debug .key {
   color: hsl(300, 60%, 65%);
   user-select: none;
 }
 
-.string > .value {
+.tw-debug .string > .value {
   color: hsl(15, 100%, 70%);
 }
 
-.boolean > .value,
-.number > .value {
+.tw-debug .boolean > .value,
+.tw-debug .number > .value {
   color: hsl(250, 70%, 65%);
 }
 
-.null > .value,
-.undefined > .value {
+.tw-debug .null > .value,
+.tw-debug .undefined > .value {
   color: hsl(0, 0%, 40%);
 }
 
-.separator {
+.tw-debug .separator {
   cursor: pointer;
   font-size: 0.8rem;
   user-select: none;
   color: hsl(0, 0%, 80%);
 }
 
-.indicator {
+.tw-debug .indicator {
   cursor: pointer;
   font-size: 0.8rem;
   padding-right: 0.3rem;
@@ -80,24 +80,24 @@
   color: hsl(0, 0%, 50%);
 }
 
-.array,
-.object {
+.tw-debug .array,
+.tw-debug .object {
   position: relative;
 }
 
-.array > .key,
-.object > .key {
+.tw-debug .array > .key,
+.tw-debug .object > .key {
   cursor: pointer;
 }
 
-.value > .array > .indicator,
-.value > .object > .indicator {
+.tw-debug .value > .array > .indicator,
+.tw-debug .value > .object > .indicator {
   margin-left: -1em;
 }
 
-.count,
-.preview,
-.quotes {
+.tw-debug .count,
+.tw-debug .preview,
+.tw-debug .quotes {
   cursor: pointer;
   font-size: 0.8rem;
   user-select: none;

@@ -46,7 +46,7 @@ function removeListener(listener: KeyListener) {
  */
 export function useKey(
   key: string,
-  fn: EventHandlerNonNull,
+  fn: () => void,
   opt: { ignoreInputElements: boolean } = { ignoreInputElements: true }
 ) {
   const handler: KeyListener = {

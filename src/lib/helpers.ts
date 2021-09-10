@@ -160,6 +160,7 @@ export function escapeRegExp(value: {
 export const supportsTouch = Boolean(
   (window && "ontouchstart" in window) ||
     (navigator?.maxTouchPoints || 0) > 1 ||
+    // @ts-ignore
     (navigator?.msPointerEnabled && window?.MSGesture) ||
     // @ts-ignore
     (window?.DocumentTouch && document instanceof DocumentTouch)

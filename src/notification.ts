@@ -1,3 +1,4 @@
+import { uname } from "zeed"
 import { notifications } from "./state"
 import { TwindyNotification } from "./types"
 // import { createApp } from "vue"

@@ -54,9 +54,9 @@
   </div>
 </template>
 
-<style src="./debug/index.css"></style>
-
 <script lang="js">
+import "./debug/index.css"
+
 import NullWrapper from "./debug/NullWrapper.vue"
 import UndefinedWrapper from "./debug/UndefinedWrapper.vue"
 import BooleanWrapper from "./debug/BooleanWrapper.vue"

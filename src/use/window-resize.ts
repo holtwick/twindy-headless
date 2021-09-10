@@ -1,6 +1,6 @@
 import { onBeforeUnmount, onMounted } from "vue"
 
-export function useWindowResize(fn: EventHandlerNonNull) {
+export function useWindowResize(fn: () => void) {
   onMounted(() => {
     window.addEventListener("resize", fn)
   })

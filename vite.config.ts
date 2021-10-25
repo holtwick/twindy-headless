@@ -21,19 +21,13 @@ export default defineConfig({
   },
   build: {
     sourcemap: true,
+    target: "esnext",
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
       formats: ["es"],
     },
     rollupOptions: {
       external: ["vue"],
-      // plugins: [
-      //   typescript({
-      //     check: true,
-      //     clean: true,
-      //     abortOnError: false,
-      //   }),
-      // ],
     },
   },
 })

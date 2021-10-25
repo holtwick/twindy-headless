@@ -39,12 +39,12 @@ export function useSeparator(
     }
   }
 
-  function onMouseUp(e: any) {
+  function onMouseUp() {
     dragging.value = false
     unbindEvents()
   }
 
-  function onDblClick(e: any) {
+  function onDblClick() {
     collapsed.value = !collapsed.value
   }
 

@@ -9,6 +9,7 @@
           v-if="item.title"
           @click.prevent.stop="doAction(item)"
           @contextmenu.prevent.stop="doAction(item)"
+          :data-test-menu="item.title"
         >
           {{ item.title }}
         </a>

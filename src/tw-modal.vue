@@ -18,6 +18,7 @@
       aria-modal="true"
       :role="role"
       ref="root"
+      :data-test-modal="title || '1'"
     >
       <a
         @click="doCancel"

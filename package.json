@@ -15,27 +15,27 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.10.2",
-    "@vueuse/core": "^6.7.3",
-    "vue": "^3.2.20",
-    "zeed": "^0.7.49"
+    "@vueuse/core": "^6.7.5",
+    "vue": "^3.2.21",
+    "zeed": "^0.7.66"
   },
   "devDependencies": {
     "@types/dom-screen-wake-lock": "^1.0.0",
-    "@types/node": "^16.11.4",
-    "@vitejs/plugin-vue": "^1.9.3",
-    "@vue/compiler-sfc": "^3.2.20",
+    "@types/node": "^16.11.6",
+    "@vitejs/plugin-vue": "^1.9.4",
+    "@vue/compiler-sfc": "^3.2.21",
     "@vuedx/typecheck": "^0.7.4",
     "@vuedx/typescript-plugin-vue": "^0.7.4",
     "prettier": "^2.4.1",
-    "rollup-plugin-typescript2": "0.30.0",
     "typescript": "^4.4.4",
-    "vite": "2.6.11",
-    "vue-tsc": "^0.28.8"
+    "vite": "2.6.13",
+    "vue-dts-gen": "^0.3.0",
+    "vue-tsc": "^0.28.10"
   },
   "scripts": {
     "start": "vite build --watch",
     "dev": "vite",
-    "build": "npm run clean && vite build",
+    "build": "npm run clean && vite build && vue-dts-gen \"src/*.{ts,vue}\"",
     "check": "vue-tsc  --noEmit",
     "check2": "vuedx-typecheck .",
     "clean": "rm -rf dist",

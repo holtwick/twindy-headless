@@ -16,7 +16,7 @@ export default defineConfig({
       formats: ["es"],
     },
     rollupOptions: {
-      external: ["vue"],
+      external: ["@popperjs/core", "@vueuse/core", "vue"],
     },
   },
 })

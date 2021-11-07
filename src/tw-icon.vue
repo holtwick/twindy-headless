@@ -18,6 +18,9 @@
 import { twIconUrl } from "./state"
 import { defineComponent } from "vue"
 
+import { Logger } from "zeed"
+const log = Logger("icon")
+
 export default defineComponent({
   props: {
     name: {
@@ -26,10 +29,15 @@ export default defineComponent({
     },
   },
   setup(props) {
+    log("twicon", twIconUrl)
+
+    // @ts-ignore
+    let url = twIconUrl ?? window.twIconUrl
     return {
-      url: `${twIconUrl ?? `${import.meta.env.BASE_URL}assets/sprites.svg`}#${
-        props.name
-      }`,
+      url:
+        (url ?? `${import.meta.env.BASE_URL}assets/sprites.svg`) +
+        "#" +
+        props.name,
     }
   },
 })

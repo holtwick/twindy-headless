@@ -1,6 +1,6 @@
 <template>
   <svg v-if="name" preserveAspectRatio="xMinYMin">
-    <use :xlink:href="`${base}assets/sprites.svg#${name}`"></use>
+    <use :xlink:href="url"></use>
   </svg>
   <svg
     v-else
@@ -15,6 +15,7 @@
 </template>
 
 <script lang="ts">
+import { twIconUrl } from "./state"
 import { defineComponent } from "vue"
 
 export default defineComponent({
@@ -24,9 +25,11 @@ export default defineComponent({
       default: "",
     },
   },
-  setup() {
+  setup(props) {
     return {
-      base: import.meta.env.BASE_URL,
+      url: `${twIconUrl ?? `${import.meta.env.BASE_URL}assets/sprites.svg`}#${
+        props.name
+      }`,
     }
   },
 })

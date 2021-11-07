@@ -18,7 +18,7 @@ export function useSeparator(
   let startValue = 0
 
   const { minValue = 0, maxValue = Infinity } = opt
-  console.log("minmax", minValue, maxValue)
+  //console.log("minmax", minValue, maxValue)
 
   function onMouseDown(e: { pageX: number; pageY: number }) {
     dragging.value = true

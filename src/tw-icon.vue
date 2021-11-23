@@ -15,10 +15,10 @@
 </template>
 
 <script lang="ts">
-import { twIconUrl } from "./state"
 import { defineComponent } from "vue"
-
 import { Logger } from "zeed"
+import { twIconUrl } from "./state"
+
 const log = Logger("icon")
 
 export default defineComponent({
@@ -29,7 +29,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    log("twicon", twIconUrl)
+    // log("twicon", twIconUrl)
 
     // @ts-ignore
     let url = twIconUrl ?? window.twIconUrl

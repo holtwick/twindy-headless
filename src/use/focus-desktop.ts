@@ -1,9 +1,9 @@
 import { watch, Ref } from "vue"
-import { supportsTouch } from "../lib/helpers"
+// import { supportsTouch } from "../lib/helpers"
 
 export function useFocusDesktopInput(input: Ref<HTMLElement>) {
-  if (!supportsTouch) {
-    watch(input, () => input?.value?.focus())
-    // input?.value?.focus()
-  }
+  // if (!supportsTouch) {
+  //   watch(input, () => input?.value?.focus())
+  //   // input?.value?.focus()
+  // }
 }

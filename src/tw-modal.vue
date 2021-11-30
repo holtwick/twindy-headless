@@ -13,8 +13,7 @@
       class="tw-modal"
       :class="{ active: open }"
       v-if="open"
-      :tabindex="-1"
-      v-trap-focus
+      :tabindex="-1"       
       aria-modal="true"
       :role="role"
       ref="root"
@@ -67,7 +66,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue"
-import trapFocus from "./lib/directives/trapFocus"
+// import trapFocus from "./lib/directives/trapFocus"
 import TwButton from "./tw-button.vue"
 import { useActive } from "./use/active"
 import { useKey } from "./use/key"
@@ -107,9 +106,9 @@ export default defineComponent({
       },
     },
   },
-  directives: {
-    trapFocus,
-  },
+  // directives: {
+  //   trapFocus,
+  // },
 
   // https://v3.vuejs.org/guide/transitions-enterleave.html#javascript-hooks
   emits: [

@@ -1,37 +1,41 @@
 import { useSessionStorage } from "@vueuse/core"
 import { names } from "../config"
-import { watch, Ref } from "vue"
+import { watch, Ref, ref } from "vue"
 
-const query = "(prefers-color-scheme: dark)"
-const mediaQuery = window.matchMedia(query)
+let darkMode = ref(false)
 
-if ("addEventListener" in mediaQuery) {
-  mediaQuery.addEventListener("change", (event) => {
-    setDarkMode(event.matches)
-  })
-}
+if (typeof window !== "undefined") {
+  const query = "(prefers-color-scheme: dark)"
+  const mediaQuery = window.matchMedia(query)
 
-let darkMode = useSessionStorage(names.darkMode, mediaQuery.matches)
+  if ("addEventListener" in mediaQuery) {
+    mediaQuery.addEventListener("change", (event) => {
+      setDarkMode(event.matches)
+    })
+  }
 
-function setDarkMode(value: boolean) {
-  darkMode.value = !!value
+  darkMode = useSessionStorage(names.darkMode, mediaQuery.matches)
+
+  function setDarkMode(value: boolean) {
+    darkMode.value = !!value
+    applyTheme()
+  }
+
+  watch(darkMode, applyTheme)
+
+  function applyTheme() {
+    if (darkMode.value) {
+      document.documentElement.classList.add("dark")
+      document.documentElement.classList.remove("light")
+    } else {
+      document.documentElement.classList.add("light")
+      document.documentElement.classList.remove("dark")
+    }
+  }
+
   applyTheme()
 }
 
 export function useDarkMode(): Ref<boolean> {
   return darkMode
 }
-
-watch(darkMode, applyTheme)
-
-function applyTheme() {
-  if (darkMode.value) {
-    document.documentElement.classList.add("dark")
-    document.documentElement.classList.remove("light")
-  } else {
-    document.documentElement.classList.add("light")
-    document.documentElement.classList.remove("dark")
-  }
-}
-
-applyTheme()

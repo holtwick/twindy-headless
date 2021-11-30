@@ -30,7 +30,7 @@ export default defineComponent({
       default: () => [],
     },
     target: {
-      type: Element,
+      type: Object as PropType<HTMLElement>,
     },
   },
   data() {

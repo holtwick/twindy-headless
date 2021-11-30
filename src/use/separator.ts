@@ -1,5 +1,8 @@
-import { Ref, ref } from "vue"
 import { useEventListener } from "@vueuse/core"
+import { Ref, ref } from "vue"
+import { Logger } from "zeed"
+
+const log = Logger("use-separator")
 
 export function useSeparator(
   el: Ref<HTMLElement>,
@@ -9,6 +12,7 @@ export function useSeparator(
     maxValue?: number
   } = {}
 ) {
+  log("separator", el, value, opt)
   let dragging = ref(false)
   let collapsed = ref(false)
   let startX = 0
@@ -21,6 +25,7 @@ export function useSeparator(
   //console.log("minmax", minValue, maxValue)
 
   function onMouseDown(e: { pageX: number; pageY: number }) {
+    log("mouse down")
     dragging.value = true
     startX = e.pageX
     startY = e.pageY
@@ -29,17 +34,22 @@ export function useSeparator(
   }
 
   function onMouseMove(e: { pageX: number; pageY: number }) {
+    log("mouse move")
+    if (!dragging.value) return
     deltaX.value = e.pageX - startX
     deltaY.value = e.pageY - startY
     if (value) {
-      value.value = Math.max(
+      const size = Math.max(
         minValue,
         Math.min(maxValue, startValue + deltaX.value)
       )
+      log("update size", size)
+      value.value = size
     }
   }
 
   function onMouseUp() {
+    log("mouse up")
     dragging.value = false
     unbindEvents()
   }

@@ -1,4 +1,4 @@
-import { watch, Ref } from "vue"
+import { Ref, watch } from "vue"
 import { supportsTouch } from "../lib/helpers"
 
 export function useFocusDesktopInput(input: Ref<HTMLElement>) {

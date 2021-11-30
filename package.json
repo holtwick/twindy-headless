@@ -35,7 +35,7 @@
   "scripts": {
     "start": "vite build --watch",
     "dev": "vite",
-    "build": "npm run clean && vite build && vue-dts-gen \"src/*.{ts,vue}\"",
+    "build": "npm run clean && vite build && vue-dts-gen \"src/**/*.{ts,vue}\"",
     "check": "vue-tsc  --noEmit",
     "check2": "vuedx-typecheck .",
     "clean": "rm -rf dist",

@@ -6,8 +6,12 @@ import { resolve } from "path"
 export default defineConfig({
   plugins: [vue()],
   resolve: {
-    dedupe: ["vue"],
+    dedupe: ["vue", "zeed"],
   },
+  // optimizeDeps: {
+  //   exclude: ["@popperjs/core", "@vueuse/core", "vue"],
+  //   include: ["zeed"],
+  // },
   build: {
     sourcemap: true,
     target: "esnext",
@@ -16,7 +20,7 @@ export default defineConfig({
       formats: ["es"],
     },
     rollupOptions: {
-      external: ["@popperjs/core", "@vueuse/core", "vue"],
+      external: ["@popperjs/core", "@vueuse/core", "vue", "zeed"],
     },
   },
 })

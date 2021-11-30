@@ -35,13 +35,16 @@ export function useSeparator(
 
   function onMouseMove(e: { pageX: number; pageY: number }) {
     log("mouse move")
+    if (!dragging.value) return
     deltaX.value = e.pageX - startX
     deltaY.value = e.pageY - startY
     if (value) {
-      value.value = Math.max(
+      const size = Math.max(
         minValue,
         Math.min(maxValue, startValue + deltaX.value)
       )
+      log("update size", size)
+      value.value = size
     }
   }
 

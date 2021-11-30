@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import twPopover from "./tw-popover.vue"
-import { defineComponent, ref } from "vue"
+import { defineComponent, ref, PropType } from "vue"
 import { useEventListener } from "@vueuse/core"
 import { Logger } from "zeed"
 
@@ -28,7 +28,7 @@ export default defineComponent({
       default: "top",
     },
     active: Boolean,
-    target: HTMLElement,
+    target: Object as PropType<HTMLElement>,
     text: String,
   },
   components: {

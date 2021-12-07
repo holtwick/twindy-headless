@@ -1,9 +1,6 @@
 import { useEventListener } from "@vueuse/core"
 import { useWindowResize } from "./window-resize"
 import { onMounted, Ref, ref } from "vue"
-// import { Logger } from "zeed"
-
-// const log = Logger("use-separator")
 
 interface SeparatorState {
   value: number
@@ -22,7 +19,6 @@ export function useSeparator(
     calcFirstElementSize?: (info: SeparatorState) => number
   } = {}
 ) {
-  // log("separator", el, value, opt)
   let dragging = ref(false)
   let collapsed = ref(false)
   let startX = 0
@@ -41,7 +37,6 @@ export function useSeparator(
       )
     },
   } = opt
-  //console.log("minmax", minValue, maxValue)
 
   let lastSeparatorState: SeparatorState = {
     startValue,
@@ -52,18 +47,24 @@ export function useSeparator(
     value: value?.value ?? 0,
   }
 
+  function cancelEvent(e: MouseEvent) {
+    e?.stopPropagation()
+    e?.preventDefault()
+  }
+
   function onMouseDown(e: MouseEvent) {
-    // log("mouse down")
     const { pageX, pageY } = e
     dragging.value = true
     startX = pageX
     startY = pageY
     startValue = value?.value || 0
+    // document.body.style.userSelect = "none"
+    // document.body.style.webkitUserSelect = "none"
     bindEvents()
+    return cancelEvent(e)
   }
 
   function onMouseMove(e: MouseEvent) {
-    // log("mouse move")
     if (!dragging.value) return
     const { pageX, pageY } = e
     deltaX.value = pageX - startX
@@ -77,17 +78,18 @@ export function useSeparator(
         pageY,
         value: value.value,
       }
-      // log("lastSeparatorState =", lastSeparatorState)
       const size = calcFirstElementSize(lastSeparatorState)
-      // log("update size", size)
       value.value = size
     }
+    return cancelEvent(e)
   }
 
-  function onMouseUp() {
-    // log("mouse up")
+  function onMouseUp(e: MouseEvent) {
     dragging.value = false
+    // document.body.style.userSelect = "auto"
+    // document.body.style.webkitUserSelect = "auto"
     unbindEvents()
+    return cancelEvent(e)
   }
 
   function onDblClick() {

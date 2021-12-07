@@ -1,9 +1,9 @@
 import { useEventListener } from "@vueuse/core"
 import { useWindowResize } from "./window-resize"
 import { onMounted, Ref, ref } from "vue"
-import { Logger } from "zeed"
+// import { Logger } from "zeed"
 
-const log = Logger("use-separator")
+// const log = Logger("use-separator")
 
 interface SeparatorState {
   value: number
@@ -22,7 +22,7 @@ export function useSeparator(
     calcFirstElementSize?: (info: SeparatorState) => number
   } = {}
 ) {
-  log("separator", el, value, opt)
+  // log("separator", el, value, opt)
   let dragging = ref(false)
   let collapsed = ref(false)
   let startX = 0
@@ -53,7 +53,7 @@ export function useSeparator(
   }
 
   function onMouseDown(e: MouseEvent) {
-    log("mouse down")
+    // log("mouse down")
     const { pageX, pageY } = e
     dragging.value = true
     startX = pageX
@@ -63,7 +63,7 @@ export function useSeparator(
   }
 
   function onMouseMove(e: MouseEvent) {
-    log("mouse move")
+    // log("mouse move")
     if (!dragging.value) return
     const { pageX, pageY } = e
     deltaX.value = pageX - startX
@@ -77,15 +77,15 @@ export function useSeparator(
         pageY,
         value: value.value,
       }
-      log("lastSeparatorState =", lastSeparatorState)
+      // log("lastSeparatorState =", lastSeparatorState)
       const size = calcFirstElementSize(lastSeparatorState)
-      log("update size", size)
+      // log("update size", size)
       value.value = size
     }
   }
 
   function onMouseUp() {
-    log("mouse up")
+    // log("mouse up")
     dragging.value = false
     unbindEvents()
   }

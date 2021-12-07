@@ -1,15 +1,25 @@
 import { useEventListener } from "@vueuse/core"
-import { Ref, ref } from "vue"
+import { useWindowResize } from "./window-resize"
+import { onMounted, Ref, ref } from "vue"
 import { Logger } from "zeed"
 
 const log = Logger("use-separator")
 
+interface SeparatorState {
+  value: number
+  startValue: number
+  pageX: number
+  pageY: number
+  deltaX: number
+  deltaY: number
+}
 export function useSeparator(
   el: Ref<HTMLElement>,
-  value?: Ref<number>,
+  value: Ref<number>,
   opt: {
     minValue?: number
     maxValue?: number
+    calcFirstElementSize?: (info: SeparatorState) => number
   } = {}
 ) {
   log("separator", el, value, opt)
@@ -21,28 +31,54 @@ export function useSeparator(
   let deltaY = ref(0)
   let startValue = 0
 
-  const { minValue = 0, maxValue = Infinity } = opt
+  const {
+    minValue = 0,
+    maxValue = Infinity,
+    calcFirstElementSize = (info) => {
+      return Math.max(
+        minValue,
+        Math.min(maxValue, info.startValue + info.deltaX)
+      )
+    },
+  } = opt
   //console.log("minmax", minValue, maxValue)
 
-  function onMouseDown(e: { pageX: number; pageY: number }) {
+  let lastSeparatorState: SeparatorState = {
+    startValue,
+    deltaX: deltaX.value,
+    deltaY: deltaY.value,
+    pageX: 0,
+    pageY: 0,
+    value: value?.value ?? 0,
+  }
+
+  function onMouseDown(e: MouseEvent) {
     log("mouse down")
+    const { pageX, pageY } = e
     dragging.value = true
-    startX = e.pageX
-    startY = e.pageY
+    startX = pageX
+    startY = pageY
     startValue = value?.value || 0
     bindEvents()
   }
 
-  function onMouseMove(e: { pageX: number; pageY: number }) {
+  function onMouseMove(e: MouseEvent) {
     log("mouse move")
     if (!dragging.value) return
-    deltaX.value = e.pageX - startX
-    deltaY.value = e.pageY - startY
+    const { pageX, pageY } = e
+    deltaX.value = pageX - startX
+    deltaY.value = pageY - startY
     if (value) {
-      const size = Math.max(
-        minValue,
-        Math.min(maxValue, startValue + deltaX.value)
-      )
+      lastSeparatorState = {
+        startValue,
+        deltaX: deltaX.value,
+        deltaY: deltaY.value,
+        pageX,
+        pageY,
+        value: value.value,
+      }
+      log("lastSeparatorState =", lastSeparatorState)
+      const size = calcFirstElementSize(lastSeparatorState)
       log("update size", size)
       value.value = size
     }
@@ -81,10 +117,18 @@ export function useSeparator(
     docListeners = []
   }
 
+  function recalc() {
+    value.value = calcFirstElementSize(lastSeparatorState)
+  }
+
+  useWindowResize(recalc)
+  onMounted(recalc)
+
   return {
     dragging,
     collapsed,
     deltaX,
     deltaY,
+    recalc,
   }
 }

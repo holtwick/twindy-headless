@@ -1,10 +1,10 @@
 {
   "name": "twindy-headless",
-  "version": "0.12.6",
+  "version": "0.12.7",
   "private": false,
   "type": "module",
   "typings": "dist/index.d.ts",
-  "module": "dist/index.es",
+  "module": "dist/index.js",
   "main": "dist/index.cjs",
   "files": [
     "dist"
@@ -12,7 +12,7 @@
   "exports": {
     ".": {
       "require": "./dist/index.cjs",
-      "default": "./dist/index.es"
+      "default": "./dist/index.js"
     }
   },
   "dependencies": {

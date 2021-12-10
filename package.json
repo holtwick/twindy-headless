@@ -3,14 +3,16 @@
   "version": "0.12.5",
   "private": false,
   "type": "module",
-  "types": "dist/index.d.ts",
-  "module": "dist/twindy-headless.es.js",
+  "typings": "dist/index.d.ts",
+  "module": "dist/index.es",
+  "main": "dist/index.cjs",
   "files": [
     "dist"
   ],
   "exports": {
     ".": {
-      "default": "./dist/twindy-headless.es.js"
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.es"
     }
   },
   "dependencies": {

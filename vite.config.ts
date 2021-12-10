@@ -13,7 +13,7 @@ export default defineConfig({
     target: "esnext",
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
-      formats: ["es"],
+      formats: ["es", "cjs"],
     },
     rollupOptions: {
       external: ["@popperjs/core", "@vueuse/core", "vue"],

@@ -1,6 +1,6 @@
 {
   "name": "twindy-headless",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "private": false,
   "type": "module",
   "typings": "dist/index.d.ts",

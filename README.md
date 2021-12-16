@@ -64,6 +64,14 @@ If placed somewhere in the project will show tooltips for elements having a `too
 
 See also: `tw-popover`
 
+### tw-debug
+
+Debug output of Vue reactive objects. Requires CSS import:
+
+```js
+import "twindy-headless/index.css"
+```
+
 ---
 
 ### useActive(props)

@@ -25,7 +25,7 @@ export function useSeparator(
   let startY = 0
   let deltaX = ref(0)
   let deltaY = ref(0)
-  let startValue = 0
+  let startValue = value.value ?? 0
 
   const {
     minValue = 0,
